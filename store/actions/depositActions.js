@@ -28,7 +28,6 @@ export const addDeposit = (deposit, goal_id, navigation) => {
   return dispatch => {
     instance
       .post("create/", {
-        label: deposit.label,
         amount: deposit.amount,
         goal: goal_id
       })
@@ -51,7 +50,6 @@ export const updateDeposit = (deposit_id, goal_id, deposit, navigation) => {
     axios
       .put(`${deposit_id}/update/`, {
         amount: deposit.amount,
-        label: deposit.label,
         goal: goal_id
       })
       .then(res => res.data)
