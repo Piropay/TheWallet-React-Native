@@ -26,22 +26,35 @@ class BudgetsView extends React.Component {
   }
   renderCard(budget) {
     return (
-      <Card key={budget.id}>
-        <CardItem>
-          <Body>
-            <Text>{budget.label}</Text>
-            <Text>{budget.category}</Text>
-            <Text>{parseFloat(budget.amount).toFixed(3)}KWD</Text>
-          </Body>
-        </CardItem>
-      </Card>
+      <TouchableOpacity
+        key={budget.id}
+        onPress={() =>
+          this.props.navigation.navigate("BudgetDetails", {
+            budget: budget
+          })
+        }
+      >
+        <Card>
+          <CardItem>
+            <Body>
+              <Text>{budget.label}</Text>
+              <Text>{budget.category}</Text>
+              <Text>{parseFloat(budget.balance).toFixed(3)}KWD</Text>
+            </Body>
+          </CardItem>
+        </Card>
+      </TouchableOpacity>
     );
   }
   render() {
-    const budgets = this.props.budgets;
+    const budgets = this.props.budgets.map(budget => {
+      if (new Date(budget.date).getMonth() + 1 >= new Date().getMonth() + 1)
+        return budget;
+    });
+
     let ListItems;
     if (budgets) {
-      console.log(budgets);
+      // console.log(budgets);
 
       ListItems = budgets.map(budget => this.renderCard(budget));
     }
@@ -61,13 +74,15 @@ class BudgetsView extends React.Component {
           >
             <Text style={{ color: "white" }}> ADD Transaction</Text>
           </Button>
-          <Button
-            block
-            warning
-            onPress={() => this.props.navigation.navigate("userBudgets")}
-          >
-            <Text style={{ color: "white" }}> ADD Budget</Text>
-          </Button>
+          {this.props.profile.automated && (
+            <Button
+              block
+              warning
+              onPress={() => this.props.navigation.navigate("userBudgets")}
+            >
+              <Text style={{ color: "white" }}> ADD Budget</Text>
+            </Button>
+          )}
         </View>
       </View>
     );

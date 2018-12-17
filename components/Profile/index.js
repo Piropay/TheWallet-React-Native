@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { CheckBox } from "react-native-elements";
 
 import { Col, Row, Grid } from "react-native-easy-grid";
 import {
@@ -25,10 +26,23 @@ class Profile extends Component {
     title: "Profile"
   });
 
+  constructor(props) {
+    super(props);
+    this.state = { checked: this.props.profile.automated };
+    this.automate = this.automate.bind(this);
+  }
+
   async componentDidMount() {
     if (this.props.user) {
       await this.props.fetchProfile();
     }
+  }
+
+  automate() {
+    this.setState({ checked: !this.state.checked });
+    let profile = { ...this.props.profile, automated: !this.state.checked };
+
+    this.props.updateProfile(profile);
   }
   render() {
     const prof = this.props.profile;
@@ -37,6 +51,12 @@ class Profile extends Component {
         <View style={styles.container}>
           <View style={styles.header} />
           <View style={styles.body}>
+            <CheckBox
+              center
+              title="Automate my budgets"
+              checked={this.state.checked}
+              onPress={() => this.automate()}
+            />
             <View style={styles.bodyContent}>
               <Text style={styles.name}>
                 {this.props.user.username.toUpperCase()}
@@ -81,6 +101,7 @@ const mapStateToProps = state => ({
 
 const mapActionsToProps = dispatch => ({
   fetchProfile: () => dispatch(actionCreators.fetchProfile()),
+  updateProfile: auto => dispatch(actionCreators.updateProfile(auto)),
   logout: navigation => dispatch(actionCreators.logout(navigation))
 });
 
