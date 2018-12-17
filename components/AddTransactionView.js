@@ -37,6 +37,11 @@ class AddTransactionView extends React.Component {
       label: ""
     };
   }
+
+  componentDidMount() {
+    this.props.fetchBudgets();
+  }
+
   onValueChange2(value) {
     this.setState({
       budget: value
@@ -56,7 +61,7 @@ class AddTransactionView extends React.Component {
         }
         return false;
       });
-      setBudget.amount = setBudget.amount - this.state.amount;
+      setBudget.balance = setBudget.balance - this.state.amount;
       console.log(setBudget.amount + "is it updated?");
       await this.props.updateBudget(setBudget, this.props.navigation);
       await this.props.makeTransaction(
@@ -136,7 +141,8 @@ const mapDispatchToProps = dispatch => ({
   updateBudget: (budget, navigation) =>
     dispatch(actionCreators.updateBudget(budget, navigation)),
   makeTransaction: (transaction, budget_id, navigation) =>
-    dispatch(actionCreators.addTransaction(transaction, budget_id, navigation))
+    dispatch(actionCreators.addTransaction(transaction, budget_id, navigation)),
+  fetchBudgets: () => dispatch(actionCreators.fetchBudgets())
 });
 export default connect(
   mapStateToProps,

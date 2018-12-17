@@ -12,6 +12,7 @@ import SettingsScreen from "../screens/SettingsScreen";
 import mandatoryInfo from "../components/MandatoryUserInfo";
 import UpdateProfile from "../components/UpdateProfile";
 import userBudgets from "../components/Budgets";
+import BudgetDetails from "../components/BudgetDetails";
 import AddTransactionView from "../components/AddTransactionView";
 import TransactionsView from "../components/TransactionsView";
 import BudgetsView from "../components/BudgetsView";
@@ -20,6 +21,8 @@ import Profile from "../components/Profile";
 import Goals from "../components/Goal";
 import Deposit from "../components/Deposit";
 import GoalsView from "../components/GoalView";
+import Report from "../components/Report";
+import AutomatedBudgets from "../components/Budgets/AutomatedBudgets";
 
 const HomeStack = createStackNavigator(
   {
@@ -32,7 +35,8 @@ const HomeStack = createStackNavigator(
     Profile: Profile,
     Goals: Goals,
     Deposit: Deposit,
-    GoalsView: GoalsView
+    GoalsView: GoalsView,
+    AutomatedBudgets: AutomatedBudgets
   },
   {
     initialRouteName: "Home",
@@ -72,7 +76,8 @@ const LinksStack = createStackNavigator({
 
   Budgets: BudgetsView,
   userBudgets: userBudgets,
-  Add: AddTransactionView
+  Add: AddTransactionView,
+  BudgetDetails: BudgetDetails
 });
 
 LinksStack.navigationOptions = {
@@ -88,7 +93,7 @@ LinksStack.navigationOptions = {
 const SettingsStack = createStackNavigator({
   // Settings: SettingsScreen
 
-  Transaction: TransactionsView
+  Report: Report
 });
 
 SettingsStack.navigationOptions = {

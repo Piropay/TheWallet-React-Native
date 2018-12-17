@@ -5,7 +5,8 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  View
+  View,
+  TouchableOpacity
 } from "react-native";
 
 import { Button, List, Card, CardItem, Body } from "native-base";
@@ -44,7 +45,7 @@ class HomeScreen extends React.Component {
           <Button
             block
             success
-            onPress={() => this.props.navigation.navigate("Budgets")}
+            onPress={() => this.props.navigation.navigate("AutomatedBudgets")}
           >
             <Text style={{ color: "white" }}>Move</Text>
           </Button>
@@ -62,9 +63,7 @@ class HomeScreen extends React.Component {
           >
             <Text style={{ color: "white" }}>Goals View</Text>
           </Button>
-          <Button onPress={() => this.props.navigation.navigate("Login")}>
-            <Text>Login</Text>
-          </Button>
+
           {!this.props.user ? (
             <Button
               block
@@ -96,6 +95,13 @@ class HomeScreen extends React.Component {
               >
                 <Text>Update Profile</Text>
               </Button>
+              <TouchableOpacity
+                danger
+                onPress={() => this.props.logout(this.props.navigation)}
+                style={styles.buttonContainer}
+              >
+                <Text>Logout</Text>
+              </TouchableOpacity>
             </View>
           )}
         </View>
@@ -110,6 +116,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchBudgets: () => dispatch(actionCreators.fetchBudgets()),
   fetchGoals: () => dispatch(actionCreators.fetchGoals()),
+  logout: navigation => dispatch(actionCreators.logout(navigation)),
   checkForExpiredToken: () => dispatch(actionCreators.checkForExpiredToken())
 });
 export default connect(
