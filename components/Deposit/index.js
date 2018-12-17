@@ -19,8 +19,7 @@ class AddDeposit extends React.Component {
     super(props);
     this.state = {
       goal: undefined,
-      amount: 0,
-      label: ""
+      amount: 0
     };
   }
   onValueChange2(value) {
@@ -31,8 +30,6 @@ class AddDeposit extends React.Component {
   async sendDeposit() {
     if (this.state.goal === undefined) {
       alert("Please select a goal");
-    } else if (this.state.label === "") {
-      alert("Please enter a label");
     } else if (this.state.amount === 0) {
       alert("Please enter a valid value");
     } else {
@@ -45,7 +42,7 @@ class AddDeposit extends React.Component {
       setGoal.amount = setGoal.amount - this.state.amount;
       // await this.props.updateGoal(setGoal, this.props.navigation);
       await this.props.addDeposit(
-        { label: this.state.label, amount: this.state.amount },
+        { amount: this.state.amount },
         this.state.goal,
         this.props.navigation
       );
@@ -82,12 +79,6 @@ class AddDeposit extends React.Component {
               >
                 {ListItems}
               </Picker>
-            </Item>
-            <Item>
-              <Input
-                placeholder="Deposit..."
-                onChangeText={value => this.setState({ label: value })}
-              />
             </Item>
             <Item>
               <Input

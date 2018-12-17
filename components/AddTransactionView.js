@@ -74,7 +74,7 @@ class AddTransactionView extends React.Component {
     );
   }
   render() {
-    const budgets = this.props.profile.budgets;
+    const budgets = this.props.budgets;
     let ListItems;
     if (budgets) {
       ListItems = budgets.map(budget => this.renderCard(budget));

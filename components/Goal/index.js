@@ -64,9 +64,11 @@ class Goal extends Component {
       }
     });
     if (filled) {
-      this.state.goals.forEach(goal =>
-        this.props.addGoal(goal, this.props.navigation)
-      );
+      let today = new Date();
+
+      this.state.goals.forEach(goal => {
+        this.props.addGoal(goal, this.props.navigation);
+      });
       this.props.navigation.navigate("GoalsView");
     } else {
       alert("Please make sure that you fill in all the boxes");
