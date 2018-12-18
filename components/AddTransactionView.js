@@ -1,28 +1,7 @@
 import React from "react";
-import {
-  Image,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View
-} from "react-native";
-import {
-  Button,
-  List,
-  Card,
-  CardItem,
-  Body,
-  Form,
-  Item,
-  Picker,
-  Icon,
-  Input
-} from "native-base";
-import { WebBrowser } from "expo";
+import { Platform, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Button, Form, Item, Picker, Icon, Input } from "native-base";
 import { connect } from "react-redux";
-import { MonoText } from "../components/StyledText";
 import * as actionCreators from "../store/actions";
 
 class AddTransactionView extends React.Component {
@@ -79,7 +58,16 @@ class AddTransactionView extends React.Component {
     );
   }
   render() {
-    const budgets = this.props.budgets;
+    var today = new Date();
+    const budgets = this.props.budgets.filter(budget => {
+      let date = new Date(budget.date);
+      if (
+        date.getMonth() === today.getMonth() &&
+        date.getFullYear() === today.getFullYear()
+      ) {
+        return budget;
+      }
+    });
     let ListItems;
     if (budgets) {
       ListItems = budgets.map(budget => this.renderCard(budget));

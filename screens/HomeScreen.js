@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Image,
   Platform,
   ScrollView,
   StyleSheet,
@@ -9,7 +8,7 @@ import {
   TouchableOpacity
 } from "react-native";
 
-import { Button, List, Card, CardItem, Body } from "native-base";
+import { Button } from "native-base";
 import { connect } from "react-redux";
 
 // Actions
@@ -20,8 +19,24 @@ class HomeScreen extends React.Component {
     title: "Home"
   };
 
-  componentDidMount() {
-    this.props.checkForExpiredToken();
+  async componentDidMount() {
+    await this.props.checkForExpiredToken();
+    if (this.props.user) {
+      var today = new Date();
+      if (this.props.budgets.length !== 0) {
+        var compDate = new Date(
+          this.props.budgets[this.props.budgets.length - 1].date
+        );
+        if (
+          (today.getMonth() !== compDate.getMonth()) |
+          (today.getFullYear() !== compDate.getFullYear())
+        ) {
+          this.props.navigation.replace("Report");
+        }
+      } else {
+        this.props.navigation.replace("Report");
+      }
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -88,7 +103,13 @@ class HomeScreen extends React.Component {
               >
                 <Text>Profile</Text>
               </Button>
-
+              <Button
+                block
+                warning
+                onPress={() => this.props.navigation.navigate("Report")}
+              >
+                <Text>Report</Text>
+              </Button>
               <Button
                 block
                 onPress={() => this.props.navigation.navigate("UpdateProfile")}
@@ -111,7 +132,8 @@ class HomeScreen extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.auth.user
+  user: state.auth.user,
+  profile: state.auth.profile
 });
 const mapDispatchToProps = dispatch => ({
   fetchBudgets: () => dispatch(actionCreators.fetchBudgets()),
