@@ -42,6 +42,11 @@ class AddTransactionView extends React.Component {
     this.props.fetchBudgets();
   }
 
+  componentDidUpdate(prevPorps) {
+    if (prevPorps.profile.budgets !== this.props.profile.budgets)
+      this.props.fetchBudgets();
+  }
+
   onValueChange2(value) {
     this.setState({
       budget: value
@@ -116,7 +121,7 @@ class AddTransactionView extends React.Component {
                 placeholder="0.00"
                 keyboardType="decimal-pad"
                 onChangeText={value =>
-                  this.setState({ amount: parseInt(value) })
+                  this.setState({ amount: parseFloat(value) })
                 }
               />
             </Item>

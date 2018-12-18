@@ -48,13 +48,14 @@ export const addBudget = (budget, navigation) => {
 //   };
 // };
 
-export const updateBudget = (budget, navigation) => {
+export const updateBudget = (budget, budget_id, navigation) => {
   return dispatch => {
     instance
-      .put(`${budget.id}/update/`, {
+      .put(`${budget_id}/update/`, {
         category: budget.category,
         amount: budget.amount,
-        label: budget.label
+        label: budget.label,
+        balance: budget.balance
       })
       .then(res => res.data)
       .then(budget => {
