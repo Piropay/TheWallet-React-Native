@@ -26,7 +26,9 @@
     "react-native-css": "^2.1.2",
     "react-native-easy-grid": "^0.2.0",
     "react-native-elements": "^0.19.1",
+    "react-native-paper": "^2.3.0",
     "react-navigation": "^2.18.2",
+    "react-navigation-material-bottom-tabs": "^0.4.0",
     "react-redux": "^5.1.1",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0"

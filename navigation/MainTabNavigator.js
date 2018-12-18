@@ -4,7 +4,7 @@ import {
   createStackNavigator,
   createBottomTabNavigator
 } from "react-navigation";
-
+import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 import TabBarIcon from "../components/TabBarIcon";
 import HomeScreen from "../screens/HomeScreen";
 import LinksScreen from "../screens/LinksScreen";
@@ -45,17 +45,18 @@ const HomeStack = createStackNavigator(
   {
     initialRouteName: "Home",
     navigationOptions: {
-      headerTintColor: "black",
+      headerTintColor: "#fff",
       headerStyle: {
-        backgroundColor: "white"
+        fontWeight: "bold",
+        backgroundColor: "transparent"
       },
       headerTextStyle: {
         fontWeight: "bold",
-        color: "black"
+        fontFamily: "pacifico-regular"
       }
     },
     cardStyle: {
-      backgroundColor: "gray"
+      backgroundColor: "#2B2B2B"
     }
   }
 );
@@ -96,13 +97,12 @@ LinksStack.navigationOptions = {
 };
 
 const SettingsStack = createStackNavigator({
-  // Settings: SettingsScreen
-
+  Profile: Profile,
   Report: Report
 });
 
 SettingsStack.navigationOptions = {
-  tabBarLabel: "Settings",
+  tabBarLabel: "Profile",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -110,9 +110,20 @@ SettingsStack.navigationOptions = {
     />
   )
 };
-
-export default createBottomTabNavigator({
-  HomeStack,
-  LinksStack,
-  SettingsStack
-});
+// export default createBottomTabNavigator({
+//   HomeStack,
+//   LinksStack,
+//   SettingsStack
+// });
+export default createMaterialBottomTabNavigator(
+  {
+    HomeStack,
+    LinksStack,
+    SettingsStack
+  },
+  {
+    activeColor: "#D5C157",
+    inactiveColor: "#fff",
+    barStyle: { backgroundColor: "#258779" }
+  }
+);

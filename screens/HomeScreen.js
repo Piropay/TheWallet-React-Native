@@ -78,7 +78,16 @@ class HomeScreen extends React.Component {
           >
             <Text style={{ color: "white" }}>Goals View</Text>
           </Button>
-
+          <Button
+            block
+            success
+            onPress={() => this.props.navigation.navigate("GoalsView")}
+          >
+            <Text style={{ color: "white" }}>Signup</Text>
+          </Button>
+          <Button onPress={() => this.props.navigation.navigate("Login")}>
+            <Text>Login</Text>
+          </Button>
           {!this.props.user ? (
             <Button
               block

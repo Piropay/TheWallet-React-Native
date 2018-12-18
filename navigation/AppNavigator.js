@@ -1,12 +1,10 @@
-import React from 'react';
-import { createSwitchNavigator } from 'react-navigation';
+import React from "react";
+import { createSwitchNavigator } from "react-navigation";
 
-import MainTabNavigator from './MainTabNavigator';
-
+import MainTabNavigator from "./MainTabNavigator";
+import StarterNavigator from "./StarterNavigator";
 
 export default createSwitchNavigator({
-
-  
-  Main: MainTabNavigator,
-
+  Starter: StarterNavigator,
+  Main: MainTabNavigator
 });

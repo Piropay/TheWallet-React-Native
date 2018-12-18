@@ -19,17 +19,16 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: "#2B2B2B",
-    marginVertical: 30
+    paddingVertical: 20
   },
   contentContainer: {
     paddingVertical: 20
   },
   label: {
-    color: "#258779",
-    marginTop: 15
+    marginBottom: 8
   },
   button: {
-    top: 50,
+    top: 30,
     marginBottom: 10,
     backgroundColor: "#258779",
     paddingHorizontal: 50,
@@ -38,12 +37,14 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.7,
     borderRadius: 5,
     shadowOffset: { width: 5, height: 5 },
-    paddingBottom: 13
+    paddingBottom: 13,
+    alignSelf: "center"
   },
   header: {
+    marginBottom: 10,
     paddingTop: 40,
-    paddingLeft: 30,
-    paddingRight: 30,
+    paddingLeft: 20,
+    paddingRight: 20,
     paddingBottom: 10,
     alignSelf: "center",
     color: "#D5C157",
@@ -54,5 +55,4 @@ const styles = StyleSheet.create({
     textShadowRadius: 1
   }
 });
-
 export default styles;

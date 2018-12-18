@@ -1,54 +1,45 @@
 import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#5cd6d6",
-    opacity: 0.6
-  },
-  topheader: {
-    backgroundColor: "#5cd6d6",
-    opacity: 0
-  },
-  icon: {
-    color: "white",
-    fontSize: 17,
-    opacity: 1
-  },
-  footericon: {
-    color: "white",
-    fontSize: 18
+  shadow: {
+    alignSelf: "center",
+    shadowColor: "#a0a0a0",
+    shadowRadius: 7,
+    shadowOpacity: 0.5,
+    shadowOffset: { width: 5, height: 7 },
+    width: 200,
+    height: 200,
+    borderRadius: 200 / 2,
+    backgroundColor: "#fff",
+    padding: 5
   },
   text: {
-    color: "white",
-    fontSize: 15,
-    marginTop: 19,
-    opacity: 1
-  },
-  header: {
-    color: "white",
     fontWeight: "bold",
-    fontSize: 17,
-    marginTop: 10,
-    opacity: 1
+    fontFamily: "pacifico-regular",
+    fontSize: 22,
+    paddingBottom: 40
   },
-  footerbutton: {
-    color: "white",
-    fontWeight: "bold",
-    fontSize: 17
+  signup: {
+    marginLeft: 35,
+    marginRight: 35,
+    paddingBottom: 13,
+    marginTop: 20,
+    backgroundColor: "#D5C157",
+    shadowColor: "#595959",
+    shadowRadius: 1,
+    shadowOpacity: 0.7,
+    borderRadius: 5,
+    shadowOffset: { width: 5, height: 5 }
   },
-  footer: {
-    backgroundColor: "#5cd6d6",
-    opacity: 0.6
-  },
-  overlay: {
-    position: "absolute",
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
-    backgroundColor: "rgb(8,80,129)",
-    opacity: 0.6
-  },
-  background: { height: "100%", width: "100%", flex: 1 },
-  transparent: { backgroundColor: "transparent" }
+  login: {
+    marginLeft: 35,
+    marginRight: 35,
+    backgroundColor: "#258779",
+    paddingBottom: 13,
+    shadowColor: "#595959",
+    shadowRadius: 1,
+    shadowOpacity: 0.7,
+    borderRadius: 5,
+    shadowOffset: { width: 5, height: 5 }
+  }
 });
 export default styles;
