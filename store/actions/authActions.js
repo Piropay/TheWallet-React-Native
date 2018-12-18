@@ -89,18 +89,27 @@ const setCurrentUser = user => {
 export const updateProfile = (profile, navigation) => {
   return dispatch => {
     instance
-      .put(`profile/update/`, profile)
+      .put(`profile/update/`, {
+        phoneNo: profile.phoneNo,
+        dob: profile.dob,
+        gender: profile.gender,
+        income: profile.income,
+        balance: profile.balance,
+        savings: profile.savings,
+        automated: profile.automated
+      })
       .then(res => res.data)
       .then(profile => {
         dispatch({
           type: actionTypes.UPDATE_PROFILE,
           payload: profile
         });
-        navigation.replace("Home");
       })
 
       .catch(err => {
+
         dispatch(console.log(err.response.data));
+
       });
   };
 };
