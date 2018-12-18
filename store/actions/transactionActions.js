@@ -19,7 +19,7 @@ export const fetchTransactions = () => {
         });
       })
       .catch(err => {
-        dispatch(console.log(err.response));
+        dispatch(console.log(err.response.data));
       });
   };
 };
@@ -41,7 +41,7 @@ export const addTransaction = (transaction, budget_id, navigation) => {
       })
       .then(() => navigation.navigate("Budgets"))
       .catch(err => {
-        dispatch(console.log(err.response));
+        dispatch(console.log(err.response.data));
       });
   };
 };
@@ -67,7 +67,7 @@ export const updateTransaction = (
         });
       })
       .catch(err => {
-        dispatch(console.log(err.response));
+        dispatch(console.log(err.response.data));
       });
   };
 };

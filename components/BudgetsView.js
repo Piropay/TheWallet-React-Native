@@ -6,24 +6,22 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
+  RefreshControl
 } from "react-native";
 import { Button, List, Card, CardItem, Body } from "native-base";
 import { WebBrowser } from "expo";
 import { connect } from "react-redux";
 import { MonoText } from "../components/StyledText";
 import * as actionCreators from "../store/actions";
+import { dispatch } from "rxjs/internal/observable/pairs";
 
 class BudgetsView extends React.Component {
   static navigationOptions = {
     title: "Budgets"
   };
-  componentDidMount() {
-    this.props.fetchBudgets();
-  }
-  componentDidUpdate(prevProps) {
-    if (prevProps.budgets !== this.props.budgets) this.props.fetchBudgets();
-  }
+
+  state = { refreshing: false };
   renderCard(budget) {
     return (
       <TouchableOpacity
@@ -46,6 +44,13 @@ class BudgetsView extends React.Component {
       </TouchableOpacity>
     );
   }
+
+  _onRefresh = () => {
+    this.setState({ refreshing: true });
+    this.props.fetchBudgets();
+
+    this.setState({ refreshing: false });
+  };
   render() {
     var today = new Date();
     const budgets = this.props.budgets.filter(budget => {
@@ -60,8 +65,6 @@ class BudgetsView extends React.Component {
 
     let ListItems;
     if (budgets) {
-      // console.log(budgets);
-
       ListItems = budgets.map(budget => this.renderCard(budget));
     }
     return (
@@ -69,6 +72,12 @@ class BudgetsView extends React.Component {
         <ScrollView
           style={styles.container}
           contentContainerStyle={styles.contentContainer}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={this._onRefresh}
+            />
+          }
         >
           <List>{ListItems}</List>
         </ScrollView>

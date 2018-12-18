@@ -31,11 +31,7 @@ class Goal extends Component {
 
   handleGoalAmountChange = (value, i) => {
     let oldAmount = 0;
-    // let value = 0;
-    // if (e.nativeEvent.text.length > 0) {
-    //   value = parseFloat(e.nativeEvent.text);
-    // }
-    // value = parseFloat(value);
+
     console.log(this.state.goals);
     const newAmount = this.state.goals.map((goal, sidx) => {
       if (i !== sidx) return goal;
@@ -44,7 +40,6 @@ class Goal extends Component {
     });
     this.setState(prevState => ({
       goals: newAmount,
-      // totalBudget: prevState.totalBudget - parseFloat(oldAmount) + value
       totalGoal: prevState.totalGoal - oldAmount + value
     }));
   };
@@ -112,13 +107,12 @@ class Goal extends Component {
           <View style={styles.inputContainer}>
             <Input
               style={styles.inputs}
-              // keyboardType="numeric"
+              keyboardType="numeric"
               value={idx.amount}
               clearTextOnFocus={true}
               onChangeText={value =>
                 this.handleGoalAmountChange(parseFloat(value), i)
               }
-              // onEndEditing={e => this.handleGoalAmountChange(e, i)}
             />
           </View>
         </View>

@@ -12,13 +12,6 @@ export const addIncome = income => {
   };
 };
 
-// export const addExpenses = expense => {
-//   return {
-//     type: actionTypes.ADD_EXPENSES,
-//     payload: expense
-//   };
-// };
-
 export const addExpenses = (expense, navigation) => {
   return dispatch => {
     instance
@@ -35,14 +28,12 @@ export const addExpenses = (expense, navigation) => {
       })
       .then(() => navigation.navigate("Home"))
       .catch(err => {
-        dispatch(console.log(err.response));
+        dispatch(console.log(err.response.data));
       });
   };
 };
 
 export const getBalance = (income, expenses, navigation) => {
-  // console.log(expenses);
-
   let totalExpense = 0;
   let balance = 0;
   for (let index = 0; index < expenses.length; index++) {

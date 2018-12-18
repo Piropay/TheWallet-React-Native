@@ -32,12 +32,6 @@ class Profile extends Component {
     this.automate = this.automate.bind(this);
   }
 
-  async componentDidMount() {
-    if (this.props.user) {
-      await this.props.fetchProfile();
-    }
-  }
-
   automate() {
     this.setState({ checked: !this.state.checked });
     let profile = { ...this.props.profile, automated: !this.state.checked };

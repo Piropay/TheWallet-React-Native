@@ -37,32 +37,15 @@ class userBudgets extends Component {
   };
 
   handleBudgetAmountChange = (value, i) => {
-    // let oldAmount = 0;
-    // let value = 0;
-    // if (e.nativeEvent.text.length > 0) {
-    //   value = parseFloat(e.nativeEvent.text);
-    // }
-    // value = parseFloat(value);
-
-    // if (
-    //   this.state.totalBudget < this.props.balance &&
-    //   value + this.state.totalBudget < this.props.balance
-    // ) {
     const newAmount = this.state.budgets.map((budget, sidx) => {
       if (i !== sidx) return budget;
-      // oldAmount = budget.amount;
 
       return { ...budget, amount: value };
     });
     this.setState(prevState => ({
       budgets: newAmount,
       value: parseFloat(value)
-      // totalBudget: prevState.totalBudget - parseFloat(oldAmount) + value
-      // totalBudget: prevState.totalBudget - oldAmount + value
     }));
-    // } else {
-    //   alert("You can't exceed your current balance");
-    // }
   };
 
   handleAddBudget = () => {
@@ -111,21 +94,7 @@ class userBudgets extends Component {
   onValueChange2(category, i) {
     const newCategory = this.state.budgets.map((budget, sidx) => {
       if (i !== sidx) return budget;
-      // if (this.props.profile.automated) {
-      //   let precentage = this.state[category];
-      //   console.log("precentage: " + precentage);
-      //   let newAmount =
-      //     (parseFloat(this.props.profile.balance) -
-      //       this.props.totalUserBudget) *
-      //     precentage;
-      //   console.log("newAmount: " + newAmount);
 
-      //   return {
-      //     ...budget,
-      //     category: category,
-      //     amount: newAmount
-      //   };
-      // } else {
       return { ...budget, category: category };
     });
 
@@ -141,8 +110,6 @@ class userBudgets extends Component {
     });
   }
   render() {
-    // console.log(this.state.budgets);
-
     const inputRows = this.state.budgets.map((idx, i) => (
       <Row key={`${i}`}>
         <Grid>
@@ -158,26 +125,6 @@ class userBudgets extends Component {
               </View>
             </View>
 
-            {/* <View style={styles.inputWrap}>
-              <Text style={styles.label}>Amount</Text>
-              <View style={styles.inputContainer}>
-                <TextInput
-                  style={styles.inputs}
-                  keyboardType="numeric"
-                  defaultValue={idx.amount + ""}
-                  clearTextOnFocus={true}
-                  // onChangeText={value =>
-                  //   this.handleBudgetAmountChange(parseFloat(value), i)
-                  // }
-                  onEndEditing={e =>
-                    this.handleBudgetAmountChange(
-                      parseFloat(e.nativeEvent.text),
-                      i
-                    )
-                  }
-                />
-              </View>
-            </View> */}
             <Button
               type="button"
               onPress={() => this.handleRemoveBudget(i)}

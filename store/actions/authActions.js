@@ -2,6 +2,10 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 
 import * as actionTypes from "./actionTypes";
+import { fetchBudgets } from "./budgetActions";
+import { fetchDeposits } from "./depositActions";
+import { fetchGoals } from "./goalActions";
+import { fetchTransactions } from "./transactionActions";
 import { AsyncStorage } from "react-native";
 
 const instance = axios.create({
@@ -26,7 +30,7 @@ const setAuthToken = token => {
 
 export const checkForExpiredToken = () => {
   return dispatch => {
-    AsyncStorage.getItem("token").then(token => {
+    return AsyncStorage.getItem("token").then(token => {
       if (token) {
         const currentTime = Date.now() / 1000;
         const user = jwt_decode(token);
@@ -53,7 +57,7 @@ export const login = (userData, navigation) => {
         navigation.replace("Main");
       })
 
-      .catch(err => console.error(err.response));
+      .catch(err => console.error(err.response.data));
   };
 };
 
@@ -65,7 +69,7 @@ export const signup = (userData, navigation) => {
       .then(() => {
         dispatch(login(userData));
       })
-      .catch(err => console.error(err.response));
+      .catch(err => console.error(err.response.data));
   };
 };
 
@@ -81,7 +85,11 @@ const setCurrentUser = user => {
     dispatch({ type: actionTypes.SET_CURRENT_USER, payload: user });
 
     if (user) {
+      dispatch(fetchBudgets());
       dispatch(fetchProfile());
+      dispatch(fetchTransactions());
+      dispatch(fetchGoals());
+      dispatch(fetchDeposits());
     }
   };
 };
@@ -107,9 +115,7 @@ export const updateProfile = (profile, navigation) => {
       })
 
       .catch(err => {
-
-        dispatch(console.log(err.response.data));
-
+        dispatch(console.log(err.response.data.data));
       });
   };
 };
@@ -126,7 +132,7 @@ export const fetchProfile = () => {
       })
 
       .catch(err => {
-        //dispatch(console.log(err.response));
+        //dispatch(console.log(err.response.data));
       });
   };
 };

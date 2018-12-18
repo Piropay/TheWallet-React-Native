@@ -63,32 +63,15 @@ class AutoMatedBudgets extends Component {
   }
 
   handleBudgetAmountChange = (value, i) => {
-    // let oldAmount = 0;
-    // let value = 0;
-    // if (e.nativeEvent.text.length > 0) {
-    //   value = parseFloat(e.nativeEvent.text);
-    // }
-    // value = parseFloat(value);
-
-    // if (
-    //   this.state.totalBudget < this.props.balance &&
-    //   value + this.state.totalBudget < this.props.balance
-    // ) {
     const newAmount = this.state.budgets.map((budget, sidx) => {
       if (i !== sidx) return budget;
-      // oldAmount = budget.amount;
 
       return { ...budget, amount: value };
     });
     this.setState(prevState => ({
       budgets: newAmount,
       value: parseFloat(value)
-      // totalBudget: prevState.totalBudget - parseFloat(oldAmount) + value
-      // totalBudget: prevState.totalBudget - oldAmount + value
     }));
-    // } else {
-    //   alert("You can't exceed your current balance");
-    // }
   };
 
   handleSubmitBudget = totalBudget => {
@@ -144,7 +127,6 @@ class AutoMatedBudgets extends Component {
     });
   }
   render() {
-    // console.log(this.state.budgets);
     let totalBudget = 0;
     this.state.budgets.forEach(budget => (totalBudget += budget.amount));
     const inputRows = this.state.budgets.map((idx, i) => (
@@ -157,27 +139,6 @@ class AutoMatedBudgets extends Component {
                 <TextInput value={idx.label} style={styles.inputs} />
               </View>
             </View>
-
-            {/* <View style={styles.inputWrap}>
-              <Text style={styles.label}>Amount</Text>
-              <View style={styles.inputContainer}>
-                <TextInput
-                  style={styles.inputs}
-                  keyboardType="numeric"
-                  defaultValue={idx.amount + ""}
-                  clearTextOnFocus={true}
-                  // onChangeText={value =>
-                  //   this.handleBudgetAmountChange(parseFloat(value), i)
-                  // }
-                  onEndEditing={e =>
-                    this.handleBudgetAmountChange(
-                      parseFloat(e.nativeEvent.text),
-                      i
-                    )
-                  }
-                />
-              </View>
-            </View> */}
           </Row>
 
           <Slider

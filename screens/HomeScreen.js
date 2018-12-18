@@ -20,8 +20,7 @@ class HomeScreen extends React.Component {
   };
 
   async componentDidMount() {
-    await this.props.checkForExpiredToken();
-    if (this.props.user) {
+    if (this.props.budgets) {
       var today = new Date();
       if (this.props.budgets.length !== 0) {
         var compDate = new Date(
@@ -33,17 +32,13 @@ class HomeScreen extends React.Component {
         ) {
           this.props.navigation.replace("Report");
         }
+      } else if (!this.props.profile.income) {
+        this.props.navigation.replace("UpdateProfile");
       } else {
-        this.props.navigation.replace("Report");
-      }
-    }
-  }
+        console.log("sdefafaf", this.props.profile.income);
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.user !== this.props.user) {
-      this.props.fetchBudgets();
-      console.log("Fetching goals");
-      this.props.fetchGoals();
+        this.props.navigation.replace("Home");
+      }
     }
   }
 
@@ -78,17 +73,8 @@ class HomeScreen extends React.Component {
           >
             <Text style={{ color: "white" }}>Goals View</Text>
           </Button>
-          <Button
-            block
-            success
-            onPress={() => this.props.navigation.navigate("GoalsView")}
-          >
-            <Text style={{ color: "white" }}>Signup</Text>
-          </Button>
-          <Button onPress={() => this.props.navigation.navigate("Login")}>
-            <Text>Login</Text>
-          </Button>
-          {!this.props.user ? (
+
+          {/* {!this.props.user ? (
             <Button
               block
               onPress={() => this.props.navigation.navigate("Login")}
@@ -96,44 +82,23 @@ class HomeScreen extends React.Component {
               <Text>Login</Text>
             </Button>
           ) : (
-            <Button
-              block
-              onPress={() => this.props.navigation.navigate("mandatoryInfo")}
-            >
-              <Text>Expenses</Text>
-            </Button>
-          )}
-          {this.props.user && (
-            <View>
-              <Button
-                block
-                warning
-                onPress={() => this.props.navigation.navigate("Profile")}
-              >
-                <Text>Profile</Text>
-              </Button>
-              <Button
-                block
-                warning
-                onPress={() => this.props.navigation.navigate("Report")}
-              >
-                <Text>Report</Text>
-              </Button>
-              <Button
-                block
-                onPress={() => this.props.navigation.navigate("UpdateProfile")}
-              >
-                <Text>Update Profile</Text>
-              </Button>
-              <TouchableOpacity
-                danger
-                onPress={() => this.props.logout(this.props.navigation)}
-                style={styles.buttonContainer}
-              >
-                <Text>Logout</Text>
-              </TouchableOpacity>
-            </View>
-          )}
+            
+          )} */}
+          <Button
+            block
+            onPress={() => this.props.navigation.navigate("mandatoryInfo")}
+          >
+            <Text>Expenses</Text>
+          </Button>
+
+          <Button
+            block
+            danger
+            onPress={() => this.props.logout(this.props.navigation)}
+            style={styles.buttonContainer}
+          >
+            <Text>Logout</Text>
+          </Button>
         </View>
       </View>
     );
@@ -142,13 +107,11 @@ class HomeScreen extends React.Component {
 
 const mapStateToProps = state => ({
   user: state.auth.user,
-  profile: state.auth.profile
+  profile: state.auth.profile,
+  budgets: state.budget.budgets
 });
 const mapDispatchToProps = dispatch => ({
-  fetchBudgets: () => dispatch(actionCreators.fetchBudgets()),
-  fetchGoals: () => dispatch(actionCreators.fetchGoals()),
-  logout: navigation => dispatch(actionCreators.logout(navigation)),
-  checkForExpiredToken: () => dispatch(actionCreators.checkForExpiredToken())
+  logout: navigation => dispatch(actionCreators.logout(navigation))
 });
 export default connect(
   mapStateToProps,

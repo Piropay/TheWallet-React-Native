@@ -24,17 +24,24 @@ const reducer = (state = initialState, action) => {
         budgets: state.budgets.concat(action.payload)
       };
     case actionTypes.UPDATE_BUDGET:
+      console.log(action.payload);
+
+      let newBudget = state.budgets.find(
+        budget => budget.id === action.payload.id
+      );
+
+      if (newBudget) {
+        newBudget.amount = action.payload.amount;
+        newBudget.label = action.payload.label;
+        newBudget.category = action.payload.category;
+        newBudget.balance = action.payload.balance;
+        console.log(newBudget);
+      }
+      // console.log(state.budgets);
+      bud = [...state.budgets];
       return {
         ...state,
-        budgets: state.budgets.filter(budget => {
-          if (budget.id === action.payload.id) {
-            budget.amount = action.payload.amount;
-            budget.label = action.payload.label;
-            budget.category = action.payload.category;
-            return budget;
-          }
-          return budget;
-        })
+        budgets: bud
       };
     default:
       return state;

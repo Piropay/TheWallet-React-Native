@@ -14,7 +14,6 @@ import UpdateProfile from "../components/UpdateProfile";
 import userBudgets from "../components/Budgets";
 import BudgetDetails from "../components/BudgetDetails";
 import AddTransactionView from "../components/AddTransactionView";
-import TransactionsView from "../components/TransactionsView";
 import BudgetsView from "../components/BudgetsView";
 import Login from "../components/Login";
 import Profile from "../components/Profile";
@@ -77,8 +76,6 @@ HomeStack.navigationOptions = {
 };
 
 const LinksStack = createStackNavigator({
-  //Links: LinksScreen
-
   Budgets: BudgetsView,
   userBudgets: userBudgets,
   Add: AddTransactionView,
@@ -110,11 +107,7 @@ SettingsStack.navigationOptions = {
     />
   )
 };
-// export default createBottomTabNavigator({
-//   HomeStack,
-//   LinksStack,
-//   SettingsStack
-// });
+
 export default createMaterialBottomTabNavigator(
   {
     HomeStack,
