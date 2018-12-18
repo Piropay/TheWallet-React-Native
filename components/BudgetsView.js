@@ -47,9 +47,15 @@ class BudgetsView extends React.Component {
     );
   }
   render() {
-    const budgets = this.props.budgets.map(budget => {
-      if (new Date(budget.date).getMonth() + 1 >= new Date().getMonth() + 1)
+    var today = new Date();
+    const budgets = this.props.budgets.filter(budget => {
+      let date = new Date(budget.date);
+      if (
+        date.getMonth() === today.getMonth() &&
+        date.getFullYear() === today.getFullYear()
+      ) {
         return budget;
+      }
     });
 
     let ListItems;

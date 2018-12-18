@@ -25,7 +25,9 @@ class UpdateProfile extends Component {
       dob: this.props.profile.dob,
       gender: this.props.profile.gender,
       income: this.props.profile.income,
-      balance: 0
+      balance: 0,
+      savings: this.props.profile.savings,
+      automated: this.props.profile.automated
     };
   }
 

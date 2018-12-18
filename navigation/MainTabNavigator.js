@@ -36,7 +36,10 @@ const HomeStack = createStackNavigator(
     Goals: Goals,
     Deposit: Deposit,
     GoalsView: GoalsView,
-    AutomatedBudgets: AutomatedBudgets
+    AutomatedBudgets: AutomatedBudgets,
+    Report: Report,
+    userBudgets: userBudgets,
+    Budgets: BudgetsView
   },
   {
     initialRouteName: "Home",

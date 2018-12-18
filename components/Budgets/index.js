@@ -2,18 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions";
 
-import {
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-  Image,
-  Alert,
-  ScrollView,
-  Slider
-} from "react-native";
-
-import { Input } from "native-base";
+import { Text, View, TextInput, ScrollView, Slider } from "react-native";
 
 import { Row, Grid } from "react-native-easy-grid";
 import { Button, H1, Item, Picker, Icon } from "native-base";
@@ -104,6 +93,7 @@ class userBudgets extends Component {
       this.state.budgets.forEach(budget =>
         this.props.addBudget(budget, this.props.navigation)
       );
+      this.props.navigation.replace("Budgets");
     } else {
       alert(
         "Please make sure that you fill in all the boxes and that you're total budgets don't exceed your current balance"
