@@ -40,14 +40,12 @@ class AddDeposit extends React.Component {
         return false;
       });
       setGoal.amount = setGoal.amount - this.state.amount;
-      // await this.props.updateGoal(setGoal, this.props.navigation);
+
       await this.props.addDeposit(
         { amount: this.state.amount },
         this.state.goal,
         this.props.navigation
       );
-      // console.log(this.props.deposits);
-      // this.props.navigation.goBack();
     }
   }
   renderCard(goal) {

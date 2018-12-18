@@ -17,15 +17,6 @@ class AddTransactionView extends React.Component {
     };
   }
 
-  componentDidMount() {
-    this.props.fetchBudgets();
-  }
-
-  componentDidUpdate(prevPorps) {
-    if (prevPorps.profile.budgets !== this.props.profile.budgets)
-      this.props.fetchBudgets();
-  }
-
   onValueChange2(value) {
     this.setState({
       budget: value
@@ -53,8 +44,6 @@ class AddTransactionView extends React.Component {
         this.state.budget,
         this.props.navigation
       );
-      // console.log(this.props.transactions);
-      // this.props.navigation.goBack();
     }
   }
   renderCard(budget) {
@@ -134,8 +123,7 @@ const mapDispatchToProps = dispatch => ({
   updateBudget: (budget, navigation) =>
     dispatch(actionCreators.updateBudget(budget, navigation)),
   makeTransaction: (transaction, budget_id, navigation) =>
-    dispatch(actionCreators.addTransaction(transaction, budget_id, navigation)),
-  fetchBudgets: () => dispatch(actionCreators.fetchBudgets())
+    dispatch(actionCreators.addTransaction(transaction, budget_id, navigation))
 });
 export default connect(
   mapStateToProps,

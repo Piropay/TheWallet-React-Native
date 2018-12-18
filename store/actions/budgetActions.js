@@ -14,7 +14,7 @@ export const fetchBudgets = () => {
         dispatch({ type: actionTypes.FETCH_BUDGETS, payload: budgets });
       })
       .catch(err => {
-        dispatch(console.log(err.response));
+        dispatch(console.log(err.response.data));
       });
   };
 };
@@ -36,7 +36,7 @@ export const addBudget = (budget, navigation) => {
       })
       // .then(() => navigation.navigate("Budgets"))
       .catch(err => {
-        dispatch(console.log(err.response));
+        dispatch(console.log(err.response.data));
       });
   };
 };
@@ -65,7 +65,7 @@ export const updateBudget = (budget, budget_id, navigation) => {
         });
       })
       .catch(err => {
-        dispatch(console.log(err.response));
+        dispatch(console.log(err.response.data));
       });
   };
 };

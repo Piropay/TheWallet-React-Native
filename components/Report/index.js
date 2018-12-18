@@ -51,42 +51,46 @@ class Report extends Component {
 
   componentDidMount() {
     var today = new Date();
-    if (this.props.budgets.length !== 0) {
-      var compDate = new Date(
-        this.props.budgets[this.props.budgets.length - 1].date
-      );
-      if (
-        today.getMonth() !== compDate.getMonth() ||
-        today.getFullYear() !== compDate.getFullYear()
-      ) {
-        let tempBudgets = this.props.budgets.filter(budget => {
-          let budDate = new Date(budget.date);
-          return budDate.getMonth() === compDate.getMonth();
-        });
-        let savings = 0.0;
-        let totalBudgets = 0.0;
-        tempBudgets.forEach(budget => (savings += +budget.balance));
-        tempBudgets.forEach(budget => (totalBudgets += +budget.amount));
-        savings += +this.props.profile.balance - totalBudgets;
-        let profile = this.props.profile;
-        profile.savings = +profile.savings + savings;
-        this.props.updateProfile(
-          {
-            phoneNo: profile.phoneNo,
-            dob: profile.dob,
-            gender: profile.gender,
-            income: profile.income,
-            balance: profile.balance,
-            savings: profile.savings,
-            automated: profile.automated
-          },
-          this.props.navigation
+    if (this.props.budgets) {
+      if (this.props.budgets.length !== 0) {
+        console.log(this.props.budgets);
+
+        var compDate = new Date(
+          this.props.budgets[this.props.budgets.length - 1].date
         );
-        this.setState({ show: true });
-        AppState.addEventListener("change", this._handleAppStateChange);
+        if (
+          today.getMonth() !== compDate.getMonth() ||
+          today.getFullYear() !== compDate.getFullYear()
+        ) {
+          let tempBudgets = this.props.budgets.filter(budget => {
+            let budDate = new Date(budget.date);
+            return budDate.getMonth() === compDate.getMonth();
+          });
+          let savings = 0.0;
+          let totalBudgets = 0.0;
+          tempBudgets.forEach(budget => (savings += +budget.balance));
+          tempBudgets.forEach(budget => (totalBudgets += +budget.amount));
+          savings += +this.props.profile.balance - totalBudgets;
+          let profile = this.props.profile;
+          profile.savings = +profile.savings + savings;
+          this.props.updateProfile(
+            {
+              phoneNo: profile.phoneNo,
+              dob: profile.dob,
+              gender: profile.gender,
+              income: profile.income,
+              balance: profile.balance,
+              savings: profile.savings,
+              automated: profile.automated
+            },
+            this.props.navigation
+          );
+          this.setState({ show: true });
+          AppState.addEventListener("change", this._handleAppStateChange);
+        }
+      } else {
+        this.props.navigation.replace("userBudgets");
       }
-    } else {
-      this.props.navigation.replace("userBudgets");
     }
   }
 
@@ -101,7 +105,6 @@ class Report extends Component {
     let TotalTransactions = 0;
     budget.transactions.forEach(transaction => {
       TotalTransactions += parseFloat(transaction.amount);
-      //   console.log(parseFloat(transaction.amount));
     });
     return (
       <View key={budget.id} style={styles.card}>
@@ -185,6 +188,7 @@ class Report extends Component {
 
 const mapStateToProps = state => ({
   profile: state.auth.profile,
+  isAuthenticated: state.auth.isAuthenticated,
   budgets: state.budget.budgets,
   totalUserBudget: state.budget.totalUserBudget
 });

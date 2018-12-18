@@ -3,15 +3,20 @@ import { Platform, StatusBar, StyleSheet, View } from "react-native";
 import { AppLoading, Asset, Font, Icon } from "expo";
 import AppNavigator from "./navigation/AppNavigator";
 import { Provider } from "react-redux";
+import { checkForExpiredToken } from "./store/actions";
+
+import * as actionCreators from "./store/actions";
 
 // Store
 import store from "./store";
-
-export default class App extends React.Component {
+class App extends React.Component {
   state = {
     isLoadingComplete: false
   };
 
+  componentDidMount() {
+    store.dispatch(checkForExpiredToken());
+  }
   render() {
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
       return (
@@ -67,6 +72,8 @@ export default class App extends React.Component {
     this.setState({ isLoadingComplete: true });
   };
 }
+
+export default App;
 
 const styles = StyleSheet.create({
   container: {

@@ -14,7 +14,7 @@ export const fetchGoals = () => {
         dispatch({ type: actionTypes.FETCH_GOALS, payload: goals });
       })
       .catch(err => {
-        dispatch(console.log(err.response));
+        dispatch(console.log(err.response.data));
       });
   };
 };
@@ -43,7 +43,7 @@ export const addGoal = (goal, navigation) => {
       })
       //   .then(() => navigation.navigate("GoalsView"))
       .catch(err => {
-        dispatch(console.log(err.response));
+        dispatch(console.log(err.response.data));
       });
   };
 };
@@ -71,7 +71,7 @@ export const updateGoal = (goal, navigation) => {
         });
       })
       .catch(err => {
-        dispatch(console.log(err.response));
+        dispatch(console.log(err.response.data));
       });
   };
 };

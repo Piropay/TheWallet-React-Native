@@ -95,7 +95,6 @@ class UpdateBudget extends Component {
                 maximumValue={
                   this.props.profile.balance - this.props.totalUserBudget
                 }
-                // onValueChange={this.change.bind(this)}
                 value={this.state.amount}
                 onValueChange={value => this.setState({ amount: value })}
               />

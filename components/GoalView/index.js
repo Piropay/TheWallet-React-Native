@@ -78,13 +78,8 @@ const mapStateToProps = state => ({
   profile: state.auth.profile,
   goals: state.goal.goals
 });
-const mapDispatchToProps = dispatch => ({
-  fetchGoals: () => dispatch(actionCreators.fetchGoals())
-});
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(GoalView);
+
+export default connect(mapStateToProps)(GoalView);
 
 const styles = StyleSheet.create({
   container: {

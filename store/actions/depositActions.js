@@ -19,7 +19,7 @@ export const fetchDeposits = () => {
         });
       })
       .catch(err => {
-        dispatch(console.log(err.response));
+        dispatch(console.log(err.response.data));
       });
   };
 };
@@ -40,7 +40,7 @@ export const addDeposit = (deposit, goal_id, navigation) => {
       })
       .then(() => navigation.navigate("Goals"))
       .catch(err => {
-        dispatch(console.log(err.response));
+        dispatch(console.log(err.response.data));
       });
   };
 };
@@ -60,7 +60,7 @@ export const updateDeposit = (deposit_id, goal_id, deposit, navigation) => {
         });
       })
       .catch(err => {
-        dispatch(console.log(err.response));
+        dispatch(console.log(err.response.data));
       });
   };
 };

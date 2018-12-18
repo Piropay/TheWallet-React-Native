@@ -19,7 +19,6 @@ class mandatoryInfo extends Component {
     super(props);
     this.state = {
       totalExpense: 0,
-      // income: 0,
       expenses: [{ label: "", amount: 0 }]
     };
     this.handleExpenseLabelChange = this.handleExpenseLabelChange.bind(this);
@@ -37,20 +36,9 @@ class mandatoryInfo extends Component {
   };
 
   handleExpenseAmountChange = async (value, i) => {
-    // let oldAmount = 0;
-    // if (
-    //   this.state.totalExpense !== this.state.totalExpense ||
-    //   this.state.totalExpense < 0
-    // ) {
-    //   await this.setState({ totalExpense: 0 });
-    // }
-    // if (
-    //   this.state.totalExpense < this.props.profile.income &&
-    //   value < this.props.profile.income
-    // ) {
     const newAmount = this.state.expenses.map((expense, sidx) => {
       if (i !== sidx) return expense;
-      // oldAmount = expense.amount;
+
       return {
         ...expense,
         amount: value
@@ -59,14 +47,7 @@ class mandatoryInfo extends Component {
 
     this.setState({
       expenses: newAmount
-      // totalExpense: this.state.totalExpense - oldAmount + value
     });
-    // } else {
-    //   this.setState({
-    //     totalExpense: this.state.totalExpense - value
-    //   });
-    //   alert("You can't expenses more than your income!");
-    // }
   };
 
   handleAddExpense = () => {
@@ -128,9 +109,6 @@ class mandatoryInfo extends Component {
               keyboardType="numeric"
               clearTextOnFocus={true}
               defaultValue={idx.amount + ""}
-              // onChangeText={value =>
-              //   this.handleExpenseAmountChange(parseFloat(value), i)
-              // }
               onEndEditing={e =>
                 this.handleExpenseAmountChange(
                   parseFloat(e.nativeEvent.text),
