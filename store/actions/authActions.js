@@ -50,7 +50,7 @@ export const login = (userData, navigation) => {
         setAuthToken(user.token).then(() =>
           dispatch(setCurrentUser(decodedUser))
         );
-        navigation.replace("userBudgets");
+        navigation.replace("Main");
       })
 
       .catch(err => console.error(err.response));

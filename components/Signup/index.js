@@ -21,9 +21,9 @@ import {
   H1
 } from "native-base";
 
-class Login extends Component {
+class Signup extends Component {
   static navigationOptions = {
-    title: "Login"
+    header: null
   };
   constructor(props) {
     super(props);
@@ -34,17 +34,14 @@ class Login extends Component {
   }
   componentDidMount() {
     if (this.props.user) {
-      this.props.navigation.replace("Main");
+      this.props.navigation.replace("Goals");
     }
   }
   componentDidUpdate(prevProps) {
     if (prevProps.profile !== this.props.profile) {
-      this.props.navigation.replace("Main");
+      this.props.navigation.replace("Goals");
     }
   }
-  static navigationOptions = {
-    header: null
-  };
   render() {
     return (
       <Container style={styles.container}>
@@ -66,7 +63,7 @@ class Login extends Component {
                   paddingHorizontal: 40
                 }}
               >
-                <H1 style={styles.header}>Login!</H1>
+                <H1 style={styles.header}>Signup!</H1>
                 <Item style={styles.label}>
                   <Icon
                     active
@@ -91,31 +88,39 @@ class Login extends Component {
                     }}
                   />
                   <Input
-                    placeholder="password"
+                    placeholder="Password"
                     secureTextEntry={true}
                     autoCorrect={false}
                     autoCapitalize="none"
                     onChangeText={value => this.setState({ password: value })}
                   />
                 </Item>
+                <Item>
+                  <Icon
+                    active
+                    name="key"
+                    style={{
+                      color: "#585858"
+                    }}
+                  />
+                  <Input
+                    placeholder="Confirm Password"
+                    secureTextEntry={true}
+                  />
+                </Item>
               </Body>
             </CardItem>
-            <CardItem
-              style={{
-                alignSelf: "center"
-              }}
+
+            <Button
+              rounded
+              dark
+              style={styles.button}
+              onPress={() =>
+                this.props.signup(this.state, this.props.navigation)
+              }
             >
-              <Button
-                rounded
-                dark
-                style={styles.button}
-                onPress={() =>
-                  this.props.login(this.state, this.props.navigation)
-                }
-              >
-                <Text style={styles.text}>Login</Text>
-              </Button>
-            </CardItem>
+              <Text style={styles.text}>Signup</Text>
+            </Button>
           </Card>
         </Content>
       </Container>
@@ -129,11 +134,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  login: (userData, navigation) =>
-    dispatch(actionCreators.login(userData, navigation))
+  signup: (userData, navigation) =>
+    dispatch(actionCreators.signup(userData, navigation))
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Login);
+)(Signup);
