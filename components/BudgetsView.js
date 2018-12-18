@@ -80,7 +80,7 @@ class BudgetsView extends React.Component {
           >
             <Text style={{ color: "white" }}> ADD Transaction</Text>
           </Button>
-          {this.props.profile.automated && (
+          {!this.props.profile.automated && (
             <Button
               block
               warning

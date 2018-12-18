@@ -26,20 +26,18 @@ export default class BudgetDetails extends Component {
     };
   }
 
-  eventClickListener = viewId => {
-    let budget = this.props.navigation.getParam("budget", {});
-    let day = new Date(budget.date);
-    let month = new Date(budget.date).getMonth();
-    console.log(budget.transactions[0]);
-
-    // Alert.alert("alert", budget.id);
-  };
-
   render() {
     let budget = this.props.navigation.getParam("budget", {});
 
     return (
       <View style={styles.container}>
+        <Button
+          onPress={() =>
+            this.props.navigation.navigate("UpdateBudget", { budget: budget })
+          }
+        >
+          <Text>Update Budget</Text>
+        </Button>
         {budget.transactions.length > 0 ? (
           <ListView
             enableEmptySections={true}
@@ -47,9 +45,7 @@ export default class BudgetDetails extends Component {
             dataSource={this.state.dataSource}
             renderRow={transaction => {
               return (
-                <TouchableOpacity
-                  onPress={() => this.eventClickListener("row")}
-                >
+                <TouchableOpacity>
                   <View style={styles.eventBox}>
                     <View style={styles.eventDate}>
                       <Text style={styles.eventDay}>

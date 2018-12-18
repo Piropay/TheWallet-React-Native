@@ -111,23 +111,22 @@ class userBudgets extends Component {
   onValueChange2(category, i) {
     const newCategory = this.state.budgets.map((budget, sidx) => {
       if (i !== sidx) return budget;
-      if (this.props.profile.automated) {
-        let precentage = this.state[category];
-        console.log("precentage: " + precentage);
-        let newAmount =
-          (parseFloat(this.props.profile.balance) -
-            this.props.totalUserBudget) *
-          precentage;
-        console.log("newAmount: " + newAmount);
+      // if (this.props.profile.automated) {
+      //   let precentage = this.state[category];
+      //   console.log("precentage: " + precentage);
+      //   let newAmount =
+      //     (parseFloat(this.props.profile.balance) -
+      //       this.props.totalUserBudget) *
+      //     precentage;
+      //   console.log("newAmount: " + newAmount);
 
-        return {
-          ...budget,
-          category: category,
-          amount: newAmount
-        };
-      } else {
-        return { ...budget, category: category };
-      }
+      //   return {
+      //     ...budget,
+      //     category: category,
+      //     amount: newAmount
+      //   };
+      // } else {
+      return { ...budget, category: category };
     });
 
     this.setState({
@@ -251,7 +250,10 @@ class userBudgets extends Component {
       >
         <Grid>
           <H1>Current Balance {this.props.profile.balance} KD</H1>
-          <H1>Current Total Budget: {this.props.totalUserBudget} KD</H1>
+          <H1>
+            Current balance left:{" "}
+            {this.props.profile.balance - this.props.totalUserBudget} KD
+          </H1>
 
           <H1>Your budgets</H1>
           {inputRows}

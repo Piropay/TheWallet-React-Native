@@ -23,6 +23,7 @@ import Deposit from "../components/Deposit";
 import GoalsView from "../components/GoalView";
 import Report from "../components/Report";
 import AutomatedBudgets from "../components/Budgets/AutomatedBudgets";
+import UpdateBudget from "../components/Budgets/UpdateBudget";
 
 const HomeStack = createStackNavigator(
   {
@@ -80,7 +81,8 @@ const LinksStack = createStackNavigator({
   Budgets: BudgetsView,
   userBudgets: userBudgets,
   Add: AddTransactionView,
-  BudgetDetails: BudgetDetails
+  BudgetDetails: BudgetDetails,
+  UpdateBudget: UpdateBudget
 });
 
 LinksStack.navigationOptions = {

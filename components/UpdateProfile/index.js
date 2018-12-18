@@ -32,6 +32,8 @@ class UpdateProfile extends Component {
   }
 
   onClickListener = () => {
+    console.log(this.state);
+
     this.props.UpdateProfile(this.state, this.props.navigation);
   };
 

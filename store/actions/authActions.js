@@ -107,7 +107,9 @@ export const updateProfile = (profile, navigation) => {
       })
 
       .catch(err => {
-        console.log(err);
+
+        dispatch(console.log(err.response.data));
+
       });
   };
 };
