@@ -66,7 +66,7 @@ export const signup = (userData, navigation) => {
       .post("register/", userData)
       .then(res => res.data)
       .then(() => {
-        dispatch(login(userData));
+        dispatch(login(userData, navigation));
       })
       .catch(err => console.error(err.response.data));
   };
