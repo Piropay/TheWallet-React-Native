@@ -7,6 +7,7 @@ import { fetchDeposits } from "./depositActions";
 import { fetchGoals } from "./goalActions";
 import { fetchTransactions } from "./transactionActions";
 import { AsyncStorage } from "react-native";
+import { StackActions, NavigationActions } from "react-navigation";
 
 const instance = axios.create({
   baseURL: "http://68.183.217.91/api/"
@@ -37,8 +38,6 @@ export const checkForExpiredToken = () => {
         if (user.exp >= currentTime) {
           setAuthToken(token).then(() => dispatch(setCurrentUser(user)));
         }
-      } else {
-        logout();
       }
     });
   };
@@ -54,7 +53,7 @@ export const login = (userData, navigation) => {
         setAuthToken(user.token).then(() =>
           dispatch(setCurrentUser(decodedUser))
         );
-        navigation.replace("Main");
+        navigation.navigate("Home");
       })
 
       .catch(err => console.error(err.response.data));
@@ -74,7 +73,7 @@ export const signup = (userData, navigation) => {
 };
 
 export const logout = navigation => {
-  navigation.replace("Home");
+  navigation.navigate("HomePage");
 
   setAuthToken();
   return setCurrentUser(null);
@@ -82,14 +81,15 @@ export const logout = navigation => {
 
 const setCurrentUser = user => {
   return dispatch => {
-    dispatch({ type: actionTypes.SET_CURRENT_USER, payload: user });
-
     if (user) {
+      dispatch({ type: actionTypes.SET_CURRENT_USER, payload: user });
       dispatch(fetchBudgets());
       dispatch(fetchProfile());
       dispatch(fetchTransactions());
       dispatch(fetchGoals());
       dispatch(fetchDeposits());
+    } else {
+      dispatch({ type: actionTypes.LOGOUT_USER, payload: user });
     }
   };
 };

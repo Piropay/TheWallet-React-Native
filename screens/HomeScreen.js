@@ -32,12 +32,6 @@ class HomeScreen extends React.Component {
         ) {
           this.props.navigation.replace("Report");
         }
-      } else if (!this.props.profile.income) {
-        this.props.navigation.replace("UpdateProfile");
-      } else {
-        console.log("sdefafaf", this.props.profile.income);
-
-        this.props.navigation.replace("Home");
       }
     }
   }
@@ -82,7 +76,7 @@ class HomeScreen extends React.Component {
               <Text>Login</Text>
             </Button>
           ) : (
-            
+
           )} */}
           <Button
             block
