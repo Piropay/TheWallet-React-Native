@@ -18,3 +18,7 @@ export {
 
 export { addGoal, updateGoal, fetchGoals } from "./goalActions";
 export { addDeposit, fetchDeposits, updateDeposit } from "./depositActions";
+export {
+  getCurrentPositionThunk,
+  watchCurrentPositionThunk
+} from "./locationActions";
