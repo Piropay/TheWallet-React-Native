@@ -17,7 +17,6 @@ export default function locationReducer(
     }
 
     case actionTypes.REDUX_SAGA_LOCATION_ACTION_SET_POSITION: {
-      console.log(action.payload);
       return {
         ...state,
         position: action.payload,

@@ -4,7 +4,7 @@ export const getCurrentPositionThunk = options => dispatch => {
   dispatch({ type: actionTypes.REDUX_SAGA_LOCATION_ACTION_REQUEST });
   navigator.geolocation.getCurrentPosition(
     position => {
-      console.log(position);
+      console.log("Actions Position ", position);
       dispatch({
         type: actionTypes.REDUX_SAGA_LOCATION_ACTION_SET_POSITION,
         payload: position

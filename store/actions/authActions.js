@@ -9,7 +9,7 @@ import { fetchTransactions } from "./transactionActions";
 import { AsyncStorage } from "react-native";
 
 const instance = axios.create({
-  baseURL: "http://68.183.217.91/api/"
+  baseURL: "http://192.168.1.60/api/"
 });
 
 const setAuthToken = token => {
@@ -104,6 +104,9 @@ export const updateProfile = (profile, navigation) => {
         income: profile.income,
         balance: profile.balance,
         savings: profile.savings,
+        longitude: profile.longitude,
+        latitude: profile.latitude,
+        accuracy: profile.accuracy,
         automated: profile.automated
       })
       .then(res => res.data)

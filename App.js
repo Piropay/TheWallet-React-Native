@@ -1,9 +1,11 @@
 import React from "react";
-import { Platform, StatusBar, StyleSheet, View } from "react-native";
+import { StatusBar, StyleSheet, View } from "react-native";
 import { AppLoading, Asset, Font, Icon } from "expo";
 import AppNavigator from "./navigation/AppNavigator";
 import { Provider } from "react-redux";
 import { checkForExpiredToken } from "./store/actions";
+import { connect } from "react-redux";
+import Location from "./components/Location";
 
 import * as actionCreators from "./store/actions";
 
@@ -17,6 +19,7 @@ class App extends React.Component {
   componentDidMount() {
     store.dispatch(checkForExpiredToken());
   }
+
   render() {
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
       return (
@@ -35,7 +38,7 @@ class App extends React.Component {
               hidden={false}
               backgroundColor="#2B2B2B"
             />
-
+            <Location />
             <AppNavigator />
           </View>
         </Provider>

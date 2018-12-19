@@ -20,24 +20,26 @@ class HomeScreen extends React.Component {
   };
 
   async componentDidMount() {
-    if (this.props.budgets) {
-      var today = new Date();
-      if (this.props.budgets.length !== 0) {
-        var compDate = new Date(
-          this.props.budgets[this.props.budgets.length - 1].date
-        );
-        if (
-          (today.getMonth() !== compDate.getMonth()) |
-          (today.getFullYear() !== compDate.getFullYear())
-        ) {
-          this.props.navigation.replace("Report");
-        }
-      } else if (!this.props.profile.income) {
-        this.props.navigation.replace("UpdateProfile");
-      } else {
-        console.log("sdefafaf", this.props.profile.income);
+    if (this.props.profile) {
+      if (this.props.budgets) {
+        var today = new Date();
+        if (this.props.budgets.length !== 0) {
+          var compDate = new Date(
+            this.props.budgets[this.props.budgets.length - 1].date
+          );
+          if (
+            (today.getMonth() !== compDate.getMonth()) |
+            (today.getFullYear() !== compDate.getFullYear())
+          ) {
+            this.props.navigation.replace("Report");
+          }
+        } else if (!this.props.profile.income) {
+          this.props.navigation.replace("UpdateProfile");
+        } else {
+          console.log("sdefafaf", this.props.profile.income);
 
-        this.props.navigation.replace("Home");
+          this.props.navigation.replace("Home");
+        }
       }
     }
   }
