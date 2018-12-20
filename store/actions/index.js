@@ -8,7 +8,7 @@ export {
   setErrors
 } from "./authActions";
 
-export { addIncome, addExpenses, getBalance } from "./userInfo";
+export { addIncome, addExpenses, getBalance, fetchExpenses } from "./userInfo";
 export { addBudget, updateBudget, fetchBudgets } from "./budgetActions";
 export {
   addTransaction,

@@ -14,6 +14,11 @@ const reducer = (state = initialState, action) => {
         income: action.payload,
         balance: action.payload
       };
+    case actionTypes.FETCH_EXPENSES:
+      return {
+        ...state,
+        expenses: action.payload
+      };
     case actionTypes.ADD_EXPENSES:
       return {
         ...state,

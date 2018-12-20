@@ -6,6 +6,7 @@ import { fetchBudgets } from "./budgetActions";
 import { fetchDeposits } from "./depositActions";
 import { fetchGoals } from "./goalActions";
 import { fetchTransactions } from "./transactionActions";
+import { fetchExpenses } from "./userInfo";
 import { AsyncStorage } from "react-native";
 
 const instance = axios.create({
@@ -89,6 +90,7 @@ const setCurrentUser = user => {
       dispatch(fetchProfile());
       dispatch(fetchTransactions());
       dispatch(fetchGoals());
+      dispatch(fetchExpenses());
       dispatch(fetchDeposits());
     }
   };

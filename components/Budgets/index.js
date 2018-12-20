@@ -5,7 +5,16 @@ import * as actionCreators from "../../store/actions";
 import { Text, View, TextInput, ScrollView, Slider } from "react-native";
 
 import { Row, Grid } from "react-native-easy-grid";
-import { Button, H1, Item, Picker, Icon } from "native-base";
+import {
+  Button,
+  H2,
+  Item,
+  Picker,
+  Icon,
+  Card,
+  CardItem,
+  Body
+} from "native-base";
 import styles from "./styles";
 class userBudgets extends Component {
   constructor(props) {
@@ -112,35 +121,38 @@ class userBudgets extends Component {
   render() {
     const inputRows = this.state.budgets.map((idx, i) => (
       <Row key={`${i}`}>
-        <Grid>
-          <Row>
-            <View style={styles.inputWrap}>
-              <Text style={styles.label}>Label</Text>
-              <View style={styles.inputContainer}>
+        <Card style={styles.shadow}>
+          <Button
+            type="button"
+            onPress={() => this.handleRemoveBudget(i)}
+            style={styles.closeButton}
+          >
+            <Text>x</Text>
+          </Button>
+          <CardItem style={{ borderRadius: 10 }}>
+            <Body
+              style={{
+                paddingHorizontal: 40
+              }}
+            >
+              <Item style={styles.label}>
                 <TextInput
+                  placeholder="Food, etc..."
                   value={idx.label}
                   style={styles.inputs}
                   onChangeText={value => this.handleBudgetLabelChange(value, i)}
                 />
-              </View>
-            </View>
+              </Item>
+            </Body>
+          </CardItem>
 
-            <Button
-              type="button"
-              onPress={() => this.handleRemoveBudget(i)}
-              style={{ width: 30, justifyContent: "center", marginTop: 13 }}
-            >
-              <Text>x</Text>
-            </Button>
-          </Row>
-
-          <Row>
+          <Row style={{ alignSelf: "center" }}>
             <Item picker>
               <Picker
                 mode="dropdown"
                 iosIcon={<Icon name="ios-arrow-dropdown" />}
                 placeholder="Select the Budget"
-                placeholderStyle={{ color: "#bfc6ea" }}
+                placeholderStyle={{ color: "#278979" }}
                 placeholderIconColor="#007aff"
                 selectedValue={idx.category}
                 onValueChange={value => this.onValueChange2(value, i)}
@@ -165,6 +177,7 @@ class userBudgets extends Component {
             </Item>
           </Row>
           <Slider
+            style={{ width: 200, alignSelf: "center" }}
             step={1}
             maximumValue={
               this.props.profile.balance - this.props.totalUserBudget
@@ -185,8 +198,8 @@ class userBudgets extends Component {
             )}
             %
           </Text>
-          <Text>{String(idx.amount)} KWD</Text>
-        </Grid>
+          <Text style={styles.text}>{String(idx.amount)} KWD</Text>
+        </Card>
       </Row>
     ));
 
@@ -196,25 +209,71 @@ class userBudgets extends Component {
         contentContainerStyle={styles.contentContainer}
       >
         <Grid>
-          <H1>Current Balance {this.props.profile.balance} KD</H1>
-          <H1>
-            Current balance left:{" "}
+          <H2
+            style={[
+              styles.h3,
+              { fontSize: 35, paddingTop: 23, paddingBottom: 10 }
+            ]}
+          >
+            Your budgets
+          </H2>
+          <H2
+            style={[
+              styles.h3,
+              {
+                fontFamily: "quicksand-bold",
+                textShadowOffset: { width: 0, height: 0 }
+              }
+            ]}
+          >
+            Balance {this.props.profile.balance} KD
+          </H2>
+          <H2
+            style={[
+              styles.h3,
+              {
+                fontFamily: "quicksand-bold",
+                textShadowOffset: { width: 0, height: 0 }
+              }
+            ]}
+          >
+            balance left:
             {this.props.profile.balance - this.props.totalUserBudget} KD
-          </H1>
+          </H2>
 
-          <H1>Your budgets</H1>
           {inputRows}
         </Grid>
-        <Button block full onPress={() => this.handleAddBudget()}>
-          <Text>Add</Text>
+        <Button
+          style={styles.button}
+          block
+          full
+          onPress={() => this.handleAddBudget()}
+        >
+          <Text
+            style={{
+              fontFamily: "pacifico-regular",
+              color: "white",
+              fontSize: 15
+            }}
+          >
+            Add
+          </Text>
         </Button>
         <Button
           block
           full
           onPress={() => this.handleSubmitBudget()}
-          style={{ marginTop: 10 }}
+          style={[styles.button, { backgroundColor: "#278979" }]}
         >
-          <Text>Submit</Text>
+          <Text
+            style={{
+              fontFamily: "pacifico-regular",
+              color: "white",
+              fontSize: 15
+            }}
+          >
+            Submit
+          </Text>
         </Button>
       </ScrollView>
     );

@@ -75,13 +75,31 @@ HomeStack.navigationOptions = {
   )
 };
 
-const LinksStack = createStackNavigator({
-  Budgets: BudgetsView,
-  userBudgets: userBudgets,
-  Add: AddTransactionView,
-  BudgetDetails: BudgetDetails,
-  UpdateBudget: UpdateBudget
-});
+const LinksStack = createStackNavigator(
+  {
+    Budgets: BudgetsView,
+    userBudgets: userBudgets,
+    Add: AddTransactionView,
+    BudgetDetails: BudgetDetails,
+    UpdateBudget: UpdateBudget
+  },
+  {
+    navigationOptions: {
+      headerTintColor: "#fff",
+      headerStyle: {
+        fontWeight: "bold",
+        backgroundColor: "transparent"
+      },
+      headerTextStyle: {
+        fontWeight: "bold",
+        fontFamily: "pacifico-regular"
+      }
+    },
+    cardStyle: {
+      backgroundColor: "#2B2B2B"
+    }
+  }
+);
 
 LinksStack.navigationOptions = {
   tabBarLabel: "Links",

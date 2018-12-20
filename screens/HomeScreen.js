@@ -50,31 +50,31 @@ class HomeScreen extends React.Component {
           contentContainerStyle={styles.contentContainer}
         >
           <Text> Home</Text>
-        </ScrollView>
-        <View>
-          <Button
-            block
-            success
-            onPress={() => this.props.navigation.navigate("AutomatedBudgets")}
-          >
-            <Text style={{ color: "white" }}>Move</Text>
-          </Button>
-          <Button
-            block
-            success
-            onPress={() => this.props.navigation.navigate("Goals")}
-          >
-            <Text style={{ color: "white" }}>Goals</Text>
-          </Button>
-          <Button
-            block
-            success
-            onPress={() => this.props.navigation.navigate("GoalsView")}
-          >
-            <Text style={{ color: "white" }}>Goals View</Text>
-          </Button>
 
-          {/* {!this.props.user ? (
+          <View>
+            <Button
+              block
+              success
+              onPress={() => this.props.navigation.navigate("AutomatedBudgets")}
+            >
+              <Text style={{ color: "white" }}>Move</Text>
+            </Button>
+            <Button
+              block
+              success
+              onPress={() => this.props.navigation.navigate("Goals")}
+            >
+              <Text style={{ color: "white" }}>Goals</Text>
+            </Button>
+            <Button
+              block
+              success
+              onPress={() => this.props.navigation.navigate("GoalsView")}
+            >
+              <Text style={{ color: "white" }}>Goals View</Text>
+            </Button>
+
+            {/* {!this.props.user ? (
             <Button
               block
               onPress={() => this.props.navigation.navigate("Login")}
@@ -84,22 +84,23 @@ class HomeScreen extends React.Component {
           ) : (
             
           )} */}
-          <Button
-            block
-            onPress={() => this.props.navigation.navigate("mandatoryInfo")}
-          >
-            <Text>Expenses</Text>
-          </Button>
+            <Button
+              block
+              onPress={() => this.props.navigation.navigate("mandatoryInfo")}
+            >
+              <Text>Expenses</Text>
+            </Button>
 
-          <Button
-            block
-            danger
-            onPress={() => this.props.logout(this.props.navigation)}
-            style={styles.buttonContainer}
-          >
-            <Text>Logout</Text>
-          </Button>
-        </View>
+            <Button
+              block
+              danger
+              onPress={() => this.props.logout(this.props.navigation)}
+              style={styles.buttonContainer}
+            >
+              <Text>Logout</Text>
+            </Button>
+          </View>
+        </ScrollView>
       </View>
     );
   }

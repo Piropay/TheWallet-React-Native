@@ -2,9 +2,19 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions";
 import { Text, View, TextInput, ScrollView } from "react-native";
-import { Input } from "native-base";
 import { Row, Grid } from "react-native-easy-grid";
-import { Button, H1, Item, Picker, DatePicker, Icon } from "native-base";
+import {
+  Button,
+  H1,
+  Item,
+  Picker,
+  DatePicker,
+  Icon,
+  Input,
+  Card,
+  CardItem,
+  Body
+} from "native-base";
 import styles from "./styles";
 
 class Goal extends Component {
@@ -91,75 +101,71 @@ class Goal extends Component {
   render() {
     const inputRows = this.state.goals.map((idx, i) => (
       <Row key={`${i}`}>
-        <View style={styles.inputWrap}>
-          <Text style={styles.label}>Label</Text>
-          <View style={styles.inputContainer}>
-            <TextInput
-              value={idx.label}
-              style={styles.inputs}
-              onChangeText={value => this.handleGoalLabelChange(value, i)}
-            />
-          </View>
-        </View>
-
-        <View style={styles.inputWrap}>
-          <Text style={styles.label}>Amount</Text>
-          <View style={styles.inputContainer}>
-            <Input
-              style={styles.inputs}
-              keyboardType="numeric"
-              value={idx.amount}
-              clearTextOnFocus={true}
-              onChangeText={value =>
-                this.handleGoalAmountChange(parseFloat(value), i)
-              }
-            />
-          </View>
-        </View>
-        <Button
-          type="button"
-          onPress={() => this.handleRemoveGoal(i)}
-          style={{ width: 30, justifyContent: "center", marginTop: 13 }}
-        >
-          <Text>x</Text>
-        </Button>
-        <Row>
-          <Item picker>
-            {/* <Picker
-              mode="dropdown"
-              iosIcon={<Icon name="ios-arrow-dropdown" />}
-              placeholder="Select the Goal"
-              placeholderStyle={{ color: "#bfc6ea" }}
-              placeholderIconColor="#007aff"
-              selectedValue={idx.end_date}
-              onValueChange={value => this.onValueChange2(value, i)}
+        <Card style={styles.shadow}>
+          <Button
+            type="button"
+            onPress={() => this.handleRemoveGoal(i)}
+            style={styles.closeButton}
+          >
+            <Text>x</Text>
+          </Button>
+          <CardItem style={{ borderRadius: 10 }}>
+            <Body
+              style={{
+                paddingHorizontal: 40
+              }}
             >
-              <Picker.Item key={1} label={"Food"} value={"Food"} />
-              <Picker.Item key={2} label={"Health"} value={"Health"} />
-              <Picker.Item key={3} label={"Emergency"} value={"Emergency"} />
-              <Picker.Item
-                key={4}
-                label={"Entertainment"}
-                value={"Entertainment"}
+              <Item style={styles.label}>
+                <TextInput
+                  value={idx.label}
+                  style={styles.inputs}
+                  onChangeText={value => this.handleGoalLabelChange(value, i)}
+                />
+              </Item>
+              <Text style={styles.label}>Label</Text>
+            </Body>
+          </CardItem>
+
+          <CardItem style={{ borderRadius: 10 }}>
+            <Body
+              style={{
+                paddingHorizontal: 40
+              }}
+            >
+              <Item style={styles.label}>
+                <Input
+                  style={styles.inputs}
+                  keyboardType="numeric"
+                  value={idx.amount}
+                  clearTextOnFocus={true}
+                  onChangeText={value =>
+                    this.handleGoalAmountChange(parseFloat(value), i)
+                  }
+                />
+              </Item>
+              <Text style={styles.label}>Amount</Text>
+            </Body>
+          </CardItem>
+          <Row style={{ alignSelf: "center" }}>
+            <Item picker>
+              <DatePicker
+                defaultDate={new Date()}
+                minimumDate={new Date()}
+                selectedValue={idx.end_date}
+                locale={"en"}
+                timeZoneOffsetInMinutes={undefined}
+                modalTransparent={false}
+                animationType={"fade"}
+                androidMode={"default"}
+                placeHolderText="Select date"
+                textStyle={{ color: "green" }}
+                placeHolderTextStyle={{ color: "#278979" }}
+                onDateChange={value => this.onValueChange2(value, i)}
               />
-              <Picker.Item key={5} label={"Others"} value={"Others"} />
-            </Picker> */}
-            <DatePicker
-              defaultDate={new Date()}
-              minimumDate={new Date()}
-              selectedValue={idx.end_date}
-              locale={"en"}
-              timeZoneOffsetInMinutes={undefined}
-              modalTransparent={false}
-              animationType={"fade"}
-              androidMode={"default"}
-              placeHolderText="Select date"
-              textStyle={{ color: "green" }}
-              placeHolderTextStyle={{ color: "#d3d3d3" }}
-              onDateChange={value => this.onValueChange2(value, i)}
-            />
-          </Item>
-        </Row>
+              <Icon name="ios-arrow-dropdown" />
+            </Item>
+          </Row>
+        </Card>
       </Row>
     ));
     return (
@@ -168,17 +174,22 @@ class Goal extends Component {
         contentContainerStyle={styles.contentContainer}
       >
         <Grid>
-          <H1>Your Goals</H1>
+          <H1 style={styles.h3}>Your Goals</H1>
           {inputRows}
         </Grid>
-        <Button block full onPress={() => this.handleAddGoal()}>
+        <Button
+          style={styles.button}
+          block
+          full
+          onPress={() => this.handleAddGoal()}
+        >
           <Text>Add</Text>
         </Button>
         <Button
+          style={styles.button}
           block
           full
           onPress={() => this.handleSubmitGoal()}
-          style={{ marginTop: 10 }}
         >
           <Text>Submit</Text>
         </Button>

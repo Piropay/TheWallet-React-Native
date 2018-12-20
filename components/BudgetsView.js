@@ -82,13 +82,6 @@ class BudgetsView extends React.Component {
           <List>{ListItems}</List>
         </ScrollView>
         <View>
-          <Button
-            block
-            success
-            onPress={() => this.props.navigation.navigate("Add")}
-          >
-            <Text style={{ color: "white" }}> ADD Transaction</Text>
-          </Button>
           {!this.props.profile.automated && (
             <Button
               block

@@ -9,10 +9,11 @@ import {
   TouchableOpacity,
   Image,
   Alert,
-  ScrollView
+  ScrollView,
+  Slider
 } from "react-native";
 import { Row, Grid } from "react-native-easy-grid";
-import { Button, H1, Input } from "native-base";
+import { Button, H1, Input, Card, CardItem, Body, Item } from "native-base";
 import styles from "./styles";
 class mandatoryInfo extends Component {
   constructor(props) {
@@ -84,47 +85,65 @@ class mandatoryInfo extends Component {
         if (i !== sidx) return expense;
       })
     });
-    console.log(this.state.expenses);
   };
 
   render() {
+    let totalexpenses = 0;
+    this.props.expenses.forEach(expense => {
+      totalexpenses += parseFloat(expense.amount);
+    });
+    console.log(totalexpenses);
+
     const inputRows = this.state.expenses.map((idx, i) => (
       <Row key={`${i}`}>
-        <View style={styles.inputWrap}>
-          <Text style={styles.label}>Label</Text>
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.inputs}
-              value={idx.label}
-              onChangeText={value => this.handleExpenseLabelChange(value, i)}
-            />
-          </View>
-        </View>
+        <Card style={styles.shadow}>
+          <Button
+            style={styles.closeButton}
+            type="button"
+            onPress={() => this.handleRemoveExpense(idx, i)}
+          >
+            <Text>x</Text>
+          </Button>
 
-        <View style={styles.inputWrap}>
+          <CardItem style={{ borderRadius: 10 }}>
+            <Body
+              style={{
+                paddingHorizontal: 40
+              }}
+            >
+              <Item style={styles.label}>
+                <TextInput
+                  style={styles.inputs}
+                  value={idx.label}
+                  onChangeText={value =>
+                    this.handleExpenseLabelChange(value, i)
+                  }
+                />
+              </Item>
+            </Body>
+          </CardItem>
+
           <Text style={styles.label}>Amount</Text>
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.inputs}
-              keyboardType="numeric"
-              clearTextOnFocus={true}
-              defaultValue={idx.amount + ""}
-              onEndEditing={e =>
-                this.handleExpenseAmountChange(
-                  parseFloat(e.nativeEvent.text),
-                  i
-                )
-              }
-            />
-          </View>
-        </View>
-        <Button
-          type="button"
-          onPress={() => this.handleRemoveExpense(idx, i)}
-          style={{ width: 30, justifyContent: "center", marginTop: 13 }}
-        >
-          <Text>x</Text>
-        </Button>
+
+          <Slider
+            step={1}
+            maximumValue={this.props.profile.income - totalexpenses}
+            value={idx.amount}
+            onValueChange={value =>
+              this.handleExpenseAmountChange(parseFloat(value), i)
+            }
+          />
+          <Text style={styles.text}>
+            {String(
+              (
+                (idx.amount / (this.props.profile.income - totalexpenses)) *
+                100
+              ).toFixed(1)
+            )}
+            %
+          </Text>
+          <Text style={styles.text}>{String(idx.amount)} KWD</Text>
+        </Card>
       </Row>
     ));
     return (
@@ -133,42 +152,43 @@ class mandatoryInfo extends Component {
         contentContainerStyle={styles.contentContainer}
       >
         <Grid>
-          <H1>Income: {this.props.profile.income} </H1>
+          <H1
+            style={[
+              styles.h3,
+              { fontSize: 35, paddingTop: 20, paddingBottom: 10 }
+            ]}
+          >
+            Mandatory expenses
+          </H1>
+          <H1
+            style={[
+              styles.h3,
+              {
+                fontFamily: "quicksand-bold",
+                textShadowOffset: { width: 0, height: 0 }
+              }
+            ]}
+          >
+            Your Income: {this.props.profile.income}{" "}
+          </H1>
 
-          {/* 
-          <Row>
-            <View style={styles.inputWrap}>
-              <Text style={styles.label}>Income</Text>
-              <View style={styles.inputContainer}>
-                <TextInput
-                  keyboardType="numeric"
-                  style={styles.inputs}
-                  onChangeText={value => this.setState({ income: value })}
-                />
-              </View>
-            </View>
-          </Row> */}
-          <H1>Mandatory expenses</H1>
           {inputRows}
         </Grid>
-        <Button block full onPress={() => this.handleAddExpense()}>
+        <Button
+          style={styles.button}
+          block
+          full
+          onPress={() => this.handleAddExpense()}
+        >
           <Text>Add</Text>
         </Button>
         <Button
+          style={[styles.button, { backgroundColor: "#278979" }]}
           block
           full
           onPress={() => this.handleSubmitExpenses()}
-          style={{ marginTop: 10 }}
         >
           <Text>Submit</Text>
-        </Button>
-        <Button
-          block
-          full
-          onPress={() => this.props.logout(this.props.navigation)}
-          style={{ marginTop: 10 }}
-        >
-          <Text>logout</Text>
         </Button>
       </ScrollView>
     );
