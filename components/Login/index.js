@@ -32,16 +32,7 @@ class Login extends Component {
       password: ""
     };
   }
-  componentDidMount() {
-    if (this.props.user) {
-      this.props.navigation.replace("Main");
-    }
-  }
-  componentDidUpdate(prevProps) {
-    if (prevProps.profile !== this.props.profile) {
-      this.props.navigation.replace("Main");
-    }
-  }
+
   static navigationOptions = {
     header: null
   };

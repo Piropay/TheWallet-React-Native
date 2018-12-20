@@ -32,16 +32,7 @@ class Signup extends Component {
       password: ""
     };
   }
-  componentDidMount() {
-    if (this.props.user) {
-      this.props.navigation.replace("Goals");
-    }
-  }
-  componentDidUpdate(prevProps) {
-    if (prevProps.profile !== this.props.profile) {
-      this.props.navigation.replace("Goals");
-    }
-  }
+
   render() {
     return (
       <Container style={styles.container}>

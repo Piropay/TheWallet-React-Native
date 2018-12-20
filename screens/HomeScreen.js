@@ -7,7 +7,7 @@ import {
   View,
   TouchableOpacity
 } from "react-native";
-
+import GoalsCarousel from "../components/GoalsCarousel";
 import { Button } from "native-base";
 import { connect } from "react-redux";
 
@@ -32,12 +32,6 @@ class HomeScreen extends React.Component {
         ) {
           this.props.navigation.replace("Report");
         }
-      } else if (!this.props.profile.income) {
-        this.props.navigation.replace("UpdateProfile");
-      } else {
-        console.log("sdefafaf", this.props.profile.income);
-
-        this.props.navigation.replace("Home");
       }
     }
   }
@@ -49,32 +43,33 @@ class HomeScreen extends React.Component {
           style={styles.container}
           contentContainerStyle={styles.contentContainer}
         >
-          <Text> Home</Text>
+          <GoalsCarousel />
+        </ScrollView>
+        <View>
+          {/*
+          <Button
+            block
+            success
+            onPress={() => this.props.navigation.navigate("AutomatedBudgets")}
+          >
+            <Text style={{ color: "white" }}>Move</Text>
+          </Button>
+          <Button
+            block
+            success
+            onPress={() => this.props.navigation.navigate("Goals")}
+          >
+            <Text style={{ color: "white" }}>Goals</Text>
+          </Button>
+          <Button
+            block
+            success
+            onPress={() => this.props.navigation.navigate("GoalsView")}
+          >
+            <Text style={{ color: "white" }}>Goals View</Text>
+          </Button>
 
-          <View>
-            <Button
-              block
-              success
-              onPress={() => this.props.navigation.navigate("AutomatedBudgets")}
-            >
-              <Text style={{ color: "white" }}>Move</Text>
-            </Button>
-            <Button
-              block
-              success
-              onPress={() => this.props.navigation.navigate("Goals")}
-            >
-              <Text style={{ color: "white" }}>Goals</Text>
-            </Button>
-            <Button
-              block
-              success
-              onPress={() => this.props.navigation.navigate("GoalsView")}
-            >
-              <Text style={{ color: "white" }}>Goals View</Text>
-            </Button>
-
-            {/* {!this.props.user ? (
+           {!this.props.user ? (
             <Button
               block
               onPress={() => this.props.navigation.navigate("Login")}
@@ -82,25 +77,23 @@ class HomeScreen extends React.Component {
               <Text>Login</Text>
             </Button>
           ) : (
-            
-          )} */}
-            <Button
-              block
-              onPress={() => this.props.navigation.navigate("mandatoryInfo")}
-            >
-              <Text>Expenses</Text>
-            </Button>
 
-            <Button
-              block
-              danger
-              onPress={() => this.props.logout(this.props.navigation)}
-              style={styles.buttonContainer}
-            >
-              <Text>Logout</Text>
-            </Button>
-          </View>
-        </ScrollView>
+          )}   <Button
+            block
+            onPress={() => this.props.navigation.navigate("mandatoryInfo")}
+          >
+            <Text>Expenses</Text>
+          </Button>
+
+          <Button
+            block
+            danger
+            onPress={() => this.props.logout(this.props.navigation)}
+            style={styles.buttonContainer}
+          >
+            <Text>Logout</Text>
+          </Button>*/}
+        </View>
       </View>
     );
   }

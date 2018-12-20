@@ -7,8 +7,6 @@ import {
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 import TabBarIcon from "../components/TabBarIcon";
 import HomeScreen from "../screens/HomeScreen";
-import LinksScreen from "../screens/LinksScreen";
-import SettingsScreen from "../screens/SettingsScreen";
 import mandatoryInfo from "../components/MandatoryUserInfo";
 import UpdateProfile from "../components/UpdateProfile";
 import userBudgets from "../components/Budgets";
@@ -111,17 +109,17 @@ LinksStack.navigationOptions = {
   )
 };
 
-const SettingsStack = createStackNavigator({
+const ProfileStack = createStackNavigator({
   Profile: Profile,
   Report: Report
 });
 
-SettingsStack.navigationOptions = {
-  tabBarLabel: "Profile",
+ProfileStack.navigationOptions = {
+  tabBarLabel: false,
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === "ios" ? "ios-options" : "md-options"}
+      name={Platform.OS === "ios" ? "md-person" : "md-person"}
     />
   )
 };
@@ -130,7 +128,7 @@ export default createMaterialBottomTabNavigator(
   {
     HomeStack,
     LinksStack,
-    SettingsStack
+    ProfileStack
   },
   {
     activeColor: "#D5C157",

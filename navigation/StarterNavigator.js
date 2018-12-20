@@ -9,15 +9,16 @@ import HomePage from "../components/HomePage";
 import Signup from "../components/Signup";
 import Login from "../components/Login";
 import MainTabNavigator from "../navigation/MainTabNavigator";
+import SetIncome from "../components/SetIncome";
 export default createStackNavigator(
   {
-    Home: HomePage,
+    HomePage: HomePage,
     Signup: Signup,
     Login: Login,
-    Main: MainTabNavigator
+    SetIncome: SetIncome
   },
   {
-    initialRouteName: "Home",
+    initialRouteName: "HomePage",
     navigationOptions: {
       header: null,
 
