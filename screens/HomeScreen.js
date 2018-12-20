@@ -7,7 +7,7 @@ import {
   View,
   TouchableOpacity
 } from "react-native";
-
+import CarouselExample from "../components/CarouselExample";
 import { Button } from "native-base";
 import { connect } from "react-redux";
 
@@ -43,9 +43,10 @@ class HomeScreen extends React.Component {
           style={styles.container}
           contentContainerStyle={styles.contentContainer}
         >
-          <Text> Home</Text>
+          <CarouselExample />
         </ScrollView>
         <View>
+          {/*
           <Button
             block
             success
@@ -68,7 +69,7 @@ class HomeScreen extends React.Component {
             <Text style={{ color: "white" }}>Goals View</Text>
           </Button>
 
-          {/* {!this.props.user ? (
+           {!this.props.user ? (
             <Button
               block
               onPress={() => this.props.navigation.navigate("Login")}
@@ -77,8 +78,7 @@ class HomeScreen extends React.Component {
             </Button>
           ) : (
 
-          )} */}
-          <Button
+          )}   <Button
             block
             onPress={() => this.props.navigation.navigate("mandatoryInfo")}
           >
@@ -92,7 +92,7 @@ class HomeScreen extends React.Component {
             style={styles.buttonContainer}
           >
             <Text>Logout</Text>
-          </Button>
+          </Button>*/}
         </View>
       </View>
     );
