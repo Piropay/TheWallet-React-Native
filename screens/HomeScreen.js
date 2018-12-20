@@ -7,7 +7,7 @@ import {
   View,
   TouchableOpacity
 } from "react-native";
-
+import GoalsCarousel from "../components/GoalsCarousel";
 import { Button } from "native-base";
 import { connect } from "react-redux";
 
@@ -32,12 +32,6 @@ class HomeScreen extends React.Component {
         ) {
           this.props.navigation.replace("Report");
         }
-      } else if (!this.props.profile.income) {
-        this.props.navigation.replace("UpdateProfile");
-      } else {
-        console.log("sdefafaf", this.props.profile.income);
-
-        this.props.navigation.replace("Home");
       }
     }
   }
@@ -49,9 +43,10 @@ class HomeScreen extends React.Component {
           style={styles.container}
           contentContainerStyle={styles.contentContainer}
         >
-          <Text> Home</Text>
+          <GoalsCarousel />
         </ScrollView>
         <View>
+          {/*
           <Button
             block
             success
@@ -74,7 +69,7 @@ class HomeScreen extends React.Component {
             <Text style={{ color: "white" }}>Goals View</Text>
           </Button>
 
-          {/* {!this.props.user ? (
+           {!this.props.user ? (
             <Button
               block
               onPress={() => this.props.navigation.navigate("Login")}
@@ -82,9 +77,8 @@ class HomeScreen extends React.Component {
               <Text>Login</Text>
             </Button>
           ) : (
-            
-          )} */}
-          <Button
+
+          )}   <Button
             block
             onPress={() => this.props.navigation.navigate("mandatoryInfo")}
           >
@@ -98,7 +92,7 @@ class HomeScreen extends React.Component {
             style={styles.buttonContainer}
           >
             <Text>Logout</Text>
-          </Button>
+          </Button>*/}
         </View>
       </View>
     );

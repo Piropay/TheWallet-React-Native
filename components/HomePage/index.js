@@ -11,14 +11,14 @@ import styles from "./styles";
 class HomePage extends Component {
   componentDidMount() {
     if (this.props.user) {
-      this.props.navigation.replace("Main");
+      this.props.navigation.navigate("Home");
     }
   }
-  componentDidUpdate(prevProps) {
-    if (prevProps.profile !== this.props.profile) {
-      this.props.navigation.replace("Main");
-    }
-  }
+  // componentDidUpdate(prevProps) {
+  //   if (prevProps.profile !== this.props.profile) {
+  //     this.props.navigation.replace("Main");
+  //   }
+  // }
   static navigationOptions = {
     header: null
   };
@@ -27,7 +27,10 @@ class HomePage extends Component {
       return <H1>Loading</H1>;
     } else {
       return (
-        <ScrollView style={{ backgroundColor: "transparent" }}>
+        <ScrollView
+          contentContainerStyle={{ top: 40, alignItems: "center" }}
+          style={{ backgroundColor: "transparent" }}
+        >
           <Image
             style={{
               alignSelf: "center",
