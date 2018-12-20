@@ -46,7 +46,6 @@ class HomeScreen extends React.Component {
           <GoalsCarousel />
         </ScrollView>
         <View>
-          {/*
           <Button
             block
             success
@@ -68,23 +67,20 @@ class HomeScreen extends React.Component {
           >
             <Text style={{ color: "white" }}>Goals View</Text>
           </Button>
-
-           {!this.props.user ? (
+          {!this.props.user && (
             <Button
               block
               onPress={() => this.props.navigation.navigate("Login")}
             >
               <Text>Login</Text>
             </Button>
-          ) : (
-
-          )}   <Button
+          )}
+          <Button
             block
             onPress={() => this.props.navigation.navigate("mandatoryInfo")}
           >
             <Text>Expenses</Text>
           </Button>
-
           <Button
             block
             danger
@@ -92,7 +88,7 @@ class HomeScreen extends React.Component {
             style={styles.buttonContainer}
           >
             <Text>Logout</Text>
-          </Button>*/}
+          </Button>
         </View>
       </View>
     );
