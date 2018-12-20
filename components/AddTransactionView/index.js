@@ -1,6 +1,6 @@
 import React from "react";
 import { Platform, ScrollView, StyleSheet, Text, View } from "react-native";
-import { Button, Form, Item, Picker, Icon, Input } from "native-base";
+import { Button, Form, Item, Picker, Icon, Input, H1 } from "native-base";
 import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions";
 import styles from "./styles";
@@ -11,8 +11,10 @@ class AddTransactionView extends React.Component {
   };
   constructor(props) {
     super(props);
+    let budget = this.props.navigation.getParam("budget", {});
+
     this.state = {
-      budget: undefined,
+      budget: budget,
       amount: 0,
       label: ""
     };
@@ -23,7 +25,7 @@ class AddTransactionView extends React.Component {
       budget: value
     });
   }
-  async sendTransaction() {
+  sendTransaction() {
     if (this.state.budget === undefined) {
       alert("Please select a budget");
     } else if (this.state.label === "") {
@@ -31,18 +33,17 @@ class AddTransactionView extends React.Component {
     } else if (this.state.amount === 0) {
       alert("Please enter a valid value");
     } else {
-      let setBudget = this.props.budgets.find(b => {
-        if (b.id === this.state.budget) {
-          return b;
-        }
-        return false;
-      });
-      setBudget.balance = setBudget.balance - this.state.amount;
-      console.log(setBudget.amount + "is it updated?");
-      await this.props.updateBudget(setBudget, this.props.navigation);
-      await this.props.makeTransaction(
+      // let setBudget = this.props.budgets.find(b => {
+      //   if (b.id === this.state.budget) {
+      //     return b;
+      //   }
+      //   return false;
+      // });
+      // setBudget.balance = setBudget.balance - this.state.amount;
+      // await this.props.updateBudget(setBudget, this.props.navigation);
+      this.props.makeTransaction(
         { label: this.state.label, amount: this.state.amount },
-        this.state.budget,
+        this.state.budget.id,
         this.props.navigation
       );
     }
@@ -74,7 +75,7 @@ class AddTransactionView extends React.Component {
           contentContainerStyle={styles.contentContainer}
         >
           <Form>
-            <Item picker>
+            {/* <Item picker>
               <Picker
                 mode="dropdown"
                 iosIcon={<Icon name="ios-arrow-dropdown" />}
@@ -87,7 +88,8 @@ class AddTransactionView extends React.Component {
               >
                 {ListItems}
               </Picker>
-            </Item>
+            </Item> */}
+            <H1>{this.state.budget.label}</H1>
             <Item>
               <Input
                 placeholder="Transaction..."

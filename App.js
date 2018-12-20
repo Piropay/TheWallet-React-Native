@@ -57,7 +57,9 @@ class App extends React.Component {
         // We include SpaceMono because we use it in HomeScreen.js. Feel free
         // to remove this if you are not using it in your app
         "space-mono": require("./assets/fonts/SpaceMono-Regular.ttf"),
-        "pacifico-regular": require("./assets/fonts/Pacifico-Regular.ttf")
+        "pacifico-regular": require("./assets/fonts/Pacifico-Regular.ttf"),
+        "quicksand-regular": require("./assets/fonts/Quicksand-Regular.otf"),
+        "quicksand-bold": require("./assets/fonts/Quicksand-Bold.otf")
       })
     ]);
   };

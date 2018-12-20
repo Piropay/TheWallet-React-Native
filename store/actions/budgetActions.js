@@ -48,10 +48,10 @@ export const addBudget = (budget, navigation) => {
 //   };
 // };
 
-export const updateBudget = (budget, budget_id, navigation) => {
+export const updateBudget = (budget, navigation) => {
   return dispatch => {
     instance
-      .put(`${budget_id}/update/`, {
+      .put(`${budget.id}/update/`, {
         category: budget.category,
         amount: budget.amount,
         label: budget.label,
@@ -63,6 +63,7 @@ export const updateBudget = (budget, budget_id, navigation) => {
           type: actionTypes.UPDATE_BUDGET,
           payload: budget
         });
+        navigation.goBack();
       })
       .catch(err => {
         dispatch(console.log(err.response.data));

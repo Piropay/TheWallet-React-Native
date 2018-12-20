@@ -2,7 +2,8 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#DCDCDC"
+    backgroundColor: "#2B2B2B",
+    height: "100%"
   },
   eventList: {
     marginTop: 20
@@ -13,39 +14,59 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     flexDirection: "row"
   },
+  actionButtonIcon: {
+    fontSize: 20,
+    height: 22,
+    color: "white"
+  },
   eventDate: {
     flexDirection: "column"
   },
   eventDay: {
     fontSize: 50,
-    color: "#0099FF",
-    fontWeight: "600"
+    color: "#BDA747",
+    fontWeight: "600",
+    fontFamily: "pacifico-regular",
+    textShadowColor: "#7f7f7f",
+    textShadowOffset: { width: 3, height: 3 },
+    textShadowRadius: 1
   },
   eventMonth: {
     fontSize: 16,
-    color: "#0099FF",
-    fontWeight: "600"
+    color: "#BDA747",
+    fontWeight: "600",
+    fontFamily: "pacifico-regular",
+    textShadowColor: "#7f7f7f",
+    textShadowOffset: { width: 3, height: 3 },
+    textShadowRadius: 1
   },
   eventContent: {
     flex: 1,
     flexDirection: "column",
     alignItems: "flex-start",
+    justifyContent: "center",
     marginLeft: 10,
     backgroundColor: "#FFFFFF",
-    padding: 10,
-    borderRadius: 10
+    paddingLeft: 20,
+    borderRadius: 10,
+    shadowColor: "#a0a0a0",
+    shadowRadius: 1,
+    shadowOpacity: 0.5,
+    shadowOffset: { width: 5, height: 7 }
   },
   description: {
     fontSize: 15,
     color: "#646464"
   },
   eventTime: {
-    fontSize: 18,
-    color: "#151515"
+    fontSize: 20,
+    color: "#151515",
+    fontFamily: "quicksand-regular"
   },
   userName: {
     fontSize: 16,
-    color: "#151515"
+    color: "#151515",
+    fontFamily: "quicksand-regular"
   }
 });
 

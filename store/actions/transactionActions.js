@@ -38,6 +38,10 @@ export const addTransaction = (transaction, budget_id, navigation) => {
           type: actionTypes.ADD_TRANSACTION,
           payload: transaction
         });
+        dispatch({
+          type: actionTypes.SUBTRACT_BUDGET,
+          payload: transaction
+        });
       })
       .then(() => navigation.navigate("Budgets"))
       .catch(err => {

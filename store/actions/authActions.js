@@ -6,6 +6,7 @@ import { fetchBudgets } from "./budgetActions";
 import { fetchDeposits } from "./depositActions";
 import { fetchGoals } from "./goalActions";
 import { fetchTransactions } from "./transactionActions";
+import { fetchExpenses } from "./userInfo";
 import { AsyncStorage } from "react-native";
 import { StackActions, NavigationActions } from "react-navigation";
 
@@ -87,6 +88,7 @@ const setCurrentUser = user => {
       dispatch(fetchProfile());
       dispatch(fetchTransactions());
       dispatch(fetchGoals());
+      dispatch(fetchExpenses());
       dispatch(fetchDeposits());
     } else {
       dispatch({ type: actionTypes.LOGOUT_USER, payload: user });

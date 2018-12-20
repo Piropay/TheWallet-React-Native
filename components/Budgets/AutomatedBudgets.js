@@ -13,11 +13,12 @@ import {
   Slider
 } from "react-native";
 
-import { Input } from "native-base";
+import { Input, CardItem, Body } from "native-base";
 
 import { Row, Grid } from "react-native-easy-grid";
-import { Button, H1, Item, Picker, Icon } from "native-base";
+import { Button, H2, Item, Picker, Icon } from "native-base";
 import styles from "./styles";
+import { Card } from "react-native-paper";
 class AutoMatedBudgets extends Component {
   constructor(props) {
     super(props);
@@ -131,17 +132,22 @@ class AutoMatedBudgets extends Component {
     this.state.budgets.forEach(budget => (totalBudget += budget.amount));
     const inputRows = this.state.budgets.map((idx, i) => (
       <Row key={`${i}`}>
-        <Grid>
-          <Row>
-            <View style={styles.inputWrap}>
-              <Text style={styles.label}>Label</Text>
-              <View style={styles.inputContainer}>
-                <TextInput value={idx.label} style={styles.inputs} />
-              </View>
-            </View>
-          </Row>
-
+        <Card style={styles.shadow}>
+          <CardItem style={{ borderRadius: 10 }}>
+            <Body
+              style={{
+                paddingHorizontal: 40
+              }}
+            >
+              <Item style={styles.label}>
+                <View>
+                  <Input value={idx.label} />
+                </View>
+              </Item>
+            </Body>
+          </CardItem>
           <Slider
+            style={{ width: 200, alignSelf: "center" }}
             step={1}
             maximumValue={this.props.profile.balance}
             value={idx.amount}
@@ -155,8 +161,8 @@ class AutoMatedBudgets extends Component {
             )}
             %
           </Text>
-          <Text>{String(idx.amount)} KWD</Text>
-        </Grid>
+          <Text style={styles.text}>{String(idx.amount)} KWD</Text>
+        </Card>
       </Row>
     ));
 
@@ -166,21 +172,54 @@ class AutoMatedBudgets extends Component {
         contentContainerStyle={styles.contentContainer}
       >
         <Grid>
-          <H1>Current Balance {this.props.profile.balance} KD</H1>
-          <H1>Current Total Budget: {totalBudget} KD</H1>
+          <H2
+            style={[
+              styles.h3,
+              { fontSize: 35, paddingTop: 20, paddingBottom: 10 }
+            ]}
+          >
+            Your budgets
+          </H2>
 
-          <H1>Your budgets</H1>
-          <Button full onPress={() => this.resetBudgets()}>
+          <H2
+            style={[
+              styles.h3,
+              {
+                fontFamily: "quicksand-bold",
+                textShadowOffset: { width: 0, height: 0 }
+              }
+            ]}
+          >
+            Balance: {this.props.profile.balance} KD {"\n"} Total Budget:{" "}
+            {totalBudget} KD
+          </H2>
+
+          <H2
+            style={[
+              styles.h3,
+              {
+                fontFamily: "quicksand-bold",
+                textShadowOffset: { width: 0, height: 0 }
+              }
+            ]}
+          >
+            {" "}
+          </H2>
+          <Button
+            style={styles.button}
+            full
+            onPress={() => this.resetBudgets()}
+          >
             <Text>Reset Budgets</Text>
           </Button>
           {inputRows}
         </Grid>
 
         <Button
+          style={styles.button}
           block
           full
           onPress={() => this.handleSubmitBudget(totalBudget)}
-          style={{ marginTop: 10 }}
         >
           <Text>Submit</Text>
         </Button>

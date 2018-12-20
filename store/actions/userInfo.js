@@ -33,6 +33,20 @@ export const addExpenses = (expense, navigation) => {
   };
 };
 
+export const fetchExpenses = () => {
+  return dispatch => {
+    instance
+      .get("list/")
+      .then(res => res.data)
+      .then(expenses => {
+        dispatch({ type: actionTypes.FETCH_EXPENSES, payload: expenses });
+      })
+      .catch(err => {
+        dispatch(console.log(err.response.data));
+      });
+  };
+};
+
 export const getBalance = (income, expenses, navigation) => {
   let totalExpense = 0;
   let balance = 0;

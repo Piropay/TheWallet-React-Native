@@ -13,10 +13,10 @@ import {
   Slider
 } from "react-native";
 
-import { Input } from "native-base";
+import { Input, CardItem, Body } from "native-base";
 
 import { Row, Grid } from "react-native-easy-grid";
-import { Button, H1, Item, Picker, Icon } from "native-base";
+import { Button, H1, Item, Picker, Icon, Card } from "native-base";
 import styles from "./styles";
 
 class UpdateBudget extends Component {
@@ -25,6 +25,7 @@ class UpdateBudget extends Component {
     let budget = this.props.navigation.getParam("budget", {});
 
     this.state = {
+      id: budget.id,
       category: budget.category,
       label: budget.label,
       amount: parseFloat(budget.amount),
@@ -52,7 +53,7 @@ class UpdateBudget extends Component {
       amount + this.props.totalUserBudget < this.props.profile.balance
     ) {
       await this.setState({ balance: newBalance });
-      this.props.updateBudget(this.state, budget.id, this.props.navigation);
+      this.props.updateBudget(this.state, this.props.navigation);
     } else {
       alert(
         "Please make sure that you fill in all the boxes and that you're total budgets don't exceed your current balance"
@@ -68,30 +69,60 @@ class UpdateBudget extends Component {
         contentContainerStyle={styles.contentContainer}
       >
         <Grid>
-          <H1>Current Balance {this.props.profile.balance} KD</H1>
-          <H1>
-            Current balance left:
+          <H1
+            style={[
+              styles.h3,
+              { fontSize: 35, paddingTop: 20, paddingBottom: 10 }
+            ]}
+          >
+            Your budget
+          </H1>
+          <H1
+            style={[
+              styles.h3,
+              {
+                fontFamily: "quicksand-bold",
+                textShadowOffset: { width: 0, height: 0 }
+              }
+            ]}
+          >
+            {" "}
+            Balance {this.props.profile.balance} KD
+          </H1>
+          <H1
+            style={[
+              styles.h3,
+              {
+                fontFamily: "quicksand-bold",
+                textShadowOffset: { width: 0, height: 0 }
+              }
+            ]}
+          >
+            {" "}
+            balance left:
             {this.props.profile.balance - this.props.totalUserBudget} KD
           </H1>
 
-          <H1>Your budget</H1>
           <Row>
-            <Grid>
-              <Row>
-                <View style={styles.inputWrap}>
-                  <Text style={styles.label}>Label</Text>
-                  <View style={styles.inputContainer}>
+            <Card style={styles.shadow}>
+              <CardItem style={{ borderRadius: 10 }}>
+                <Body
+                  style={{
+                    paddingHorizontal: 40
+                  }}
+                >
+                  <Item style={styles.label}>
                     <TextInput
                       value={this.state.label}
                       style={styles.inputs}
                       onChangeText={value => this.setState({ label: value })}
                     />
-                  </View>
-                </View>
-              </Row>
-
+                  </Item>
+                </Body>
+              </CardItem>
               <Slider
                 step={1}
+                style={{ width: 200, alignSelf: "center" }}
                 maximumValue={
                   this.props.profile.balance - this.props.totalUserBudget
                 }
@@ -109,15 +140,15 @@ class UpdateBudget extends Component {
                 )}
                 %
               </Text>
-              <Text>{String(this.state.amount)} KWD</Text>
-            </Grid>
+              <Text style={styles.text}>{String(this.state.amount)} KWD</Text>
+            </Card>
           </Row>
         </Grid>
         <Button
+          style={styles.button}
           block
           full
           onPress={() => this.handleSubmitBudget(budget)}
-          style={{ marginTop: 10 }}
         >
           <Text>Submit</Text>
         </Button>
@@ -133,8 +164,8 @@ const mapStateToProps = state => ({
 
 const mapActionsToProps = dispatch => {
   return {
-    updateBudget: (budget, budget_id, navigation) =>
-      dispatch(actionCreators.updateBudget(budget, budget_id, navigation))
+    updateBudget: (budget, navigation) =>
+      dispatch(actionCreators.updateBudget(budget, navigation))
   };
 };
 
