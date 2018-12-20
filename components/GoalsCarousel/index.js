@@ -10,7 +10,8 @@ import {
 import { LinearGradient } from "expo";
 import Carousel, { Pagination } from "react-native-snap-carousel";
 import styles, { colors } from "./styles/index.style";
-
+import { connect } from "react-redux";
+import * as actionCreators from "../../store/actions";
 import { sliderWidth, itemWidth } from "./styles/SE";
 
 import SliderEntry from "./components/SliderEntry";
@@ -20,7 +21,7 @@ import { scrollInterpolators, animatedStyles } from "./utils/animations";
 const IS_ANDROID = Platform.OS === "android";
 const SLIDER_1_FIRST_ITEM = 1;
 
-export default class example extends Component {
+class GoalsCarousel extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -123,20 +124,15 @@ export default class example extends Component {
   layoutExample(number, title, type) {
     const isTinder = type === "tinder";
     return (
-      <View
-        style={[
-          styles.exampleContainer,
-          isTinder ? styles.exampleContainerDark : styles.exampleContainerLight
-        ]}
-      >
+      <View style={[styles.exampleContainer]}>
         <Text
-          style={[styles.title, isTinder ? {} : styles.titleDark]}
-        >{`Example ${number}`}</Text>
-        <Text style={[styles.subtitle, isTinder ? {} : styles.titleDark]}>
+          style={[styles.title, isTinder ? {} : styles.titleLight]}
+        >{`Goals`}</Text>
+        <Text style={[styles.subtitle, isTinder ? {} : styles.titleLight]}>
           {title}
         </Text>
         <Carousel
-          data={isTinder ? ENTRIES2 : ENTRIES1}
+          data={isTinder ? ENTRIES2 : this.props.budgets}
           renderItem={isTinder ? this._renderLightItem : this._renderItem}
           sliderWidth={sliderWidth}
           itemWidth={itemWidth}
@@ -197,42 +193,12 @@ export default class example extends Component {
   }
 
   render() {
-    const example1 = this.mainExample(
-      1,
-      "Default layout | Loop | Autoplay | Parallax | Scale | Opacity | Pagination with tappable dots"
-    );
     const example2 = this.momentumExample(
       2,
       "Momentum | Left-aligned | Active animation"
     );
-    const example3 = this.layoutExample(
-      3,
-      '"Stack of cards" layout | Loop',
-      "stack"
-    );
-    const example4 = this.layoutExample(
-      4,
-      '"Tinder-like" layout | Loop',
-      "tinder"
-    );
-    const example5 = this.customExample(
-      5,
-      "Custom animation 1",
-      1,
-      this._renderItem
-    );
-    const example6 = this.customExample(
-      6,
-      "Custom animation 2",
-      2,
-      this._renderLightItem
-    );
-    const example7 = this.customExample(
-      7,
-      "Custom animation 3",
-      3,
-      this._renderDarkItem
-    );
+    const example3 = this.layoutExample(3, "The key is to deposit!", "stack");
+
     const example8 = this.customExample(
       8,
       "Custom animation 4",
@@ -254,17 +220,18 @@ export default class example extends Component {
             scrollEventThrottle={200}
             directionalLockEnabled={true}
           >
-            {example1}
             {example2}
-            {example3}
-            {example4}
-            {example5}
-            {example6}
-            {example7}
             {example8}
+
+            {example3}
           </ScrollView>
         </View>
       </SafeAreaView>
     );
   }
 }
+const mapStateToProps = state => ({
+  goals: state.goal.goals
+});
+
+export default connect(mapStateToProps)(GoalsCarousel);

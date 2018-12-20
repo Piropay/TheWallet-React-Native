@@ -7,7 +7,7 @@ import {
   View,
   TouchableOpacity
 } from "react-native";
-import CarouselExample from "../components/CarouselExample";
+import GoalsCarousel from "../components/GoalsCarousel";
 import { Button } from "native-base";
 import { connect } from "react-redux";
 
@@ -43,7 +43,7 @@ class HomeScreen extends React.Component {
           style={styles.container}
           contentContainerStyle={styles.contentContainer}
         >
-          <CarouselExample />
+          <GoalsCarousel />
         </ScrollView>
         <View>
           {/*

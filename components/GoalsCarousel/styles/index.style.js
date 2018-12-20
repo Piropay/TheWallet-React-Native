@@ -35,9 +35,10 @@ export default StyleSheet.create({
     paddingHorizontal: 30,
     backgroundColor: "transparent",
     color: "rgba(255, 255, 255, 0.9)",
-    fontSize: 20,
+    fontSize: 30,
     fontWeight: "bold",
-    textAlign: "center"
+    textAlign: "center",
+    fontFamily: "pacifico-regular"
   },
   titleDark: {
     color: colors.black
