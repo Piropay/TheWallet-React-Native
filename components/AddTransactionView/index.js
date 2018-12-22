@@ -1,6 +1,6 @@
 import React from "react";
 import { Platform, ScrollView, StyleSheet, Text, View } from "react-native";
-import { Button, Form, Item, Picker, Icon, Input, H1 } from "native-base";
+import { Button, Form, Item, Picker, Icon, Input, H1, H3 } from "native-base";
 import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions";
 import styles from "./styles";
@@ -11,20 +11,14 @@ class AddTransactionView extends React.Component {
   };
   constructor(props) {
     super(props);
-    let budget = this.props.navigation.getParam("budget", {});
 
     this.state = {
-      budget: budget,
+      budget: this.props.budget,
       amount: 0,
       label: ""
     };
   }
 
-  onValueChange2(value) {
-    this.setState({
-      budget: value
-    });
-  }
   sendTransaction() {
     if (this.state.budget === undefined) {
       alert("Please select a budget");
@@ -48,67 +42,37 @@ class AddTransactionView extends React.Component {
       );
     }
   }
-  renderCard(budget) {
-    return (
-      <Picker.Item key={budget.id} label={budget.label} value={budget.id} />
-    );
-  }
+
   render() {
-    var today = new Date();
-    const budgets = this.props.budgets.filter(budget => {
-      let date = new Date(budget.date);
-      if (
-        date.getMonth() === today.getMonth() &&
-        date.getFullYear() === today.getFullYear()
-      ) {
-        return budget;
-      }
-    });
-    let ListItems;
-    if (budgets) {
-      ListItems = budgets.map(budget => this.renderCard(budget));
-    }
     return (
       <View style={styles.container}>
-        <ScrollView
-          style={styles.container}
-          contentContainerStyle={styles.contentContainer}
-        >
-          <Form>
-            {/* <Item picker>
-              <Picker
-                mode="dropdown"
-                iosIcon={<Icon name="ios-arrow-dropdown" />}
-                style={{ width: undefined }}
-                placeholder="Select the Budget"
-                placeholderStyle={{ color: "#bfc6ea" }}
-                placeholderIconColor="#007aff"
-                selectedValue={this.state.budget}
-                onValueChange={this.onValueChange2.bind(this)}
-              >
-                {ListItems}
-              </Picker>
-            </Item> */}
-            <H1>{this.state.budget.label}</H1>
-            <Item>
-              <Input
-                placeholder="Transaction..."
-                onChangeText={value => this.setState({ label: value })}
-              />
-            </Item>
-            <Item>
-              <Input
-                placeholder="0.00"
-                keyboardType="decimal-pad"
-                onChangeText={value =>
-                  this.setState({ amount: parseFloat(value) })
-                }
-              />
-            </Item>
-          </Form>
-        </ScrollView>
+        <H3 style={styles.h3}>Enter your transaction</H3>
+        <Form>
+          <Item style={styles.label}>
+            <Input
+              style={styles.inputs}
+              placeholder="Transaction..."
+              onChangeText={value => this.setState({ label: value })}
+            />
+          </Item>
+          <Item style={styles.label}>
+            <Input
+              style={styles.inputs}
+              placeholder="0.00"
+              keyboardType="decimal-pad"
+              onChangeText={value =>
+                this.setState({ amount: parseFloat(value) })
+              }
+            />
+          </Item>
+        </Form>
+
         <View>
-          <Button block success onPress={() => this.sendTransaction()}>
+          <Button
+            block
+            style={styles.button}
+            onPress={() => this.sendTransaction()}
+          >
             <Text style={{ color: "white" }}>ADD</Text>
           </Button>
         </View>

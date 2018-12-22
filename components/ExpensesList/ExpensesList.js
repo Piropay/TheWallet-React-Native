@@ -15,59 +15,41 @@ import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions";
 import styles from "./styles";
 
-class BudgetsView extends React.Component {
+class ExpensesList extends React.Component {
   static navigationOptions = {
     title: "Budgets"
   };
 
   state = { refreshing: false };
-  renderCard(budget) {
+  renderCard(expense) {
     return (
-      <TouchableOpacity
-        key={budget.id}
-        onPress={() =>
-          this.props.navigation.navigate("BudgetDetails", {
-            budget: budget
-          })
-        }
-        style={styles.card}
-      >
+      <View key={expense.id} style={styles.card}>
         <Card style={styles.shadow}>
           <CardItem>
             <Body>
               <H3 style={{ color: "#BEA647", fontFamily: "quicksand-bold" }}>
-                {budget.label}
+                {expense.label}
               </H3>
-              <Text>{budget.category}</Text>
-              <Text>{parseFloat(budget.balance).toFixed(3)}KWD</Text>
+              <Text>{expense.category}</Text>
+              <Text>{parseFloat(expense.amount).toFixed(3)}KWD</Text>
             </Body>
           </CardItem>
         </Card>
-      </TouchableOpacity>
+      </View>
     );
   }
 
   _onRefresh = () => {
     this.setState({ refreshing: true });
-    this.props.fetchBudgets();
+    this.props.fetchExpenes();
 
     this.setState({ refreshing: false });
   };
   render() {
-    var today = new Date();
-    const budgets = this.props.budgets.filter(budget => {
-      let date = new Date(budget.date);
-      if (
-        date.getMonth() === today.getMonth() &&
-        date.getFullYear() === today.getFullYear()
-      ) {
-        return budget;
-      }
-    });
-
+    const expenses = this.props.expenses;
     let ListItems;
-    if (budgets) {
-      ListItems = budgets.map(budget => this.renderCard(budget));
+    if (expenses) {
+      ListItems = expenses.map(expense => this.renderCard(expense));
     }
     return (
       <View style={styles.container}>
@@ -83,17 +65,6 @@ class BudgetsView extends React.Component {
         >
           <List>{ListItems}</List>
         </ScrollView>
-        <View>
-          {!this.props.profile.automated && (
-            <Button
-              block
-              warning
-              onPress={() => this.props.navigation.navigate("userBudgets")}
-            >
-              <Text style={{ color: "white" }}> ADD Budget</Text>
-            </Button>
-          )}
-        </View>
       </View>
     );
   }
@@ -101,12 +72,12 @@ class BudgetsView extends React.Component {
 
 const mapStateToProps = state => ({
   profile: state.auth.profile,
-  budgets: state.budget.budgets
+  expenses: state.userInfo.expenses
 });
 const mapDispatchToProps = dispatch => ({
-  fetchBudgets: () => dispatch(actionCreators.fetchBudgets())
+  fetchExpenes: () => dispatch(actionCreators.fetchExpenes())
 });
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(BudgetsView);
+)(ExpensesList);
