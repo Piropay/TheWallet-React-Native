@@ -40,16 +40,16 @@ export default class SliderEntry extends Component {
 
   render() {
     const {
-      data: { title, subtitle },
+      data: { label, amount },
       even
     } = this.props;
 
-    const uppercaseTitle = title ? (
+    const uppercaseTitle = label ? (
       <Text
-        style={[styles.title, even ? styles.titleEven : {}]}
+        style={[styles.label, even ? styles.titleEven : {}]}
         numberOfLines={2}
       >
-        {title.toUpperCase()}
+        {label.toUpperCase()}
       </Text>
     ) : (
       false
@@ -60,7 +60,7 @@ export default class SliderEntry extends Component {
         activeOpacity={1}
         style={styles.slideInnerContainer}
         onPress={() => {
-          alert(`You've clicked '${title}'`);
+          alert(`You've clicked '${label}'`);
         }}
       >
         <View style={styles.shadow} />
@@ -77,10 +77,10 @@ export default class SliderEntry extends Component {
         >
           {uppercaseTitle}
           <Text
-            style={[styles.subtitle, even ? styles.subtitleEven : {}]}
+            style={[styles.amount, even ? styles.subtitleEven : {}]}
             numberOfLines={2}
           >
-            {subtitle}
+            {amount}
           </Text>
         </View>
       </TouchableOpacity>

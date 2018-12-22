@@ -3,10 +3,9 @@ import { Platform, StatusBar, StyleSheet, View } from "react-native";
 import { AppLoading, Asset, Font, Icon } from "expo";
 import AppNavigator from "./navigation/AppNavigator";
 import { Provider } from "react-redux";
-import { checkForExpiredToken } from "./store/actions";
-
-import * as actionCreators from "./store/actions";
-
+import { checkForExpiredToken } from "./store/actions/authActions";
+import ActionButton from "react-native-action-button";
+import { Icon as BIcon, Root } from "native-base";
 // Store
 import store from "./store";
 class App extends React.Component {
@@ -17,6 +16,7 @@ class App extends React.Component {
   componentDidMount() {
     store.dispatch(checkForExpiredToken());
   }
+
   render() {
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
       return (
@@ -35,8 +35,52 @@ class App extends React.Component {
               hidden={false}
               backgroundColor="#2B2B2B"
             />
+            {/* not functional yet */}
+            {/* <ActionButton
+                position="center"
+                offsetY={20}
+                buttonColor="rgba(231,76,60,1)"
+                style={{ zIndex: 1 }}
+              >
+                <ActionButton.Item
+                  buttonColor="#9b59b6"
+                  title="Add Goals"
+                  onPress={() =>
+                    this.props.navigation.navigate("Goals", {
+                      budget: budget
+                    })
+                  }
+                >
+                  <BIcon
+                    name="md-create"
+                    style={{
+                      fontSize: 20,
+                      height: 22,
+                      color: "white"
+                    }}
+                  />
+                </ActionButton.Item>
 
-            <AppNavigator />
+                <ActionButton.Item
+                  buttonColor="#1abc9c"
+                  title="Add Budgets"
+                  onPress={() => this.props.navigation.navigate("userBudgets")}
+                >
+                  <BIcon
+                    name="add-to-list"
+                    type="Entypo"
+                    style={{
+                      fontSize: 20,
+                      height: 22,
+                      color: "white"
+                    }}
+                  />
+                </ActionButton.Item>
+              </ActionButton>
+             */}
+            <Root>
+              <AppNavigator />
+            </Root>
           </View>
         </Provider>
       );

@@ -101,7 +101,7 @@ class GoalsCarousel extends Component {
         <Text style={styles.title}>{`Example ${number}`}</Text>
         <Text style={styles.subtitle}>{title}</Text>
         <Carousel
-          data={ENTRIES2}
+          data={this.props.budgets}
           renderItem={this._renderItem}
           sliderWidth={sliderWidth}
           itemWidth={itemWidth}
@@ -123,6 +123,7 @@ class GoalsCarousel extends Component {
 
   layoutExample(number, title, type) {
     const isTinder = type === "tinder";
+
     return (
       <View style={[styles.exampleContainer]}>
         <Text
@@ -132,7 +133,7 @@ class GoalsCarousel extends Component {
           {title}
         </Text>
         <Carousel
-          data={isTinder ? ENTRIES2 : this.props.budgets}
+          data={isTinder ? ENTRIES1 : this.props.goals}
           renderItem={isTinder ? this._renderLightItem : this._renderItem}
           sliderWidth={sliderWidth}
           itemWidth={itemWidth}
@@ -231,7 +232,8 @@ class GoalsCarousel extends Component {
   }
 }
 const mapStateToProps = state => ({
-  goals: state.goal.goals
+  goals: state.goal.goals,
+  budgets: state.budget.budgets
 });
 
 export default connect(mapStateToProps)(GoalsCarousel);

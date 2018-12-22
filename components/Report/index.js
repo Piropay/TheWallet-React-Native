@@ -53,8 +53,6 @@ class Report extends Component {
     var today = new Date();
     if (this.props.budgets) {
       if (this.props.budgets.length !== 0) {
-        console.log(this.props.budgets);
-
         var compDate = new Date(
           this.props.budgets[this.props.budgets.length - 1].date
         );

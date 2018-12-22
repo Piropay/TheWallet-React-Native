@@ -7,7 +7,7 @@ import {
   Text,
   View
 } from "react-native";
-import { Button, Form, Item, Picker, Icon, Input } from "native-base";
+import { Button, Form, Item, Picker, Icon, Input, H3 } from "native-base";
 import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions";
 import styles from "./styles";
@@ -19,7 +19,7 @@ class AddDeposit extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      goal: undefined,
+      goal: this.props.budget,
       amount: 0
     };
   }
@@ -28,23 +28,23 @@ class AddDeposit extends React.Component {
       goal: value
     });
   }
-  async sendDeposit() {
+  sendDeposit() {
     if (this.state.goal === undefined) {
       alert("Please select a goal");
     } else if (this.state.amount === 0) {
       alert("Please enter a valid value");
     } else {
       let setGoal = this.props.goals.find(b => {
-        if (b.id === this.state.goal) {
+        if (b.id === this.state.goal.id) {
           return b;
         }
         return false;
       });
       setGoal.amount = setGoal.amount - this.state.amount;
 
-      await this.props.addDeposit(
+      this.props.addDeposit(
         { amount: this.state.amount },
-        this.state.goal,
+        this.state.goal.id,
         this.props.navigation
       );
     }
@@ -60,12 +60,9 @@ class AddDeposit extends React.Component {
     }
     return (
       <View style={styles.container}>
-        <ScrollView
-          style={styles.container}
-          contentContainerStyle={styles.contentContainer}
-        >
-          <Form>
-            <Item picker>
+        <H3 style={styles.h3}>Enter your deposit</H3>
+        <Form>
+          {/* <Item picker>
               <Picker
                 mode="dropdown"
                 iosIcon={<Icon name="ios-arrow-dropdown" />}
@@ -78,20 +75,24 @@ class AddDeposit extends React.Component {
               >
                 {ListItems}
               </Picker>
-            </Item>
-            <Item>
-              <Input
-                placeholder="0.00"
-                keyboardType="decimal-pad"
-                onChangeText={value =>
-                  this.setState({ amount: parseInt(value) })
-                }
-              />
-            </Item>
-          </Form>
-        </ScrollView>
+            </Item> */}
+          <Item style={styles.label}>
+            <Input
+              style={styles.inputs}
+              placeholder="0.00 KWD"
+              keyboardType="decimal-pad"
+              onChangeText={value => this.setState({ amount: parseInt(value) })}
+            />
+          </Item>
+        </Form>
+
         <View>
-          <Button block success onPress={() => this.sendDeposit()}>
+          <Button
+            style={styles.button}
+            block
+            success
+            onPress={() => this.sendDeposit()}
+          >
             <Text style={{ color: "white" }}>ADD</Text>
           </Button>
         </View>

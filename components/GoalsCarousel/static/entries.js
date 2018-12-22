@@ -1,6 +1,6 @@
 export const ENTRIES1 = [
   {
-    title: "Beautiful and dramatic Antelope Canyon",
+    title: "'pkj;oihlugkytfdhrctfgvjil;ok'pj;oihlgkucjh",
     subtitle: "Lorem ipsum dolor sit amet et nuncat mergitur",
     illustration: "https://i.imgur.com/UYiroysl.jpg"
   },

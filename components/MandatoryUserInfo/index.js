@@ -92,7 +92,6 @@ class mandatoryInfo extends Component {
     this.props.expenses.forEach(expense => {
       totalexpenses += parseFloat(expense.amount);
     });
-    console.log(totalexpenses);
 
     const inputRows = this.state.expenses.map((idx, i) => (
       <Row key={`${i}`}>
