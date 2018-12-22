@@ -9,14 +9,19 @@ import * as actionCreators from "../../store/actions";
 import styles from "./styles";
 
 class HomePage extends Component {
-  componentDidMount() {
-    if (this.props.user) {
-      this.props.navigation.navigate("Home");
-    }
-  }
-  componentDidUpdate(prevProps) {
-    if (prevProps.user !== this.props.user) {
-      this.props.navigation.navigate("Home");
+  componentDidMount() {}
+  componentDidUpdate() {
+    console.log(this.props.profile);
+    try {
+      if (this.props.fetched) {
+        if (this.props.profile.income !== null)
+          this.props.navigation.navigate("Home");
+        else {
+          this.props.navigation.navigate("SetIncome");
+        }
+      }
+    } catch (e) {
+    } finally {
     }
   }
   static navigationOptions = {
@@ -71,7 +76,9 @@ class HomePage extends Component {
 const mapStateToProps = state => ({
   user: state.auth.user,
   profile: state.auth.profile,
-  isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated,
+  income: state.userInfo.income,
+  fetched: state.auth.fetched
 });
 
 const mapDispatchToProps = dispatch => ({

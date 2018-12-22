@@ -9,13 +9,18 @@ import HomePage from "../components/HomePage";
 import Signup from "../components/Signup";
 import Login from "../components/Login";
 import MainTabNavigator from "../navigation/MainTabNavigator";
+import AutomatedBudgets from "../components/Budgets/AutomatedBudgets";
+import Expanses from "../components/MandatoryUserInfo";
+
 import SetIncome from "../components/SetIncome";
 export default createStackNavigator(
   {
     HomePage: HomePage,
     Signup: Signup,
     Login: Login,
-    SetIncome: SetIncome
+    SetIncome: SetIncome,
+    Automated: AutomatedBudgets,
+    Expanses: Expanses
   },
   {
     initialRouteName: "HomePage",

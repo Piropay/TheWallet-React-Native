@@ -106,7 +106,13 @@ class GoalView extends React.Component {
         >
           <List>{ListItems}</List>
         </ScrollView>
-
+        <Button
+          block
+          success
+          onPress={() => this.props.navigation.navigate("Goals")}
+        >
+          <Text style={{ color: "white" }}>Add Goal</Text>
+        </Button>
         <Modal
           animationType={"fade"}
           transparent={true}

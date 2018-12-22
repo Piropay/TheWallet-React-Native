@@ -83,6 +83,7 @@ class AutoMatedBudgets extends Component {
       this.state.budgets.forEach(budget =>
         this.props.addBudget(budget, this.props.navigation)
       );
+      this.props.navigation.navigate("Home");
     } else {
       alert(
         "Please make sure that you fill in all the boxes and that you're total budgets don't exceed your current balance"

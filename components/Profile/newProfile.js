@@ -7,6 +7,9 @@ import {
   TouchableOpacity,
   ScrollView
 } from "react-native";
+import { Button } from "native-base";
+import * as actionCreators from "../../store/actions/authActions";
+
 import { VictoryPie, VictoryLabel } from "victory-native";
 import { connect } from "react-redux";
 class ProfileView extends Component {
@@ -101,6 +104,14 @@ class ProfileView extends Component {
               >
                 <Text>Update Profile</Text>
               </TouchableOpacity>
+              <Button
+                block
+                danger
+                onPress={() => this.props.logout(this.props.navigation)}
+                style={styles.buttonContainer}
+              >
+                <Text>Logout</Text>
+              </Button>
             </View>
           </View>
         </View>

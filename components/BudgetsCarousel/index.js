@@ -133,7 +133,7 @@ class GoalsCarousel extends Component {
           {title}
         </Text>
         <Carousel
-          data={this.props.goals}
+          data={isTinder ? ENTRIES1 : this.props.goals}
           renderItem={isTinder ? this._renderLightItem : this._renderItem}
           sliderWidth={sliderWidth}
           itemWidth={itemWidth}
@@ -221,6 +221,9 @@ class GoalsCarousel extends Component {
             scrollEventThrottle={200}
             directionalLockEnabled={true}
           >
+            {example2}
+            {example8}
+
             {example3}
           </ScrollView>
         </View>

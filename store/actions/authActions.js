@@ -44,7 +44,7 @@ export const checkForExpiredToken = () => {
   };
 };
 
-export const login = (userData, navigation) => {
+export const login = (userData, navigation, type) => {
   return dispatch => {
     instance
       .post("login/", userData)
@@ -54,7 +54,11 @@ export const login = (userData, navigation) => {
         setAuthToken(user.token).then(() =>
           dispatch(setCurrentUser(decodedUser))
         );
-        navigation.navigate("Home");
+        if (type === "login") {
+          navigation.navigate("Home");
+        } else {
+          navigation.navigate("SetIncome");
+        }
       })
 
       .catch(err => console.error(err.response.data));
@@ -67,7 +71,7 @@ export const signup = (userData, navigation) => {
       .post("register/", userData)
       .then(res => res.data)
       .then(() => {
-        dispatch(login(userData, navigation));
+        dispatch(login(userData, navigation, "signup"));
       })
       .catch(err => console.error(err.response.data));
   };
@@ -114,6 +118,33 @@ export const updateProfile = (profile, navigation) => {
           type: actionTypes.UPDATE_PROFILE,
           payload: profile
         });
+      })
+
+      .catch(err => {
+        dispatch(console.log(err.response.data.data));
+      });
+  };
+};
+
+export const updateBalance = (profile, navigation) => {
+  return dispatch => {
+    instance
+      .put(`profile/update/`, {
+        phoneNo: profile.phoneNo,
+        dob: profile.dob,
+        gender: profile.gender,
+        income: profile.income,
+        balance: profile.balance,
+        savings: profile.savings,
+        automated: profile.automated
+      })
+      .then(res => res.data)
+      .then(profile => {
+        dispatch({
+          type: actionTypes.UPDATE_PROFILE,
+          payload: profile
+        });
+        navigation.navigate("Expanses");
       })
 
       .catch(err => {

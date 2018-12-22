@@ -1,10 +1,10 @@
-
 import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
   user: null,
   profile: null,
   isAuthenticated: false,
+  fetched: false,
   error: {}
 };
 
@@ -29,7 +29,8 @@ const reducer = (state = initialState, action) => {
     case actionTypes.FETCH_PROFILE:
       return {
         ...state,
-        profile: action.payload
+        profile: action.payload,
+        fetched: true
       };
     case actionTypes.LOGOUT_USER:
       return {
@@ -37,6 +38,7 @@ const reducer = (state = initialState, action) => {
         user: null,
         profile: null,
         isAuthenticated: false,
+        fetched: false,
         error: {}
       };
     default:

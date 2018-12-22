@@ -26,26 +26,18 @@ class IncomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      phoneNo: this.props.profile.phoneNo,
-      dob: this.props.profile.dob,
-      gender: this.props.profile.gender,
-      income: this.props.profile.income,
+      phoneNo: null,
+      dob: null,
+      gender: null,
+      income: null,
       balance: 0,
-      savings: this.props.profile.savings,
-      automated: this.props.profile.automated
+      savings: null,
+      automated: false
     };
   }
   onClickListener = () => {
-    console.log(this.state);
-
     this.props.UpdateProfile(this.state, this.props.navigation);
   };
-
-  onValueChange2(value) {
-    this.setState({
-      gender: value
-    });
-  }
 
   render() {
     return (
@@ -115,7 +107,7 @@ class IncomePage extends Component {
 const mapActionsToProps = dispatch => {
   return {
     UpdateProfile: (profile, navigation) =>
-      dispatch(actionCreators.updateProfile(profile, navigation))
+      dispatch(actionCreators.updateBalance(profile, navigation))
   };
 };
 
