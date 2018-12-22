@@ -19,7 +19,7 @@ class AddDeposit extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      goal: this.props.budget,
+      goal: this.props.goal,
       amount: 0
     };
   }
@@ -49,33 +49,12 @@ class AddDeposit extends React.Component {
       );
     }
   }
-  renderCard(goal) {
-    return <Picker.Item key={goal.id} label={goal.label} value={goal.id} />;
-  }
+
   render() {
-    const goals = this.props.goals;
-    let ListItems;
-    if (goals) {
-      ListItems = goals.map(goal => this.renderCard(goal));
-    }
     return (
       <View style={styles.container}>
         <H3 style={styles.h3}>Enter your deposit</H3>
         <Form>
-          {/* <Item picker>
-              <Picker
-                mode="dropdown"
-                iosIcon={<Icon name="ios-arrow-dropdown" />}
-                style={{ width: undefined }}
-                placeholder="Select the Goal"
-                placeholderStyle={{ color: "#bfc6ea" }}
-                placeholderIconColor="#007aff"
-                selectedValue={this.state.goal}
-                onValueChange={this.onValueChange2.bind(this)}
-              >
-                {ListItems}
-              </Picker>
-            </Item> */}
           <Item style={styles.label}>
             <Input
               style={styles.inputs}
@@ -90,7 +69,6 @@ class AddDeposit extends React.Component {
           <Button
             style={styles.button}
             block
-            success
             onPress={() => this.sendDeposit()}
           >
             <Text style={{ color: "white" }}>ADD</Text>

@@ -3,9 +3,12 @@ import { StyleSheet, Platform } from "react-native";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#2B2B2B"
+    backgroundColor: "#2B2B2B",
+    width: "90%"
   },
+
   card: {
+    marginLeft: 25,
     alignSelf: "center",
     width: "90%"
   },

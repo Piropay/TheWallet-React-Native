@@ -57,7 +57,7 @@ export const login = (userData, navigation) => {
         navigation.navigate("Home");
       })
 
-      .catch(err => console.error(err.response.data));
+      .catch(err => dispatch(setErrors(err.response.data)));
   };
 };
 
@@ -69,7 +69,7 @@ export const signup = (userData, navigation) => {
       .then(() => {
         dispatch(login(userData, navigation));
       })
-      .catch(err => console.error(err.response.data));
+      .catch(err => dispatch(setErrors(err.response.data)));
   };
 };
 
@@ -138,3 +138,5 @@ export const fetchProfile = () => {
       });
   };
 };
+
+export const setErrors = errors => ({ type: SET_ERRORS, payload: errors });
