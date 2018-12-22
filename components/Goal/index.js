@@ -28,6 +28,7 @@ class Goal extends Component {
     this.handleGoalLabelChange = this.handleGoalLabelChange.bind(this);
     this.handleGoalAmountChange = this.handleGoalAmountChange.bind(this);
     this.onValueChange2 = this.onValueChange2.bind(this);
+    this.handleRemoveGoal = this.handleRemoveGoal.bind(this);
   }
 
   handleGoalLabelChange = (value, i) => {
@@ -80,7 +81,7 @@ class Goal extends Component {
   };
   handleRemoveGoal = i => {
     this.setState({
-      gaols: this.state.goals.filter((goal, sidx) => {
+      goals: this.state.goals.filter((goal, sidx) => {
         if (i !== sidx) return goal;
       })
     });

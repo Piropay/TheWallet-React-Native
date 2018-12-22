@@ -4,21 +4,31 @@ import {
   View,
   Image,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
+  RefreshControl
 } from "react-native";
 import { VictoryPie, VictoryLabel } from "victory-native";
 import { connect } from "react-redux";
 import ExpensesList from "../ExpensesList/ExpensesList";
 import { Modal } from "react-native-paper";
 import { Card, H2, Text, Button, H3 } from "native-base";
+import * as actionCreators from "../../store/actions";
+
 class ProfileView extends Component {
   constructor(props) {
     super(props);
     this.state = {
       modalVisible: false,
-      modalVisible2: false
+      modalVisible2: false,
+      refreshing: false
     };
   }
+  _onRefresh = () => {
+    this.setState({ refreshing: true });
+    this.props.fetchProfile();
+
+    this.setState({ refreshing: false });
+  };
   setModalVisible(visible) {
     this.setState({ modalVisible: visible });
   }
@@ -42,7 +52,14 @@ class ProfileView extends Component {
       totalBudgets += parseFloat(budget.amount);
     });
     return (
-      <ScrollView>
+      <ScrollView
+        refreshControl={
+          <RefreshControl
+            refreshing={this.state.refreshing}
+            onRefresh={this._onRefresh}
+          />
+        }
+      >
         <View style={styles.container}>
           <View style={styles.header}>
             <View style={styles.headerContent}>
@@ -148,6 +165,12 @@ class ProfileView extends Component {
               >
                 <Text>Update Profile</Text>
               </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => this.props.logout()}
+                style={[styles.buttonContainer, { backgroundColor: "#BA2B15" }]}
+              >
+                <Text>Logout</Text>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
@@ -230,6 +253,7 @@ const mapStateToProps = state => ({
   expenses: state.userInfo.expenses
 });
 const mapDispatchToProps = dispatch => ({
+  fetchProfile: () => dispatch(actionCreators.fetchProfile()),
   logout: navigation => dispatch(actionCreators.logout(navigation))
 });
 export default connect(
