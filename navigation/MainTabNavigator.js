@@ -15,6 +15,8 @@ import AddTransactionView from "../components/AddTransactionView";
 import BudgetsView from "../components/BudgetsView";
 import Login from "../components/Login";
 import Profile from "../components/Profile";
+import ProfileView from "../components/Profile/newProfile";
+
 import Goals from "../components/Goal";
 import Deposit from "../components/Deposit";
 import GoalsView from "../components/GoalView";
@@ -28,12 +30,9 @@ const HomeStack = createStackNavigator(
 
     mandatoryInfo: mandatoryInfo,
 
-    UpdateProfile: UpdateProfile,
     Login: Login,
     Profile: Profile,
-    Goals: Goals,
-    Deposit: Deposit,
-    GoalsView: GoalsView,
+
     AutomatedBudgets: AutomatedBudgets,
     Report: Report,
     userBudgets: userBudgets,
@@ -100,7 +99,7 @@ const LinksStack = createStackNavigator(
 );
 
 LinksStack.navigationOptions = {
-  tabBarLabel: "Links",
+  tabBarLabel: "Budgets",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -109,10 +108,64 @@ LinksStack.navigationOptions = {
   )
 };
 
-const ProfileStack = createStackNavigator({
-  Profile: Profile,
-  Report: Report
-});
+const GoalsStack = createStackNavigator(
+  {
+    GoalsView: GoalsView,
+    Deposit: Deposit,
+    Goals: Goals
+  },
+  {
+    navigationOptions: {
+      headerTintColor: "#fff",
+      headerStyle: {
+        fontWeight: "bold",
+        backgroundColor: "transparent"
+      },
+      headerTextStyle: {
+        fontWeight: "bold",
+        fontFamily: "pacifico-regular"
+      }
+    },
+    cardStyle: {
+      backgroundColor: "#2B2B2B"
+    }
+  }
+);
+
+GoalsStack.navigationOptions = {
+  tabBarLabel: "Goals",
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === "ios" ? "ios-link" : "md-link"}
+    />
+  )
+};
+
+const ProfileStack = createStackNavigator(
+  {
+    // Profile: Profile,
+    Profile: ProfileView,
+    UpdateProfile: UpdateProfile,
+    Report: Report
+  },
+  {
+    navigationOptions: {
+      headerTintColor: "#fff",
+      headerStyle: {
+        fontWeight: "bold",
+        backgroundColor: "transparent"
+      },
+      headerTextStyle: {
+        fontWeight: "bold",
+        fontFamily: "pacifico-regular"
+      }
+    },
+    cardStyle: {
+      backgroundColor: "#2B2B2B"
+    }
+  }
+);
 
 ProfileStack.navigationOptions = {
   tabBarLabel: false,
@@ -124,9 +177,13 @@ ProfileStack.navigationOptions = {
   )
 };
 
+import { Component } from "react";
+import { View, Text } from "react-native";
+
 export default createMaterialBottomTabNavigator(
   {
     HomeStack,
+    GoalsStack,
     LinksStack,
     ProfileStack
   },

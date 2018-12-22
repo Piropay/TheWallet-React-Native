@@ -11,15 +11,14 @@ import styles from "./styles";
 class HomePage extends Component {
   componentDidMount() {
     if (this.props.user) {
-      console.log(this.props.user);
       this.props.navigation.navigate("Home");
     }
   }
-  // componentDidUpdate(prevProps) {
-  //   if (prevProps.profile !== this.props.profile) {
-  //     this.props.navigation.replace("Main");
-  //   }
-  // }
+  componentDidUpdate(prevProps) {
+    if (prevProps.user !== this.props.user) {
+      this.props.navigation.navigate("Home");
+    }
+  }
   static navigationOptions = {
     header: null
   };

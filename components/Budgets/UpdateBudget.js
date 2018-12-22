@@ -43,10 +43,6 @@ class UpdateBudget extends Component {
       filled = false;
     }
     newBalance = this.state.amount - budget.amount + parseFloat(balance);
-    console.log(this.state.amount);
-    console.log(budget.amount);
-    console.log(balance);
-    console.log(newBalance);
 
     if (
       filled &&
@@ -86,7 +82,6 @@ class UpdateBudget extends Component {
               }
             ]}
           >
-            {" "}
             Balance {this.props.profile.balance} KD
           </H1>
           <H1
@@ -98,7 +93,6 @@ class UpdateBudget extends Component {
               }
             ]}
           >
-            {" "}
             balance left:
             {this.props.profile.balance - this.props.totalUserBudget} KD
           </H1>

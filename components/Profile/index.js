@@ -56,87 +56,11 @@ class Profile extends Component {
     budgets.forEach(budget => {
       totalBudgets += parseFloat(budget.amount);
     });
-    const data = [
-      // { amount: parseFloat(income), label: "income" },
-      { amount: parseFloat(balance - totalBudgets), label: "balance" },
-      { amount: parseFloat(totalexpenses), label: "totalexpenses" },
-      { amount: parseFloat(totalBudgets), label: "totalBudgets" }
-    ];
-
-    const randomColor = () =>
-      ("#" + ((Math.random() * 0xffffff) << 0).toString(16) + "000000").slice(
-        0,
-        7
-      );
-
-    const pieData = data
-      .filter(value => value.amount > 0)
-      .map((value, index) => {
-        label = value.label;
-        value = value.amount;
-
-        return {
-          value,
-          svg: {
-            fill: randomColor(),
-            onPress: () => console.log("press", index)
-          },
-          key: `pie-${index}`,
-          label: label
-        };
-      });
-
-    const Labels = ({ slices }) => {
-      return slices.map((slice, index) => {
-        console.log(slice);
-        // const { width, height } = Dimensions.get("window");
-        const { labelCentroid, pieCentroid, data } = slice;
-        return (
-          <G key={index}>
-            <Line
-              x1={labelCentroid[0]}
-              y1={labelCentroid[1]}
-              x2={pieCentroid[0]}
-              y2={pieCentroid[1]}
-              stroke={data.svg.fill}
-            />
-
-            <Circle
-              cx={labelCentroid[0]}
-              cy={labelCentroid[1]}
-              r={15}
-              fill={data.svg.fill}
-            />
-            {/* <SvgText
-                fontSize="20"
-                fontWeight="bold"
-                textAnchor="middle"
-                style={{
-                  zIndex: "100",
-                  margin: "5px",
-                  backgroundColor: "black"
-                }}
-              >
-                {data.label}
-              </SvgText> */}
-          </G>
-        );
-      });
-    };
     return (
       <ScrollView>
         <View style={styles.container}>
           <View style={styles.header} />
 
-          {/* <PieChart
-            style={{ height: 200 }}
-            data={pieData}
-            innerRadius={20}
-            outerRadius={55}
-            labelRadius={80}
-          >
-            <Labels />
-          </PieChart> */}
           <VictoryPie
             animate={{
               duration: 2000

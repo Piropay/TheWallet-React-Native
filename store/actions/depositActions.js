@@ -1,6 +1,7 @@
 import * as actionTypes from "./actionTypes";
 
 import axios from "axios";
+import { Toast } from "native-base";
 const instance = axios.create({
   baseURL: "http://68.183.217.91/api/deposit/"
 });
@@ -38,9 +39,14 @@ export const addDeposit = (deposit, goal_id, navigation) => {
           payload: deposit
         });
       })
-      .then(() => navigation.navigate("Goals"))
+      .then(() =>
+        Toast.show({
+          text: "Deposit added!",
+          buttonText: "Okay"
+        })
+      )
       .catch(err => {
-        dispatch(console.log(err.response.data));
+        // dispatch(console.log(err.response));
       });
   };
 };

@@ -42,7 +42,6 @@ class Goal extends Component {
   handleGoalAmountChange = (value, i) => {
     let oldAmount = 0;
 
-    console.log(this.state.goals);
     const newAmount = this.state.goals.map((goal, sidx) => {
       if (i !== sidx) return goal;
       oldAmount = goal.amount;

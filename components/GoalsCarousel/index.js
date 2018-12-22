@@ -123,9 +123,7 @@ class GoalsCarousel extends Component {
 
   layoutExample(number, title, type) {
     const isTinder = type === "tinder";
-    if (isTinder) {
-      console.log(this.props.goals);
-    }
+
     return (
       <View style={[styles.exampleContainer]}>
         <Text
