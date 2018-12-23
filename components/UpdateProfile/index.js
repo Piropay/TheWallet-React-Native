@@ -14,8 +14,9 @@ import {
   Alert,
   ScrollView
 } from "react-native";
-import { H1, Item, Picker, Icon } from "native-base";
+import { H1, Item, Picker, Icon, DatePicker } from "native-base";
 import styles from "./styles";
+import { Card } from "react-native-paper";
 
 class UpdateProfile extends Component {
   constructor(props) {
@@ -30,10 +31,11 @@ class UpdateProfile extends Component {
       automated: this.props.profile.automated
     };
   }
+  static navigationOptions = ({ navigation }) => ({
+    title: "Profile Update"
+  });
 
   onClickListener = () => {
-    console.log(this.state);
-
     this.props.UpdateProfile(this.state, this.props.navigation);
   };
 
@@ -50,10 +52,6 @@ class UpdateProfile extends Component {
           style={styles.container}
           contentContainerStyle={styles.contentContainer}
         >
-          <Image
-            style={styles.bgImage}
-            source={{ uri: "https://lorempixel.com/900/1400/nightlife/2/" }}
-          />
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.inputs}
@@ -66,23 +64,44 @@ class UpdateProfile extends Component {
             <Image
               style={styles.inputIcon}
               source={{
-                uri: "https://img.icons8.com/nolan/40/000000/email.png"
+                uri: "https://img.icons8.com/ios/50/000000/shake-phone.png"
               }}
             />
           </View>
 
           <View style={styles.inputContainer}>
-            <TextInput
+            {/* <TextInput
               style={styles.inputs}
               placeholder="Date of Birth"
               defaultValue={this.state.dob}
               underlineColorAndroid="transparent"
               onChangeText={dob => this.setState({ dob: dob })}
-            />
-            <Image
-              style={styles.inputIcon}
-              source={{ uri: "https://img.icons8.com/nolan/40/000000/key.png" }}
-            />
+            /> */}
+            <Item picker>
+              <DatePicker
+                defaultDate={new Date()}
+                selectedValue={this.state.dob}
+                locale={"en"}
+                timeZoneOffsetInMinutes={undefined}
+                modalTransparent={false}
+                animationType={"fade"}
+                androidMode={"default"}
+                placeHolderText="Select date"
+                textStyle={{ color: "green" }}
+                placeHolderTextStyle={{ color: "#278979" }}
+                onDateChange={dob => {
+                  let date =
+                    dob.getFullYear() +
+                    "-" +
+                    (dob.getMonth() + 1) +
+                    "-" +
+                    dob.getDate();
+                  this.setState({ dob: date });
+                }}
+              />
+
+              <Icon name="ios-arrow-dropdown" />
+            </Item>
           </View>
 
           <View style={styles.inputContainer}>
@@ -115,10 +134,11 @@ class UpdateProfile extends Component {
             />
             <Image
               style={styles.inputIcon}
-              source={{ uri: "https://img.icons8.com/nolan/40/000000/key.png" }}
+              source={{
+                uri: "https://img.icons8.com/ios/50/000000/request-money.png"
+              }}
             />
           </View>
-
           <TouchableOpacity
             style={[styles.buttonContainer, styles.loginButton]}
             onPress={() => this.onClickListener()}

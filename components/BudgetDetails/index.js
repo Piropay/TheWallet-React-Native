@@ -196,7 +196,7 @@ class BudgetDetails extends Component {
               />
             ) : (
               <Card style={styles.container}>
-                <H1>No transactions made for this budget </H1>
+                <H1 style={styles.h3}>No transactions made for this budget </H1>
               </Card>
             )}
           </ScrollView>

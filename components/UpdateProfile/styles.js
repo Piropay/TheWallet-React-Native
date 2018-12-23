@@ -5,12 +5,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
 
-    backgroundColor: "#DCDCDC"
+    backgroundColor: "#2B2B2B"
   },
   contentContainer: {
-    paddingTop: 30
+    paddingTop: 30,
+    alignItems: "center"
   },
+
   inputContainer: {
+    alignSelf: "center",
     borderBottomColor: "#F5FCFF",
     backgroundColor: "#FFFFFF",
     borderRadius: 30,
@@ -20,7 +23,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     flexDirection: "row",
     alignItems: "center",
-
+    justifyContent: "center",
     shadowColor: "#808080",
     shadowOffset: {
       width: 0,
@@ -48,6 +51,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+    alignSelf: "center",
     marginBottom: 20,
     width: 300,
     borderRadius: 30,
@@ -63,8 +67,7 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent"
   },
   loginButton: {
-    backgroundColor: "#00b5ec",
-
+    backgroundColor: "#278979",
     shadowColor: "#808080",
     shadowOffset: {
       width: 0,
