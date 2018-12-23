@@ -103,7 +103,7 @@ class Login extends Component {
                 dark
                 style={styles.button}
                 onPress={() =>
-                  this.props.login(this.state, this.props.navigation)
+                  this.props.login(this.state, this.props.navigation, "login")
                 }
               >
                 <Text style={styles.text}>Login</Text>

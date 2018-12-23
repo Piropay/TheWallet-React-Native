@@ -14,6 +14,7 @@ import {
 import { Row, Grid, Col } from "react-native-easy-grid";
 import ActionButton from "react-native-action-button";
 import { Badge } from "react-native-elements";
+
 import {
   H3,
   Button,
@@ -25,6 +26,7 @@ import {
   H2,
   H1
 } from "native-base";
+
 import Speedometer from "react-native-speedometer-chart";
 import { connect } from "react-redux";
 

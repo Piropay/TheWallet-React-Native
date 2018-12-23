@@ -8,26 +8,12 @@ import * as actionCreators from "../../store/actions";
 // Style
 import styles from "./styles";
 
-class HomePage extends Component {
-  componentDidMount() {}
-  componentDidUpdate() {
-    console.log(this.props.profile);
-    try {
-      if (this.props.fetched) {
-        if (this.props.profile.income !== null)
-          this.props.navigation.navigate("Home");
-        else {
-          this.props.navigation.navigate("SetIncome");
-        }
-      }
-    } catch (e) {
-    } finally {
-    }
-  }
+class Automation extends Component {
   static navigationOptions = {
     header: null
   };
   render() {
+    let profile = this.props.profile;
     return (
       <ScrollView
         contentContainerStyle={{ top: 40, alignItems: "center" }}
@@ -42,32 +28,29 @@ class HomePage extends Component {
           source={require("../../assets/images/logo2.png")}
           resizeMode="contain"
         />
-        <Image
-          style={{
-            alignSelf: "center",
-            height: 250,
-            width: 250
-          }}
-          source={require("../../assets/images/jama3t.png")}
-          resizeMode="contain"
-        />
+
+        <Text style={styles.header}>
+          Would you like to automate your budgets?
+        </Text>
         <Button
           rounded
           block
           dark
           style={styles.login}
-          onPress={() => this.props.navigation.navigate("Login")}
+          onPress={() => {
+            this.props.navigation.navigate("Automated");
+          }}
         >
-          <Text style={styles.text}>Login</Text>
+          <Text style={styles.text}>Yes</Text>
         </Button>
         <Button
           rounded
           block
           dark
           style={styles.signup}
-          onPress={() => this.props.navigation.navigate("Signup")}
+          onPress={() => this.props.navigation.navigate("CreateBudgets")}
         >
-          <Text style={styles.text}>Signup</Text>
+          <Text style={styles.text}>No</Text>
         </Button>
       </ScrollView>
     );
@@ -88,4 +71,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(HomePage);
+)(Automation);

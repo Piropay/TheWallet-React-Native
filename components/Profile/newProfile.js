@@ -7,6 +7,9 @@ import {
   ScrollView,
   RefreshControl
 } from "react-native";
+import { Button } from "native-base";
+import * as actionCreators from "../../store/actions/authActions";
+
 import { VictoryPie, VictoryLabel } from "victory-native";
 import { connect } from "react-redux";
 import ExpensesList from "../ExpensesList/ExpensesList";
@@ -165,12 +168,14 @@ class ProfileView extends Component {
               >
                 <Text>Update Profile</Text>
               </TouchableOpacity>
+
               <TouchableOpacity
-                onPress={() => this.props.logout()}
+                onPress={() => this.props.logout(this.props.navigation)}
                 style={[styles.buttonContainer, { backgroundColor: "#BA2B15" }]}
               >
                 <Text>Logout</Text>
               </TouchableOpacity>
+
             </View>
           </View>
         </View>

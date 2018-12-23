@@ -5,13 +5,6 @@ const instance = axios.create({
   baseURL: "http://68.183.217.91/api/expense/"
 });
 
-export const addIncome = income => {
-  return {
-    type: actionTypes.ADD_INCOME,
-    payload: income
-  };
-};
-
 export const addExpenses = (expense, navigation) => {
   return dispatch => {
     instance
@@ -26,9 +19,8 @@ export const addExpenses = (expense, navigation) => {
           payload: expense
         });
       })
-      .then(() => navigation.navigate("Home"))
       .catch(err => {
-        dispatch(console.log(err.response.data));
+        dispatch(console.log(err.response));
       });
   };
 };

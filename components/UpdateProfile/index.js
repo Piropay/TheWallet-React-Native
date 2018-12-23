@@ -25,15 +25,13 @@ class UpdateProfile extends Component {
       dob: this.props.profile.dob,
       gender: this.props.profile.gender,
       income: this.props.profile.income,
-      balance: 0,
+      balance: this.props.profile.balance,
       savings: this.props.profile.savings,
       automated: this.props.profile.automated
     };
   }
 
   onClickListener = () => {
-    console.log(this.state);
-
     this.props.UpdateProfile(this.state, this.props.navigation);
   };
 

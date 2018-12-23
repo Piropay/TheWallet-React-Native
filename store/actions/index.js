@@ -5,7 +5,8 @@ export {
   updateProfile,
   checkForExpiredToken,
   fetchProfile,
-  setErrors
+  setErrors,
+  updateBalance
 } from "./authActions";
 
 export { addIncome, addExpenses, getBalance, fetchExpenses } from "./userInfo";

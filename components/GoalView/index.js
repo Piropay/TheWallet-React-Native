@@ -110,6 +110,7 @@ class GoalView extends React.Component {
         </ScrollView>
         <Button
           block
+
           warning
           onPress={() => this.props.navigation.navigate("Goals")}
         >

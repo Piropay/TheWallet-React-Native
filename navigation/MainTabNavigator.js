@@ -27,12 +27,9 @@ import UpdateBudget from "../components/Budgets/UpdateBudget";
 const HomeStack = createStackNavigator(
   {
     Home: HomeScreen,
-
     mandatoryInfo: mandatoryInfo,
-
     Login: Login,
     Profile: Profile,
-
     AutomatedBudgets: AutomatedBudgets,
     Report: Report,
     userBudgets: userBudgets,

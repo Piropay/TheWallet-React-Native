@@ -35,49 +35,7 @@ class App extends React.Component {
               hidden={false}
               backgroundColor="#2B2B2B"
             />
-            {/* not functional yet */}
-            {/* <ActionButton
-                position="center"
-                offsetY={20}
-                buttonColor="rgba(231,76,60,1)"
-                style={{ zIndex: 1 }}
-              >
-                <ActionButton.Item
-                  buttonColor="#9b59b6"
-                  title="Add Goals"
-                  onPress={() =>
-                    this.props.navigation.navigate("Goals", {
-                      budget: budget
-                    })
-                  }
-                >
-                  <BIcon
-                    name="md-create"
-                    style={{
-                      fontSize: 20,
-                      height: 22,
-                      color: "white"
-                    }}
-                  />
-                </ActionButton.Item>
 
-                <ActionButton.Item
-                  buttonColor="#1abc9c"
-                  title="Add Budgets"
-                  onPress={() => this.props.navigation.navigate("userBudgets")}
-                >
-                  <BIcon
-                    name="add-to-list"
-                    type="Entypo"
-                    style={{
-                      fontSize: 20,
-                      height: 22,
-                      color: "white"
-                    }}
-                  />
-                </ActionButton.Item>
-              </ActionButton>
-             */}
             <Root>
               <AppNavigator />
             </Root>

@@ -75,7 +75,7 @@ class AutoMatedBudgets extends Component {
     }));
   };
 
-  handleSubmitBudget = totalBudget => {
+  handleSubmitBudget = async totalBudget => {
     this.state.budgets.forEach(budget => {
       let { amount, category, label } = { ...budget };
     });
@@ -83,6 +83,13 @@ class AutoMatedBudgets extends Component {
       this.state.budgets.forEach(budget =>
         this.props.addBudget(budget, this.props.navigation)
       );
+      let profile = this.props.profile;
+      let totalE = 0;
+      this.props.expenses.forEach(expense => (totalE += expense.amount));
+
+      profile.automated = true;
+      profile.balance = profile.income - totalE;
+      this.props.updateProfile(profile, this.props.navigation);
     } else {
       alert(
         "Please make sure that you fill in all the boxes and that you're total budgets don't exceed your current balance"
@@ -190,7 +197,7 @@ class AutoMatedBudgets extends Component {
               }
             ]}
           >
-            Balance: {this.props.profile.balance} KD {"\n"} Total Budget:{" "}
+            Balance {this.props.profile.balance} KD {"\n"} Total Budget{" "}
             {totalBudget} KD
           </H2>
 
@@ -205,16 +212,12 @@ class AutoMatedBudgets extends Component {
           >
             {" "}
           </H2>
-          <Button
-            style={styles.button}
-            full
-            onPress={() => this.resetBudgets()}
-          >
-            <Text>Reset Budgets</Text>
-          </Button>
+
           {inputRows}
         </Grid>
-
+        <Button style={styles.button} full onPress={() => this.resetBudgets()}>
+          <Text>Reset Budgets</Text>
+        </Button>
         <Button
           style={styles.button}
           block
@@ -229,6 +232,7 @@ class AutoMatedBudgets extends Component {
 }
 
 const mapStateToProps = state => ({
+  expenses: state.userInfo.expenses,
   profile: state.auth.profile,
   totalUserBudget: state.budget.totalUserBudget
 });
@@ -238,7 +242,9 @@ const mapActionsToProps = dispatch => {
     addBudget: (budget, navigation) =>
       dispatch(actionCreators.addBudget(budget, navigation)),
     getBalance: (income, expenses) =>
-      dispatch(actionCreators.getBalance(income, expenses))
+      dispatch(actionCreators.getBalance(income, expenses)),
+    updateProfile: (profile, navigation) =>
+      dispatch(actionCreators.updateProfile(profile, navigation))
   };
 };
 
