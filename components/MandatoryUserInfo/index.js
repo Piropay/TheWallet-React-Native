@@ -73,7 +73,7 @@ class mandatoryInfo extends Component {
       for (let expense of this.state.expenses) {
         await this.props.addExpenses(expense);
       }
-      this.props.navigation.navigate("Automated");
+      this.props.navigation.navigate("Automation");
     } else {
       alert(
         "Please fill in all boxes and make sure that your expenses don't exceed your income"

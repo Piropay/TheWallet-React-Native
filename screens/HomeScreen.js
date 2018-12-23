@@ -8,6 +8,7 @@ import {
   TouchableOpacity
 } from "react-native";
 import GoalsCarousel from "../components/GoalsCarousel";
+import BudgetsCarousel from "../components/BudgetsCarousel";
 import { Button } from "native-base";
 import { connect } from "react-redux";
 
@@ -43,6 +44,7 @@ class HomeScreen extends React.Component {
           style={styles.container}
           contentContainerStyle={styles.contentContainer}
         >
+          <BudgetsCarousel navigation={this.props.navigation} />
           <GoalsCarousel />
         </ScrollView>
       </View>
@@ -75,9 +77,7 @@ const styles = StyleSheet.create({
     lineHeight: 19,
     textAlign: "center"
   },
-  contentContainer: {
-    paddingTop: 30
-  },
+  contentContainer: {},
   welcomeContainer: {
     alignItems: "center",
     marginTop: 10,

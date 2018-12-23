@@ -34,7 +34,7 @@ export const addBudget = (budget, navigation) => {
           payload: budget
         });
       })
-      // .then(() => navigation.navigate("Budgets"))
+
       .catch(err => {
         dispatch(console.log(err.response.data));
       });

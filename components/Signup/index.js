@@ -29,7 +29,8 @@ class Signup extends Component {
     super(props);
     this.state = {
       username: "",
-      password: ""
+      password: "",
+      confirm: ""
     };
   }
 
@@ -97,6 +98,9 @@ class Signup extends Component {
                   <Input
                     placeholder="Confirm Password"
                     secureTextEntry={true}
+                    autoCorrect={false}
+                    autoCapitalize="none"
+                    onChangeText={value => this.setState({ confirm: value })}
                   />
                 </Item>
               </Body>
@@ -106,9 +110,16 @@ class Signup extends Component {
               rounded
               dark
               style={styles.button}
-              onPress={() =>
-                this.props.signup(this.state, this.props.navigation)
-              }
+              onPress={() => {
+                if (
+                  this.state.password === this.state.confirm &&
+                  this.state.username !== ""
+                )
+                  this.props.signup(this.state, this.props.navigation);
+                else {
+                  alert("your passwords don't match");
+                }
+              }}
             >
               <Text style={styles.text}>Signup</Text>
             </Button>

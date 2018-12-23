@@ -19,9 +19,8 @@ export const addExpenses = (expense, navigation) => {
           payload: expense
         });
       })
-      .then(() => navigation.navigate("Home"))
       .catch(err => {
-        dispatch(console.log(err.response.data));
+        dispatch(console.log(err.response));
       });
   };
 };

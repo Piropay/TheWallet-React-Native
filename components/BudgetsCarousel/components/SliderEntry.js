@@ -40,7 +40,7 @@ export default class SliderEntry extends Component {
 
   render() {
     const {
-      data: { label, amount },
+      data: { label, amount, balance, category, id, transactions },
       even
     } = this.props;
 
@@ -49,18 +49,19 @@ export default class SliderEntry extends Component {
         style={[styles.label, even ? styles.titleEven : {}]}
         numberOfLines={2}
       >
-        {label.toUpperCase()}
+        {label}
       </Text>
     ) : (
       false
     );
-
     return (
       <TouchableOpacity
         activeOpacity={1}
         style={styles.slideInnerContainer}
         onPress={() => {
-          alert(`You've clicked '${label}'`);
+          this.props.navigation.navigate("BudgetDetails", {
+            budget: { label, amount, balance, category, id, transactions }
+          });
         }}
       >
         <View style={styles.shadow} />
