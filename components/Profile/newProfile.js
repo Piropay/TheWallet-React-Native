@@ -76,6 +76,9 @@ class ProfileView extends Component {
                 endAngle={450}
                 labelComponent={<VictoryLabel angle={35} />}
                 colorScale={["#278979", "#BA2D17", "#BEA647"]}
+                animate={{
+                  duration: 2000
+                }}
                 events={[
                   {
                     target: "data",
@@ -104,7 +107,7 @@ class ProfileView extends Component {
                     label: `Balance: \n ${(
                       (parseFloat(balance - totalBudgets) / income) *
                       100
-                    ).toFixed(1)}%`,
+                    ).toFixed(2)}%`,
                     x: 1,
                     y: parseFloat(balance - totalBudgets)
                   },
@@ -112,7 +115,7 @@ class ProfileView extends Component {
                     label: `Expenses:\n ${(
                       (parseFloat(totalexpenses) / income) *
                       100
-                    ).toFixed(1)}%`,
+                    ).toFixed(2)}%`,
                     x: 2,
                     y: parseFloat(totalexpenses)
                   },
@@ -120,7 +123,7 @@ class ProfileView extends Component {
                     label: `Budgets:\n ${(
                       (parseFloat(totalBudgets) / income) *
                       100
-                    ).toFixed(1)}%`,
+                    ).toFixed(2)}%`,
                     x: 3,
                     y: parseFloat(totalBudgets)
                   }
