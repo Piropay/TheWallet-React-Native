@@ -68,7 +68,9 @@ class GoalView extends React.Component {
         <Card key={goal.id} style={styles.shadow}>
           <CardItem>
             <Body>
-              <Text>{goal.label}</Text>
+              <H3 style={{ color: "#BEA647", fontFamily: "quicksand-bold" }}>
+                {goal.label}
+              </H3>
               <Text>{goal.end_date}</Text>
               <Text>{parseFloat(goal.balance).toFixed(3)}KWD</Text>
               <Text>
@@ -108,13 +110,14 @@ class GoalView extends React.Component {
         </ScrollView>
         <Button
           block
-          success
+
+          warning
           onPress={() => this.props.navigation.navigate("Goals")}
         >
-          <Text style={{ color: "white" }}>Add Goal</Text>
+          <Text style={{ color: "white" }}> ADD Goal</Text>
         </Button>
         <Modal
-          animationType={"fade"}
+          animationType={"slide"}
           transparent={true}
           onRequestClose={() => this.setModalVisible(false)}
           visible={this.state.modalVisible}
@@ -139,7 +142,7 @@ class GoalView extends React.Component {
                     Suggested Deposit:
                     {parseFloat(this.state.mdeposit).toFixed(3)} KWD
                   </Text>
-                  <Deposit budget={this.state.goalSelected} />
+                  <Deposit goal={this.state.goalSelected} />
                 </ScrollView>
               </View>
               <View style={styles.popupButtons}>

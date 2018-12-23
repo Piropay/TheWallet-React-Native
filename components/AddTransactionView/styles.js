@@ -2,90 +2,45 @@ import { StyleSheet, Platform } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#fff"
-  },
-  developmentModeText: {
-    marginBottom: 20,
-    color: "rgba(0,0,0,0.4)",
-    fontSize: 14,
-    lineHeight: 19,
-    textAlign: "center"
-  },
-  contentContainer: {
-    paddingTop: 30
-  },
-  welcomeContainer: {
-    alignItems: "center",
     marginTop: 10,
-    marginBottom: 20
-  },
-  welcomeImage: {
-    width: 100,
-    height: 80,
-    resizeMode: "contain",
-    marginTop: 3,
-    marginLeft: -10
-  },
-  getStartedContainer: {
+    width: "90%",
+    height: 250,
+    backgroundColor: "#2B2B2B",
     alignItems: "center",
-    marginHorizontal: 50
+    justifyContent: "center"
   },
-  homeScreenFilename: {
-    marginVertical: 7
-  },
-  codeHighlightText: {
-    color: "rgba(96,100,109, 0.8)"
-  },
-  codeHighlightContainer: {
-    backgroundColor: "rgba(0,0,0,0.05)",
-    borderRadius: 3,
-    paddingHorizontal: 4
-  },
-  getStartedText: {
-    fontSize: 17,
-    color: "rgba(96,100,109, 1)",
-    lineHeight: 24,
-    textAlign: "center"
-  },
-  tabBarInfoContainer: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    ...Platform.select({
-      ios: {
-        shadowColor: "black",
-        shadowOffset: { height: -3 },
-        shadowOpacity: 0.1,
-        shadowRadius: 3
-      },
-      android: {
-        elevation: 20
-      }
-    }),
-    alignItems: "center",
-    backgroundColor: "#fbfbfb",
-    paddingVertical: 20
-  },
-  tabBarInfoText: {
-    fontSize: 17,
-    color: "rgba(96,100,109, 1)",
-    textAlign: "center"
-  },
-  navigationFilename: {
-    marginTop: 5
-  },
-  helpContainer: {
+  label: {
+    alignSelf: "center",
+    color: "#258779",
     marginTop: 15,
-    alignItems: "center"
+    width: 140
   },
-  helpLink: {
-    paddingVertical: 15
+  h3: {
+    padding: 15,
+    textAlign: "center",
+    color: "#BDA747",
+    fontWeight: "600",
+    fontSize: 25,
+    fontFamily: "pacifico-regular",
+    textShadowColor: "#7f7f7f",
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 1
   },
-  helpLinkText: {
-    fontSize: 14,
-    color: "#2e78b7"
+  inputs: {
+    borderBottomColor: "#FFFFFF",
+    flex: 1
+  },
+  button: {
+    alignSelf: "center",
+    marginVertical: 5,
+    backgroundColor: "#BDA747",
+    paddingHorizontal: 50,
+    shadowColor: "#595959",
+    shadowRadius: 1,
+    shadowOpacity: 0.7,
+    borderRadius: 5,
+    shadowOffset: { width: 5, height: 5 }
   }
 });
+
 export default styles;

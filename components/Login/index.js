@@ -37,6 +37,8 @@ class Login extends Component {
     header: null
   };
   render() {
+    console.log(this.props.error);
+
     return (
       <Container style={styles.container}>
         <Content padder>
@@ -116,6 +118,7 @@ class Login extends Component {
 
 const mapStateToProps = state => ({
   user: state.auth.user,
+  error: state.auth.error,
   profile: state.auth.profile
 });
 

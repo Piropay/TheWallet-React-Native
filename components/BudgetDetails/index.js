@@ -14,12 +14,26 @@ import {
 import { Row, Grid, Col } from "react-native-easy-grid";
 import ActionButton from "react-native-action-button";
 import { Badge } from "react-native-elements";
-import { H3, Button, List, Card, CardItem, Body, Icon, H1 } from "native-base";
+
+import {
+  H3,
+  Button,
+  List,
+  Card,
+  CardItem,
+  Body,
+  Icon,
+  H2,
+  H1
+} from "native-base";
+
 import Speedometer from "react-native-speedometer-chart";
 import { connect } from "react-redux";
 
 import styles from "./styles";
+import Transaction from "../AddTransactionView";
 import { ScrollView } from "react-native-gesture-handler";
+import { Modal } from "react-native-paper";
 
 class BudgetDetails extends Component {
   constructor(props) {
@@ -30,6 +44,7 @@ class BudgetDetails extends Component {
     let budget = this.props.navigation.getParam("budget", {});
 
     this.state = {
+      modalVisible: false,
       dataSource: ds.cloneWithRows(
         this.props.transactions
           .filter(transaction => transaction.budget === budget.id)
@@ -38,6 +53,15 @@ class BudgetDetails extends Component {
     };
   }
 
+  // clickEventListener = () => {
+  //   this.setState(() => {
+  //     this.setModalVisible(true);
+  //   });
+  // };
+
+  setModalVisible(visible) {
+    this.setState({ modalVisible: visible });
+  }
   render() {
     let budget = this.props.navigation.getParam("budget", {});
     let transactions = this.props.transactions.filter(
@@ -50,6 +74,7 @@ class BudgetDetails extends Component {
       totalTransactions += parseFloat(transaction.amount);
     });
     let deviceWidth = Dimensions.get("window").width;
+    let deviceHeight = Dimensions.get("window").height;
 
     return (
       <View style={styles.container}>
@@ -119,7 +144,7 @@ class BudgetDetails extends Component {
             >
               {budget.label}
             </H3>
-            <Badge containerStyle={{ backgroundColor: "#D5C157" }}>
+            <Badge containerStyle={{ backgroundColor: "#E8D300" }}>
               <Text style={{ fontSize: 17, color: "#fff" }}>
                 amount: {budget.amount}
               </Text>
@@ -177,9 +202,49 @@ class BudgetDetails extends Component {
               </Card>
             )}
           </ScrollView>
+          <Modal
+            animationType={"fade"}
+            transparent={true}
+            onRequestClose={() => this.setModalVisible(false)}
+            visible={this.state.modalVisible}
+          >
+            <View style={styles.popupOverlay}>
+              <Card
+                style={[
+                  styles.shadow,
+                  styles.popup,
+                  { position: "relative", bottom: deviceHeight * 0.2 }
+                ]}
+              >
+                <View style={styles.popupContent}>
+                  <ScrollView contentContainerStyle={styles.modalInfo}>
+                    <H2 style={styles.h3}>Your Budget</H2>
+                    <H3 style={styles.name}>{budget.label}</H3>
+                    <Text style={styles.position}>{budget.amount} KWD</Text>
+                    <Text style={styles.position}>
+                      {budget.balance} KWD left to in your budget!
+                    </Text>
+
+                    <Transaction budget={budget} />
+                  </ScrollView>
+                </View>
+                <View style={styles.popupButtons}>
+                  <Button
+                    onPress={() => {
+                      this.setModalVisible(false);
+                    }}
+                    style={styles.btnClose}
+                  >
+                    <Text style={{ color: "wheat" }}>Close</Text>
+                  </Button>
+                </View>
+              </Card>
+            </View>
+          </Modal>
+
           <ActionButton buttonColor="rgba(231,76,60,1)">
             <ActionButton.Item
-              buttonColor="#9b59b6"
+              buttonColor="#E8D300"
               title="Update Budget"
               onPress={() =>
                 this.props.navigation.navigate("UpdateBudget", {
@@ -191,11 +256,9 @@ class BudgetDetails extends Component {
             </ActionButton.Item>
 
             <ActionButton.Item
-              buttonColor="#1abc9c"
+              buttonColor="#278979"
               title="Add a Transaction"
-              onPress={() =>
-                this.props.navigation.navigate("Add", { budget: budget })
-              }
+              onPress={() => this.setModalVisible(true)}
             >
               <Icon
                 name="add-to-list"
