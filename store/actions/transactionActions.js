@@ -2,7 +2,7 @@ import * as actionTypes from "./actionTypes";
 
 import axios from "axios";
 const instance = axios.create({
-  baseURL: "http://192.168.1.60/api/transaction/"
+  baseURL: "http://192.168.100.39/api/transaction/"
 });
 
 export const fetchTransactions = () => {

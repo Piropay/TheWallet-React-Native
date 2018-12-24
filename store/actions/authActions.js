@@ -9,7 +9,7 @@ import { fetchTransactions } from "./transactionActions";
 import { AsyncStorage } from "react-native";
 
 const instance = axios.create({
-  baseURL: "http://192.168.1.60/api/"
+  baseURL: "http://192.168.100.39/api/"
 });
 
 const setAuthToken = token => {

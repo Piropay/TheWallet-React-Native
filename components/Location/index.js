@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions";
-import { AsyncStorage } from "react-native";
+import { AsyncStorage, AppState } from "react-native";
+// import BackgroundTask from "react-native-background-task";
 import styles from "./styles";
 // NativeBase Components
 import {
@@ -19,6 +20,12 @@ import {
 } from "native-base";
 import { Platform, ScrollView, StyleSheet, View } from "react-native";
 
+// BackgroundTask.define(() => {
+//   console.log("Hello from a background task");
+//   this.render;
+//   BackgroundTask.finish();
+// });
+
 class Location extends Component {
   static navigationOptions = {
     title: "Location"
@@ -26,14 +33,27 @@ class Location extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      location: this.props.location
+      location: this.props.location,
+      appState: AppState.currentState
     };
   }
   async componentDidMount() {
     await this.props.getCurrentPositionThunk();
-    if (!this.props.fetching) {
-    }
+    // BackgroundTask.schedule({
+    //   period: 30 // Aim to run every 30 mins - more conservative on battery
+    // });
+    AppState.addEventListener("change", this._handleAppStateChange);
   }
+
+  _handleAppStateChange = nextAppState => {
+    if (this.state.appState.match(/inactive|background/)) {
+      this.render();
+      console.log("setting interval");
+      setInterval(this.render(), 10000);
+    }
+    this.setState({ appState: AppState.currentState });
+  };
+
   toRad = function(num) {
     return (num * Math.PI) / 180;
   };
@@ -86,7 +106,11 @@ class Location extends Component {
           profile.longitude = this.props.location.coords.longitude;
           profile.latitude = this.props.location.coords.latitude;
           profile.accuracy = this.props.location.coords.accuracy;
-
+          alert(
+            " Your location has changed by " +
+              (d / 1000).toFixed(2) +
+              " KMs dont forget to add any transactions you made"
+          );
           this.props.updateProfile(profile, this.props.navigation);
           // create notification
         }
