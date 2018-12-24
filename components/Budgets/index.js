@@ -82,10 +82,11 @@ class userBudgets extends Component {
       currentTotalBudget + this.props.totalUserBudget <
         this.props.profile.balance
     ) {
-      this.state.budgets.forEach(budget =>
-        this.props.addBudget(budget, this.props.navigation)
-      );
-      this.props.navigation.navigate("Home");
+      // this.state.budgets.forEach(budget =>
+      //   this.props.addBudget(budget, this.props.navigation)
+      // );
+      this.props.addBudget(this.state.budgets, this.props.navigation);
+      // this.props.navigation.navigate("Home");
       alert("Budgets Successfully added!");
     } else {
       alert(

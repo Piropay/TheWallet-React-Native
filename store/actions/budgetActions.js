@@ -19,34 +19,44 @@ export const fetchBudgets = () => {
   };
 };
 
-export const addBudget = (budget, navigation) => {
+// export const addBudget = (budget, navigation) => {
+//   return dispatch => {
+//     instance
+//       .post("create/", {
+//         label: budget.label,
+//         category: budget.category,
+//         amount: budget.amount
+//       })
+//       .then(res => res.data)
+//       .then(budget => {
+//         dispatch({
+//           type: actionTypes.ADD_BUDGET,
+//           payload: budget
+//         });
+//       })
+//       .catch(err => {
+//         console.log(err.response.data);
+//       });
+//   };
+// };
+
+export const addBudget = (budgets, navigation) => {
   return dispatch => {
     instance
-      .post("create/", {
-        label: budget.label,
-        category: budget.category,
-        amount: budget.amount
-      })
+      .post("create/", budgets)
       .then(res => res.data)
-      .then(budget => {
+      .then(budgets => {
         dispatch({
           type: actionTypes.ADD_BUDGET,
-          payload: budget
+          payload: budgets
         });
       })
-
+      .then(() => navigation.navigate("Home"))
       .catch(err => {
         console.log(err.response.data);
       });
   };
 };
-
-// export const addBudgets = budgets => {
-//   return {
-//     type: actionTypes.ADD_BUDGETS,
-//     payload: budgets
-//   };
-// };
 
 export const updateBudget = (budget, navigation) => {
   return dispatch => {
