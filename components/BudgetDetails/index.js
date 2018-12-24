@@ -9,8 +9,11 @@ import {
   Image,
   ListView,
   TouchableOpacity,
-  Dimensions
+  Dimensions,
+  RefreshControl
 } from "react-native";
+import * as actionCreators from "../../store/actions";
+
 import { Row, Grid, Col } from "react-native-easy-grid";
 import ActionButton from "react-native-action-button";
 import { Badge } from "react-native-elements";
@@ -42,9 +45,9 @@ class BudgetDetails extends Component {
       rowHasChanged: (r1, r2) => r1 !== r2
     });
     let budget = this.props.navigation.getParam("budget", {});
-
     this.state = {
       modalVisible: false,
+
       dataSource: ds.cloneWithRows(
         this.props.transactions
           .filter(transaction => transaction.budget === budget.id)
@@ -53,11 +56,11 @@ class BudgetDetails extends Component {
     };
   }
 
-  // clickEventListener = () => {
-  //   this.setState(() => {
-  //     this.setModalVisible(true);
-  //   });
-  // };
+  _onRefresh = () => {
+    this.setState({ refreshing: true });
+    this.props.fetchTransactions();
+    this.setState({ refreshing: false });
+  };
 
   setModalVisible(visible) {
     this.setState({ modalVisible: visible });
@@ -106,7 +109,7 @@ class BudgetDetails extends Component {
               }}
               size={deviceWidth * 0.5}
               outerColor="rgba(0,0,0,0)"
-              internalColor="#258779"
+              internalColor={parseFloat(budget.balance) < 0 ? "red" : "#258779"}
               showText
               text={String(totalTransactions)}
               textStyle={{
@@ -159,6 +162,12 @@ class BudgetDetails extends Component {
           <ScrollView
             style={styles.container}
             contentContainerStyle={styles.contentContainer}
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={this._onRefresh}
+              />
+            }
           >
             {transactions.length > 0 ? (
               <ListView
@@ -277,4 +286,11 @@ const mapStateToProps = state => ({
   profile: state.auth.profile,
   transactions: state.transaction.transactions
 });
-export default connect(mapStateToProps)(BudgetDetails);
+
+const mapDispatchToProps = dispatch => ({
+  fetchTransactions: () => dispatch(actionCreators.fetchTransactions())
+});
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(BudgetDetails);

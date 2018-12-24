@@ -73,7 +73,7 @@ export const signup = (userData, navigation) => {
       .then(() => {
         dispatch(login(userData, navigation, "signup"));
       })
-      .catch(err => dispatch(setErrors(err.response.data)));
+      .catch(err => console.log(err.response.data));
   };
 };
 

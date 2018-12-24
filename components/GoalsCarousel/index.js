@@ -30,7 +30,13 @@ class GoalsCarousel extends Component {
   }
 
   _renderItem({ item, index }) {
-    return <SliderEntry data={item} even={(index + 1) % 2 === 0} />;
+    return (
+      <SliderEntry
+        navigation={this.props.navigation}
+        data={item}
+        even={(index + 1) % 2 === 0}
+      />
+    );
   }
 
   _renderItemWithParallax({ item, index }, parallaxProps) {
@@ -45,11 +51,19 @@ class GoalsCarousel extends Component {
   }
 
   _renderLightItem({ item, index }) {
-    return <SliderEntry data={item} even={false} />;
+    return (
+      <SliderEntry
+        navigation={this.props.navigation}
+        data={item}
+        even={false}
+      />
+    );
   }
 
   _renderDarkItem({ item, index }) {
-    return <SliderEntry data={item} even={true} />;
+    return (
+      <SliderEntry navigation={this.props.navigation} data={item} even={true} />
+    );
   }
 
   mainExample(number, title) {
@@ -62,7 +76,11 @@ class GoalsCarousel extends Component {
         <Carousel
           ref={c => (this._slider1Ref = c)}
           data={ENTRIES1}
-          renderItem={this._renderItemWithParallax}
+          renderItem={
+            isTinder
+              ? this._renderLightItem.bind(this)
+              : this._renderItem.bind(this)
+          }
           sliderWidth={sliderWidth}
           itemWidth={itemWidth}
           hasParallaxImages={true}
@@ -134,7 +152,11 @@ class GoalsCarousel extends Component {
         </Text>
         <Carousel
           data={this.props.goals}
-          renderItem={isTinder ? this._renderLightItem : this._renderItem}
+          renderItem={
+            isTinder
+              ? this._renderLightItem.bind(this)
+              : this._renderItem.bind(this)
+          }
           sliderWidth={sliderWidth}
           itemWidth={itemWidth}
           containerCustomStyle={styles.slider}

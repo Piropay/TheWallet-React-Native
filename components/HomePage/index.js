@@ -9,11 +9,27 @@ import * as actionCreators from "../../store/actions";
 import styles from "./styles";
 
 class HomePage extends Component {
-  componentDidMount() {}
-  componentDidUpdate() {
-    console.log(this.props.profile);
+  componentDidMount() {
+    if (this.props.user) {
+      this.props.navigation.navigate("Home");
+    }
     try {
       if (this.props.fetched) {
+        if (this.props.profile.income !== null)
+          this.props.navigation.navigate("Home");
+        else {
+          this.props.navigation.navigate("SetIncome");
+        }
+      }
+    } catch (e) {
+    } finally {
+    }
+  }
+  componentDidUpdate(prevProps) {
+    try {
+      if (this.props.user !== prevProps.user && this.props.fetched) {
+        console.log("fetched");
+
         if (this.props.profile.income !== null)
           this.props.navigation.navigate("Home");
         else {
@@ -30,10 +46,10 @@ class HomePage extends Component {
   render() {
     return (
       <ScrollView
-        contentContainerStyle={{ alignItems: "center" }}
+        contentContainerStyle={{ top: 0, alignItems: "center" }}
         style={{ backgroundColor: "transparent" }}
       >
-        <View style={{ height: 400 }}>
+        <View>
           <Image
             style={{
               alignSelf: "center",

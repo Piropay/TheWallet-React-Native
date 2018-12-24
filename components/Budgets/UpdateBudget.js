@@ -33,7 +33,7 @@ class UpdateBudget extends Component {
     };
   }
 
-  handleSubmitBudget = async budget => {
+  handleSubmitBudget = async (budget, totalBudgets) => {
     let filled = false;
     let newBalance = 0;
     let { amount, category, label, balance } = { ...this.state };
@@ -44,10 +44,7 @@ class UpdateBudget extends Component {
     }
     newBalance = this.state.amount - budget.amount + parseFloat(balance);
 
-    if (
-      filled &&
-      amount + this.props.totalUserBudget < this.props.profile.balance
-    ) {
+    if (filled && amount + totalBudgets < this.props.profile.balance) {
       await this.setState({ balance: newBalance });
       this.props.updateBudget(this.state, this.props.navigation);
     } else {
@@ -59,6 +56,11 @@ class UpdateBudget extends Component {
 
   render() {
     let budget = this.props.navigation.getParam("budget", {});
+    let totalBudgets = 0;
+
+    this.props.profile.budgets.forEach(budget => {
+      totalBudgets += parseFloat(budget.amount);
+    });
     return (
       <ScrollView
         style={styles.container}
@@ -94,7 +96,7 @@ class UpdateBudget extends Component {
             ]}
           >
             balance left:
-            {this.props.profile.balance - this.props.totalUserBudget} KD
+            {this.props.profile.balance - totalBudgets} KD
           </H1>
 
           <Row>
@@ -117,9 +119,7 @@ class UpdateBudget extends Component {
               <Slider
                 step={1}
                 style={{ width: 200, alignSelf: "center" }}
-                maximumValue={
-                  this.props.profile.balance - this.props.totalUserBudget
-                }
+                maximumValue={this.props.profile.balance - totalBudgets}
                 value={this.state.amount}
                 onValueChange={value => this.setState({ amount: value })}
               />
@@ -127,8 +127,7 @@ class UpdateBudget extends Component {
                 {String(
                   (
                     (this.state.amount /
-                      (this.props.profile.balance -
-                        this.props.totalUserBudget)) *
+                      (this.props.profile.balance - totalBudgets)) *
                     100
                   ).toFixed(1)
                 )}
@@ -142,7 +141,7 @@ class UpdateBudget extends Component {
           style={styles.button}
           block
           full
-          onPress={() => this.handleSubmitBudget(budget)}
+          onPress={() => this.handleSubmitBudget(budget, totalBudgets)}
         >
           <Text>Submit</Text>
         </Button>

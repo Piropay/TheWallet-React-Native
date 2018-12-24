@@ -86,6 +86,7 @@ class userBudgets extends Component {
         this.props.addBudget(budget, this.props.navigation)
       );
       this.props.navigation.navigate("Home");
+      alert("Budgets Successfully added!");
     } else {
       alert(
         "Please make sure that you fill in all the boxes and that you're total budgets don't exceed your current balance"

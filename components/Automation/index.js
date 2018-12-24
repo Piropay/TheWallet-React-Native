@@ -12,11 +12,14 @@ class Automation extends Component {
   static navigationOptions = {
     header: null
   };
+  componentDidMount() {
+    this.props.fetchProfile();
+  }
   render() {
     let profile = this.props.profile;
     return (
       <ScrollView
-        contentContainerStyle={{ top: 40, alignItems: "center" }}
+        contentContainerStyle={{ top: 0, alignItems: "center" }}
         style={{ backgroundColor: "transparent" }}
       >
         <Image
@@ -66,6 +69,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchBudgets: () => dispatch(actionCreators.fetchBudgets()),
+  fetchProfile: () => dispatch(actionCreators.fetchProfile()),
   checkForExpiredToken: () => dispatch(actionCreators.checkForExpiredToken())
 });
 export default connect(

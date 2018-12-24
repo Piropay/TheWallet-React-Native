@@ -7,7 +7,6 @@ import {
   ScrollView,
   RefreshControl
 } from "react-native";
-import { Button } from "native-base";
 import * as actionCreators from "../../store/actions/authActions";
 
 import { VictoryPie, VictoryLabel } from "victory-native";
@@ -15,7 +14,6 @@ import { connect } from "react-redux";
 import ExpensesList from "../ExpensesList/ExpensesList";
 import { Modal } from "react-native-paper";
 import { Card, H2, Text, Button, H3 } from "native-base";
-import * as actionCreators from "../../store/actions";
 
 class ProfileView extends Component {
   constructor(props) {
@@ -54,6 +52,7 @@ class ProfileView extends Component {
     budgets.forEach(budget => {
       totalBudgets += parseFloat(budget.amount);
     });
+
     return (
       <ScrollView
         refreshControl={
@@ -65,7 +64,7 @@ class ProfileView extends Component {
       >
         <View style={styles.container}>
           <View style={styles.header}>
-            <View style={styles.headerContent}>
+            <View style={styles.a}>
               <VictoryPie
                 padAngle={3}
                 innerRadius={50}
@@ -129,6 +128,7 @@ class ProfileView extends Component {
                   }
                 ]}
                 style={{
+                  marginTop: 100,
                   labels: {
                     fill: "#158900",
                     fontSize: 13,
@@ -178,7 +178,6 @@ class ProfileView extends Component {
               >
                 <Text>Logout</Text>
               </TouchableOpacity>
-
             </View>
           </View>
         </View>

@@ -29,9 +29,7 @@ class AddDeposit extends React.Component {
     });
   }
   sendDeposit() {
-    if (this.state.goal === undefined) {
-      alert("Please select a goal");
-    } else if (this.state.amount === 0) {
+    if (this.state.amount === 0) {
       alert("Please enter a valid value");
     } else {
       let setGoal = this.props.goals.find(b => {
@@ -60,7 +58,9 @@ class AddDeposit extends React.Component {
               style={styles.inputs}
               placeholder="0.00 KWD"
               keyboardType="decimal-pad"
-              onChangeText={value => this.setState({ amount: parseInt(value) })}
+              onChangeText={value =>
+                this.setState({ amount: parseFloat(value) })
+              }
             />
           </Item>
         </Form>

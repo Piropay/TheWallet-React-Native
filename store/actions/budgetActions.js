@@ -36,7 +36,7 @@ export const addBudget = (budget, navigation) => {
       })
 
       .catch(err => {
-        dispatch(console.log(err.response.data));
+        console.log(err.response.data);
       });
   };
 };

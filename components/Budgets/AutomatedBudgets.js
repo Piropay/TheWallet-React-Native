@@ -28,32 +28,32 @@ class AutoMatedBudgets extends Component {
         {
           category: "Food",
           label: "Food",
-          amount: (this, props.profile.balance * 0.25)
+          amount: this.props.profile.balance * 0.25
         },
         {
           category: "Health",
           label: "Health",
-          amount: (this, props.profile.balance * 0.05)
+          amount: this.props.profile.balance * 0.05
         },
         {
           category: "Emergency",
           label: "Emergency",
-          amount: (this, props.profile.balance * 0.1)
+          amount: this.props.profile.balance * 0.1
         },
         {
           category: "Entertainment",
           label: "Entertainment",
-          amount: (this, props.profile.balance * 0.2)
+          amount: this.props.profile.balance * 0.2
         },
         {
           category: "Transportation",
           label: "Transportation",
-          amount: (this, props.profile.balance * 0.05)
+          amount: this.props.profile.balance * 0.05
         },
         {
           category: "Personal",
           label: "Personal",
-          amount: (this, props.profile.balance * 0.2)
+          amount: this.props.profile.balance * 0.2
         }
       ],
       value: 50
@@ -75,7 +75,7 @@ class AutoMatedBudgets extends Component {
     }));
   };
 
-  handleSubmitBudget = async totalBudget => {
+  handleSubmitBudget = totalBudget => {
     this.state.budgets.forEach(budget => {
       let { amount, category, label } = { ...budget };
     });
@@ -83,13 +83,21 @@ class AutoMatedBudgets extends Component {
       this.state.budgets.forEach(budget =>
         this.props.addBudget(budget, this.props.navigation)
       );
+      // for (let budget in this.state.budgets) {
+      //   await this.props.addBudget(budget, this.props.navigation);
+      // }
       let profile = this.props.profile;
-      let totalE = 0;
-      this.props.expenses.forEach(expense => (totalE += expense.amount));
+      // let totalE = 0;
+      // this.props.expenses.forEach(expense => (totalE += expense.amount));
 
       profile.automated = true;
-      profile.balance = profile.income - totalE;
+      // profile.balance = profile.income - totalE;
+      // console.log(profile);
+      profile = { ...profile };
+      console.log(profile);
+
       this.props.updateProfile(profile, this.props.navigation);
+      // this.props.navigation.navigate("Home");
     } else {
       alert(
         "Please make sure that you fill in all the boxes and that you're total budgets don't exceed your current balance"
@@ -104,32 +112,32 @@ class AutoMatedBudgets extends Component {
         {
           category: "Food",
           label: "Food",
-          amount: (this, this.props.profile.balance * 0.25)
+          amount: this.props.profile.balance * 0.25
         },
         {
           category: "Health",
           label: "Health",
-          amount: (this, this.props.profile.balance * 0.05)
+          amount: this.props.profile.balance * 0.05
         },
         {
           category: "Emergency",
           label: "Emergency",
-          amount: (this, this.props.profile.balance * 0.1)
+          amount: this.props.profile.balance * 0.1
         },
         {
           category: "Entertainment",
           label: "Entertainment",
-          amount: (this, this.props.profile.balance * 0.2)
+          amount: this.props.profile.balance * 0.2
         },
         {
           category: "Transportation",
           label: "Transportation",
-          amount: (this, this.props.profile.balance * 0.05)
+          amount: this.props.profile.balance * 0.05
         },
         {
           category: "Personal",
           label: "Personal",
-          amount: (this, this.props.profile.balance * 0.2)
+          amount: this.props.profile.balance * 0.2
         }
       ]
     });
@@ -241,10 +249,10 @@ const mapActionsToProps = dispatch => {
   return {
     addBudget: (budget, navigation) =>
       dispatch(actionCreators.addBudget(budget, navigation)),
-    getBalance: (income, expenses) =>
-      dispatch(actionCreators.getBalance(income, expenses)),
+
     updateProfile: (profile, navigation) =>
-      dispatch(actionCreators.updateProfile(profile, navigation))
+      dispatch(actionCreators.updateProfile(profile, navigation)),
+    fetchProfile: () => dispatch(actionCreators.fetchProfile())
   };
 };
 

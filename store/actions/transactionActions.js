@@ -42,10 +42,11 @@ export const addTransaction = (transaction, budget_id, navigation) => {
           type: actionTypes.SUBTRACT_BUDGET,
           payload: transaction
         });
+        navigation.navigate("Budgets");
       })
-      .then(() => navigation.navigate("Budgets"))
+      // .then(() => navigation.navigate("Budgets"))
       .catch(err => {
-        dispatch(console.log(err.response.data));
+        //dispatch(console.log(err.response));
       });
   };
 };
@@ -71,7 +72,7 @@ export const updateTransaction = (
         });
       })
       .catch(err => {
-        dispatch(console.log(err.response.data));
+        // dispatch(console.log(err.response.data));
       });
   };
 };

@@ -3970,6 +3970,11 @@ is-promise@^2.1.0:
   resolved "https://registry.yarnpkg.com/is-promise/-/is-promise-2.1.0.tgz#79a2a9ece7f096e80f36d2b2f3bc16c1ff4bf3fa"
   integrity sha1-eaKp7OfwlugPNtKy87wWwf9L8/o=
 
+is-promise@~2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/is-promise/-/is-promise-2.0.0.tgz#058b6404ba57c4df03c92ed987c000bda58753a6"
+  integrity sha1-BYtkBLpXxN8DyS7Zh8AAvaWHU6Y=
+
 is-regex@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/is-regex/-/is-regex-1.0.4.tgz#5517489b547091b0930e095654ced25ee97e9491"
@@ -6173,6 +6178,13 @@ react-native-reanimated@1.0.0-alpha.10:
   resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-1.0.0-alpha.10.tgz#e9e6fb35a2cf52fdc912b9fbc76f34f80698e530"
   integrity sha512-dbZG/Lh5Q+6zRvS7+gIkZKmXTG7XVqHbpMROL1LApBBMQwuLq/uLtKk/nBSn1+mNmazPrPMTehI7TG3AEkctww==
 
+react-native-refresher@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-refresher/-/react-native-refresher-0.1.1.tgz#865be133328bc7eaa5983898cafd0ed750b14b73"
+  integrity sha1-hlvhMzKLx+qlmDiYyv0O11CxS3M=
+  dependencies:
+    is-promise "~2.0.0"
+
 react-native-safe-area-view@0.11.0:
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/react-native-safe-area-view/-/react-native-safe-area-view-0.11.0.tgz#4f3dda43c2bace37965e7c6aef5fc83d4f19d174"
@@ -6204,6 +6216,14 @@ react-native-screens@^1.0.0-alpha.11:
   resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-1.0.0-alpha.17.tgz#8c1a7224b967c476670963fce7d06b946e7158e9"
   integrity sha512-BvLtqbMpteXsY3XofCCX0c2LM6X14PhjN5FZraROEXuEnw8n8ImDTuXxUPDYZqq2Wjb1bLlm1zE5+c6dcGlY+Q==
 
+react-native-snap-carousel@^3.7.5:
+  version "3.7.5"
+  resolved "https://registry.yarnpkg.com/react-native-snap-carousel/-/react-native-snap-carousel-3.7.5.tgz#7172456d40ab9161523055eb302f9b03b244240a"
+  integrity sha512-t0/wkjA4Doehv3QTcmzO56G7paGtYsvJgw9XrFI7GCDLK7MrHTiN22ROuJOxMy61nPetyjDAS0Qa3XMl8K7rVQ==
+  dependencies:
+    prop-types "^15.6.1"
+    react-addons-shallow-compare "15.6.2"
+
 react-native-speedometer-chart@^0.6.4:
   version "0.6.4"
   resolved "https://registry.yarnpkg.com/react-native-speedometer-chart/-/react-native-speedometer-chart-0.6.4.tgz#006a627ecb496a322771e999429e48375bac2657"
@@ -6221,13 +6241,6 @@ react-native-svg-charts@^5.2.0:
     d3-scale "^1.0.6"
     d3-shape "^1.0.6"
     prop-types "^15.6.0"
-react-native-snap-carousel@^3.7.5:
-  version "3.7.5"
-  resolved "https://registry.yarnpkg.com/react-native-snap-carousel/-/react-native-snap-carousel-3.7.5.tgz#7172456d40ab9161523055eb302f9b03b244240a"
-  integrity sha512-t0/wkjA4Doehv3QTcmzO56G7paGtYsvJgw9XrFI7GCDLK7MrHTiN22ROuJOxMy61nPetyjDAS0Qa3XMl8K7rVQ==
-  dependencies:
-    prop-types "^15.6.1"
-    react-addons-shallow-compare "15.6.2"
 
 react-native-svg@8.0.8:
   version "8.0.8"
