@@ -46,7 +46,7 @@ export const addDeposit = (deposit, goal_id, navigation) => {
         })
       )
       .catch(err => {
-        // dispatch(console.log(err.response));
+        console.log(err.response.data);
       });
   };
 };
