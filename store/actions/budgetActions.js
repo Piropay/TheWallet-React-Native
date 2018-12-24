@@ -1,6 +1,7 @@
 import * as actionTypes from "./actionTypes";
 
 import axios from "axios";
+import { updateProfile } from "./authActions";
 const instance = axios.create({
   baseURL: "http://68.183.217.91/api/budget/"
 });
@@ -40,17 +41,31 @@ export const fetchBudgets = () => {
 //   };
 // };
 
-export const addBudget = (budgets, navigation) => {
+export const addBudget = (budgets, navigation, type, profile) => {
+  console.log("budgets", budgets);
+
   return dispatch => {
-    instance
+    return instance
       .post("create/", budgets)
       .then(res => res.data)
       .then(budgets => {
+        console.log("new ", budgets);
+
         dispatch({
           type: actionTypes.ADD_BUDGET,
           payload: budgets
         });
       })
+      .then(() => {
+        if (type === "auto") {
+          profile = { ...profile, automated: true };
+          dispatch(updateProfile(profile));
+          navigation.navigate("Home");
+        } else {
+          navigation.navigate("BudgesView");
+        }
+      })
+
       .then(() => navigation.navigate("Home"))
       .catch(err => {
         console.log(err.response.data);

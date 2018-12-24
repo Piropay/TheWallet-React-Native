@@ -70,10 +70,9 @@ class mandatoryInfo extends Component {
     });
 
     if (filled && totalExpense < this.props.profile.income) {
-      for (let expense of this.state.expenses) {
-        await this.props.addExpenses(expense);
-      }
-      this.props.navigation.navigate("Automation");
+      await this.props.addExpenses(this.state.expenses, this.props.navigation);
+
+      // this.props.navigation.navigate("Automation");
     } else {
       alert(
         "Please fill in all boxes and make sure that your expenses don't exceed your income"

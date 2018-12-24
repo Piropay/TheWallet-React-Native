@@ -61,7 +61,7 @@ export const login = (userData, navigation, type) => {
         }
       })
 
-      .catch(err => dispatch(setErrors(err.response.data)));
+      .catch(err => console.log(err.response.data));
   };
 };
 

@@ -29,11 +29,13 @@ export const addDeposit = (deposit, goal_id, navigation) => {
   return dispatch => {
     instance
       .post("create/", {
-        amount: deposit.amount,
+        amount: deposit,
         goal: goal_id
       })
       .then(res => res.data)
       .then(deposit => {
+        console.log(deposit);
+
         dispatch({
           type: actionTypes.ADD_DEPOSIT,
           payload: deposit

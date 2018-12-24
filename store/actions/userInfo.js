@@ -5,13 +5,10 @@ const instance = axios.create({
   baseURL: "http://68.183.217.91/api/expense/"
 });
 
-export const addExpenses = (expense, navigation) => {
+export const addExpenses = (expenses, navigation) => {
   return dispatch => {
     instance
-      .post("create/", {
-        label: expense.label,
-        amount: expense.amount
-      })
+      .post("create/", expenses)
       .then(res => res.data)
       .then(expense => {
         dispatch({
@@ -19,6 +16,7 @@ export const addExpenses = (expense, navigation) => {
           payload: expense
         });
       })
+      .then(() => navigation.navigate("Automation"))
       .catch(err => {
         dispatch(console.log(err.response));
       });

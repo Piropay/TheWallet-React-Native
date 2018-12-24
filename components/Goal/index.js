@@ -22,7 +22,7 @@ class Goal extends Component {
     super(props);
     this.state = {
       totalGoal: 0,
-      goals: [{ end_date: "", label: "", amount: "0" }]
+      goals: [{ end_date: "", label: "", amount: "0", balance: "0" }]
     };
     this.handleAddGoal = this.handleAddGoal.bind(this);
     this.handleGoalLabelChange = this.handleGoalLabelChange.bind(this);
@@ -56,7 +56,9 @@ class Goal extends Component {
 
   handleAddGoal = () => {
     this.setState({
-      goals: this.state.goals.concat([{ end_date: "", label: "", amount: "0" }])
+      goals: this.state.goals.concat([
+        { end_date: "", label: "", amount: "0", balance: "0" }
+      ])
     });
   };
   handleSubmitGoal = () => {
@@ -69,12 +71,9 @@ class Goal extends Component {
       }
     });
     if (filled) {
-      let today = new Date();
+      this.props.addGoal(this.state.goals, this.props.navigation);
 
-      this.state.goals.forEach(goal => {
-        this.props.addGoal(goal, this.props.navigation);
-      });
-      this.props.navigation.navigate("GoalsView");
+      // this.props.navigation.navigate("GoalsView");
     } else {
       alert("Please make sure that you fill in all the boxes");
     }
@@ -88,9 +87,15 @@ class Goal extends Component {
   };
 
   onValueChange2(value, i) {
+    let date =
+      value.getFullYear() +
+      "-" +
+      (value.getMonth() + 1) +
+      "-" +
+      value.getDate();
     const newEndDate = this.state.goals.map((goal, sidx) => {
       if (i !== sidx) return goal;
-      return { ...goal, end_date: value };
+      return { ...goal, end_date: date };
     });
 
     this.setState({
@@ -204,8 +209,8 @@ const mapStateToProps = state => ({
 
 const mapActionsToProps = dispatch => {
   return {
-    addGoal: (goal, navigation) =>
-      dispatch(actionCreators.addGoal(goal, navigation))
+    addGoal: (goals, navigation) =>
+      dispatch(actionCreators.addGoal(goals, navigation))
   };
 };
 

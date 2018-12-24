@@ -49,7 +49,7 @@ class ProfileView extends Component {
 
     let totalBudgets = 0;
 
-    budgets.forEach(budget => {
+    this.props.budgets.forEach(budget => {
       totalBudgets += parseFloat(budget.amount);
     });
 
@@ -257,6 +257,7 @@ class ProfileView extends Component {
 const mapStateToProps = state => ({
   user: state.auth.user,
   profile: state.auth.profile,
+  budgets: state.budget.budgets,
   expenses: state.userInfo.expenses
 });
 const mapDispatchToProps = dispatch => ({

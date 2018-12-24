@@ -28,7 +28,7 @@ class UpdateBudget extends Component {
       id: budget.id,
       category: budget.category,
       label: budget.label,
-      amount: parseFloat(budget.amount),
+      amount: parseFloat(budget.balance),
       balance: budget.balance
     };
   }

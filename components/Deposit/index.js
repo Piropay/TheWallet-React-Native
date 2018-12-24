@@ -23,26 +23,22 @@ class AddDeposit extends React.Component {
       amount: 0
     };
   }
-  onValueChange2(value) {
-    this.setState({
-      goal: value
-    });
-  }
+
   sendDeposit() {
     if (this.state.amount === 0) {
       alert("Please enter a valid value");
     } else {
-      let setGoal = this.props.goals.find(b => {
-        if (b.id === this.state.goal.id) {
-          return b;
-        }
-        return false;
-      });
-      setGoal.amount = setGoal.amount - this.state.amount;
+      // let setGoal = this.props.goals.find(b => {
+      //   if (b.id === this.state.goal.id) {
+      //     return b;
+      //   }
+      //   return false;
+      // });
+      // setGoal.amount = setGoal.amount - this.state.amount;
 
       this.props.addDeposit(
-        { amount: this.state.amount },
-        this.state.goal.id,
+        this.state.amount,
+        this.props.goal.id,
         this.props.navigation
       );
     }
