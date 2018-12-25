@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js remove react-native-refresher
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add react-native-walkthrough-tooltip
 
 PATH: 
   C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Intel\iCLS Client\;C:\ProgramData\Oracle\Java\javapath;C:\Program Files\Intel\iCLS Client\;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Users\Samy\Downloads\Programs\opencv\build\bin\Release;C:\Program Files (x86)\GtkSharp\2.12\bin;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Java\jdk-10.0.1\bin;C:\Program Files\Java\jre-10.0.1\bin;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Users\Samy\AppData\Local\Programs\Python\Python37-32;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\Samy\AppData\Local\Programs\Python\Python37-32\Scripts;C:\Program Files (x86)\Notepad++;C:\Program Files\Sublime Text 3;;D:\Git LFS;C:\Program Files\nodejs\;C:\Program Files (x86)\Yarn\bin\;C:\Users\Samy\AppData\Local\Programs\Python\Python37-32\Scripts;C:\Users\Samy\AppData\Local\Programs\Python\Python37-32\;C:\Program Files\Java\jdk1.8.0_112\bin;C:\Users\Samy\AppData\Local\Microsoft\WindowsApps;C:\Users\Samy\AppData\Local\GitHubDesktop\bin;C:\Program Files (x86)\Notepad++;C:\Program Files\Sublime Text 3;C:\Users\Samy\AppData\Roaming\npm;C:\Users\Samy\AppData\Local\Yarn\bin;C:\Users\Samy\AppData\Local\atom\bin;C:\Users\Samy\AppData\Local\Programs\Microsoft VS Code\bin
@@ -47,6 +47,7 @@ npm manifest:
       "react-native-elements": "^0.19.1",
       "react-native-linear-gradient": "^2.5.3",
       "react-native-paper": "^2.3.0",
+      "react-native-progress-bar-animated": "^1.0.6",
       "react-native-snap-carousel": "^3.7.5",
       "react-native-speedometer-chart": "^0.6.4",
       "react-native-svg-charts": "^5.2.0",
@@ -4039,11 +4040,6 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/is-promise/-/is-promise-2.1.0.tgz#79a2a9ece7f096e80f36d2b2f3bc16c1ff4bf3fa"
     integrity sha1-eaKp7OfwlugPNtKy87wWwf9L8/o=
   
-  is-promise@~2.0.0:
-    version "2.0.0"
-    resolved "https://registry.yarnpkg.com/is-promise/-/is-promise-2.0.0.tgz#058b6404ba57c4df03c92ed987c000bda58753a6"
-    integrity sha1-BYtkBLpXxN8DyS7Zh8AAvaWHU6Y=
-  
   is-regex@^1.0.4:
     version "1.0.4"
     resolved "https://registry.yarnpkg.com/is-regex/-/is-regex-1.0.4.tgz#5517489b547091b0930e095654ced25ee97e9491"
@@ -6242,17 +6238,17 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/react-native-platform-touchable/-/react-native-platform-touchable-1.1.1.tgz#fde4acc65eea585d28b164d0c3716a42129a68e4"
     integrity sha1-/eSsxl7qWF0osWTQw3FqQhKaaOQ=
   
+  react-native-progress-bar-animated@^1.0.6:
+    version "1.0.6"
+    resolved "https://registry.yarnpkg.com/react-native-progress-bar-animated/-/react-native-progress-bar-animated-1.0.6.tgz#18de003ababb8222c84299ef2f20d0eab549dc19"
+    integrity sha512-UPAAwxtBVV+sPwhgVd78SA7QybPshV5CydaV0GJyM+eZ89ikkZQSasAUAgIQwVVCW1Tj6XNrgizimXM9JdczeA==
+    dependencies:
+      prop-types "^15.6.0"
+  
   react-native-reanimated@1.0.0-alpha.10:
     version "1.0.0-alpha.10"
     resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-1.0.0-alpha.10.tgz#e9e6fb35a2cf52fdc912b9fbc76f34f80698e530"
     integrity sha512-dbZG/Lh5Q+6zRvS7+gIkZKmXTG7XVqHbpMROL1LApBBMQwuLq/uLtKk/nBSn1+mNmazPrPMTehI7TG3AEkctww==
-  
-  react-native-refresher@^0.1.1:
-    version "0.1.1"
-    resolved "https://registry.yarnpkg.com/react-native-refresher/-/react-native-refresher-0.1.1.tgz#865be133328bc7eaa5983898cafd0ed750b14b73"
-    integrity sha1-hlvhMzKLx+qlmDiYyv0O11CxS3M=
-    dependencies:
-      is-promise "~2.0.0"
   
   react-native-safe-area-view@0.11.0:
     version "0.11.0"

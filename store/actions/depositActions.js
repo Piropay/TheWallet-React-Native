@@ -44,7 +44,14 @@ export const addDeposit = (deposit, goal_id, navigation) => {
       .then(() =>
         Toast.show({
           text: "Deposit added!",
-          buttonText: "Okay"
+          buttonText: "Okay",
+          duration: 6000,
+          type: "success",
+          buttonTextStyle: { color: "#000" },
+          buttonStyle: {
+            backgroundColor: "#F1C04F",
+            alignSelf: "center"
+          }
         })
       )
       .catch(err => {

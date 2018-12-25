@@ -79,21 +79,11 @@ class AutoMatedBudgets extends Component {
 
   handleSubmitBudget = totalBudget => {
     if (totalBudget < this.props.profile.balance) {
-      this.state.budgets.forEach(budget =>
-        this.props.addBudget(
-          [budget],
-          this.props.navigation,
-          this.props.profile
-        )
+      this.props.addBudget(
+        this.state.budgets,
+        this.props.navigation,
+        this.props.profile
       );
-
-      //keep this until Khalid deploys to the server then switch instead of
-      //the for loop
-      // this.props.addBudget(
-      //   this.state.budgets,
-      //   this.props.navigation,
-      //   this.props.profile
-      // );
     } else {
       Toast.show({
         text:
@@ -231,7 +221,6 @@ class AutoMatedBudgets extends Component {
             full
             onPress={() => this.resetBudgets()}
           >
-
             <Text style={styles.buttontext}>Reset</Text>
           </Button>
           <Button
@@ -244,23 +233,20 @@ class AutoMatedBudgets extends Component {
           </Button>
         </View>
         <Card padder style={styles.mainCard}>
-          <Text >
-            These are the suggested budgets for you!
-          </Text>
-    <H2  style={[
+          <Text>These are the suggested budgets for you!</Text>
+          <H2
+            style={[
               styles.text,
               {
                 color: "#2b2b2b",
                 paddingTop: 20
               }
-            ]}>
+            ]}
+          >
             Balance {parseFloat(this.props.profile.balance).toFixed(3)} KD{" "}
             {"\n"} Total Budget
             {totalBudget.toFixed(3)} KD
           </H2>
-
-      
-
 
           <ScrollView contentContainerStyle={styles.contentContainer}>
             {inputRows}

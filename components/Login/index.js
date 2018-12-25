@@ -18,9 +18,9 @@ import {
   Input,
   Container,
   Icon,
-  H1
+  H1,
+  Toast
 } from "native-base";
-
 class Login extends Component {
   static navigationOptions = {
     title: "Login"
@@ -36,8 +36,15 @@ class Login extends Component {
   static navigationOptions = {
     header: null
   };
+
+  isEmpty(obj) {
+    for (let key in obj) {
+      if (obj.hasOwnProperty(key)) return false;
+    }
+    return true;
+  }
   render() {
-    // console.log(this.props.error);
+    console.log(this.props.error);
 
     return (
       <Container>
@@ -78,7 +85,9 @@ class Login extends Component {
                     placeholder="Username"
                     autoCorrect={false}
                     autoCapitalize="none"
-                    onChangeText={value => this.setState({ username: value })}
+                    onChangeText={value => {
+                      this.setState({ username: value });
+                    }}
                   />
                 </Item>
                 <Item style={styles.label}>
@@ -108,9 +117,49 @@ class Login extends Component {
                 rounded
                 dark
                 style={styles.button}
-                onPress={() =>
-                  this.props.login(this.state, this.props.navigation, "login")
-                }
+                onPress={() => {
+                  this.props.login(this.state, this.props.navigation, "login");
+
+                  if (this.props.error.username) {
+                    Toast.show({
+                      text: "Username: " + this.props.error.username,
+                      buttonText: "Okay",
+                      duration: 6000,
+                      type: "warning",
+                      buttonTextStyle: { color: "#000" },
+                      buttonStyle: {
+                        backgroundColor: "#F1C04F",
+                        alignSelf: "center"
+                      }
+                    });
+                  }
+                  if (this.props.error.password) {
+                    Toast.show({
+                      text: "Password: " + this.props.error.password,
+                      buttonText: "Okay",
+                      duration: 6000,
+                      type: "warning",
+                      buttonTextStyle: { color: "#000" },
+                      buttonStyle: {
+                        backgroundColor: "#F1C04F",
+                        alignSelf: "center"
+                      }
+                    });
+                  }
+                  if (this.props.error.non_field_errors) {
+                    Toast.show({
+                      text: this.props.error.non_field_errors,
+                      buttonText: "Okay",
+                      duration: 6000,
+                      type: "warning",
+                      buttonTextStyle: { color: "#000" },
+                      buttonStyle: {
+                        backgroundColor: "#F1C04F",
+                        alignSelf: "center"
+                      }
+                    });
+                  }
+                }}
               >
                 <Text style={styles.text}>Login</Text>
               </Button>
@@ -130,7 +179,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   login: (userData, navigation) =>
-    dispatch(actionCreators.login(userData, navigation, "login"))
+    dispatch(actionCreators.login(userData, navigation, "login")),
+  reserError: () => dispatch(actionCreators.setErrors())
 });
 
 export default connect(

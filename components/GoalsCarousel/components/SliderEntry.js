@@ -76,7 +76,7 @@ export default class SliderEntry extends Component {
             onRequestClose={() => this.setModalVisible(false)}
             visible={this.state.modalVisible}
           >
-            <View style={[{ position: "absolute", bottom: -50 }]}>
+            <View style={[{ position: "absolute", bottom: 0 }]}>
               <Card style={[styles.shadow, styles.popup]}>
                 <View style={styles.popupContent}>
                   <ScrollView contentContainerStyle={styles.modalInfo}>

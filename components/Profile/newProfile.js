@@ -164,7 +164,6 @@ class ProfileView extends Component {
               <Text style={styles.description}>Number {prof.phoneNo}</Text>
               <Text style={styles.description}>Date Of Birth: {prof.dob}</Text>
               <Text style={styles.description}>Gender: {prof.gender}</Text>
-
               <TouchableOpacity
                 onPress={() => this.props.navigation.navigate("Report")}
                 style={styles.buttonContainer}

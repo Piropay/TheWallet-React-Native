@@ -7,7 +7,16 @@ import {
   Text,
   View
 } from "react-native";
-import { Button, Form, Item, Picker, Icon, Input, H3 } from "native-base";
+import {
+  Button,
+  Form,
+  Item,
+  Picker,
+  Icon,
+  Input,
+  H3,
+  Toast
+} from "native-base";
 import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions";
 import styles from "./styles";
@@ -35,14 +44,6 @@ class AddDeposit extends React.Component {
         buttonStyle: { backgroundColor: "#F1C04F", alignSelf: "center" }
       });
     } else {
-      // let setGoal = this.props.goals.find(b => {
-      //   if (b.id === this.state.goal.id) {
-      //     return b;
-      //   }
-      //   return false;
-      // });
-      // setGoal.amount = setGoal.amount - this.state.amount;
-
       this.props.addDeposit(
         this.state.amount,
         this.props.goal.id,

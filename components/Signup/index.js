@@ -19,7 +19,8 @@ import {
   Input,
   Container,
   Icon,
-  H1
+  H1,
+  Toast
 } from "native-base";
 
 class Signup extends Component {
@@ -36,6 +37,8 @@ class Signup extends Component {
   }
 
   render() {
+    console.log(this.props.error);
+
     return (
       <Container>
         <LinearGradient
@@ -118,12 +121,47 @@ class Signup extends Component {
               dark
               style={styles.button}
               onPress={() => {
-                if (
-                  this.state.password === this.state.confirm &&
-                  this.state.username !== ""
-                )
-                  this.props.signup(this.state, this.props.navigation);
-                else {
+                this.props.signup(this.state, this.props.navigation);
+                if (this.props.error.username) {
+                  Toast.show({
+                    text: "Username: " + this.props.error.username,
+                    buttonText: "Okay",
+                    duration: 6000,
+                    type: "warning",
+                    buttonTextStyle: { color: "#000" },
+                    buttonStyle: {
+                      backgroundColor: "#F1C04F",
+                      alignSelf: "center"
+                    }
+                  });
+                }
+                if (this.props.error.password) {
+                  Toast.show({
+                    text: "Password: " + this.props.error.password,
+                    buttonText: "Okay",
+                    duration: 6000,
+                    type: "warning",
+                    buttonTextStyle: { color: "#000" },
+                    buttonStyle: {
+                      backgroundColor: "#F1C04F",
+                      alignSelf: "center"
+                    }
+                  });
+                }
+                if (this.props.error.non_field_errors) {
+                  Toast.show({
+                    text: this.props.error.non_field_errors,
+                    buttonText: "Okay",
+                    duration: 6000,
+                    type: "warning",
+                    buttonTextStyle: { color: "#000" },
+                    buttonStyle: {
+                      backgroundColor: "#F1C04F",
+                      alignSelf: "center"
+                    }
+                  });
+                }
+                if (this.state.password !== this.state.confirm) {
                   Toast.show({
                     text: "Your passwords don't match!",
                     buttonText: "Okay",
@@ -149,7 +187,8 @@ class Signup extends Component {
 
 const mapStateToProps = state => ({
   user: state.auth.user,
-  profile: state.auth.profile
+  profile: state.auth.profile,
+  error: state.auth.error
 });
 
 const mapDispatchToProps = dispatch => ({

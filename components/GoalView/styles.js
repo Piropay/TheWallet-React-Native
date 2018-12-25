@@ -14,10 +14,12 @@ const styles = StyleSheet.create({
   },
 
   popup: {
+    alignSelf: "center",
     backgroundColor: "#fff",
     marginTop: 80,
     marginHorizontal: 40,
-    borderRadius: 10
+    borderRadius: 10,
+    width: "95%"
   },
   shadow: {
     shadowColor: "#595959",

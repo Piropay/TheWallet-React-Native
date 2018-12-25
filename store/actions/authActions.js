@@ -61,7 +61,7 @@ export const login = (userData, navigation, type) => {
         }
       })
 
-      .catch(err => console.log(err.response.data));
+      .catch(err => dispatch(setErrors(err.response.data)));
   };
 };
 
@@ -73,7 +73,7 @@ export const signup = (userData, navigation) => {
       .then(() => {
         dispatch(login(userData, navigation, "signup"));
       })
-      .catch(err => console.log(err.response.data));
+      .catch(err => dispatch(setErrors(err.response.data)));
   };
 };
 
@@ -170,4 +170,7 @@ export const fetchProfile = () => {
   };
 };
 
-export const setErrors = errors => ({ type: SET_ERRORS, payload: errors });
+export const setErrors = errors => ({
+  type: actionTypes.SET_ERROR,
+  payload: errors
+});

@@ -70,6 +70,8 @@ const styles = StyleSheet.create({
   },
   popup: {
     backgroundColor: "#fff",
+    width: "95%",
+    alignSelf: "center",
     marginHorizontal: 40,
     borderRadius: 10
   },

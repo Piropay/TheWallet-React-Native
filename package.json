@@ -28,6 +28,7 @@
     "react-native-elements": "^0.19.1",
     "react-native-linear-gradient": "^2.5.3",
     "react-native-paper": "^2.3.0",
+    "react-native-progress-bar-animated": "^1.0.6",
     "react-native-snap-carousel": "^3.7.5",
     "react-native-speedometer-chart": "^0.6.4",
     "react-native-svg-charts": "^5.2.0",
