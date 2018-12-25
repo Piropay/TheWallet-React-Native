@@ -40,6 +40,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.7,
     borderRadius: 5,
     shadowOffset: { width: 5, height: 5 }
+  },
+  container: {
+    backgroundColor: "#2B2B2B",
+    marginVertical: 30
+  },
+  contentContainer: {
+    paddingVertical: 20
   }
 });
 export default styles;

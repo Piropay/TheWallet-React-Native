@@ -6,6 +6,8 @@ import { Provider } from "react-redux";
 import { checkForExpiredToken } from "./store/actions/authActions";
 import ActionButton from "react-native-action-button";
 import { Icon as BIcon, Root } from "native-base";
+import { Constants } from "expo";
+
 // Store
 import store from "./store";
 class App extends React.Component {
@@ -27,14 +29,11 @@ class App extends React.Component {
         />
       );
     } else {
+      console.log("StatusBar.translucent:", StatusBar.translucent);
       return (
         <Provider store={store}>
           <View style={styles.container}>
-            <StatusBar
-              barStyle="light-content"
-              hidden={false}
-              backgroundColor="#2B2B2B"
-            />
+            <StatusBar barStyle="light-content" />
 
             <Root>
               <AppNavigator />

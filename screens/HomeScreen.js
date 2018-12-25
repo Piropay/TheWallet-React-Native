@@ -11,6 +11,7 @@ import GoalsCarousel from "../components/GoalsCarousel";
 import BudgetsCarousel from "../components/BudgetsCarousel";
 import { Button } from "native-base";
 import { connect } from "react-redux";
+import { Row, Grid } from "react-native-easy-grid";
 
 // Actions
 import * as actionCreators from "../store/actions";
@@ -40,13 +41,9 @@ class HomeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView
-          style={styles.container}
-          contentContainerStyle={styles.contentContainer}
-        >
-          <BudgetsCarousel navigation={this.props.navigation} />
-          <GoalsCarousel />
-        </ScrollView>
+        <BudgetsCarousel navigation={this.props.navigation} />
+
+        <GoalsCarousel />
       </View>
     );
   }
