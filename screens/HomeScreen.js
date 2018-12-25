@@ -42,9 +42,7 @@ class HomeScreen extends React.Component {
     return (
       <View style={styles.container}>
         <BudgetsCarousel navigation={this.props.navigation} />
-        <Button onPress={() => this.props.navigation.navigate("userBudgets")}>
-          <Text>create</Text>
-        </Button>
+
         <GoalsCarousel />
       </View>
     );

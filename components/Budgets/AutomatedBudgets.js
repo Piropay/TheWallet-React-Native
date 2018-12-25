@@ -16,8 +16,9 @@ import {
 import { Input, CardItem, Body } from "native-base";
 
 import { Row, Grid } from "react-native-easy-grid";
-import { Button, H2, Item, Picker, Icon } from "native-base";
-import styles from "./styles";
+import { Button, H2, H1, Item, Picker, Icon, Container } from "native-base";
+import styles, { colors } from "./styles";
+import { LinearGradient } from "expo";
 import { Card } from "react-native-paper";
 class AutoMatedBudgets extends Component {
   constructor(props) {
@@ -146,95 +147,116 @@ class AutoMatedBudgets extends Component {
     let totalBudget = 0;
     this.state.budgets.forEach(budget => (totalBudget += budget.amount));
     const inputRows = this.state.budgets.map((idx, i) => (
-      <Row key={`${i}`}>
-        <Card style={styles.shadow}>
-          <CardItem style={{ borderRadius: 10 }}>
-            <Body
-              style={{
-                paddingHorizontal: 40
-              }}
-            >
-              <Item style={styles.label}>
-                <View>
-                  <Input value={idx.label} />
-                </View>
-              </Item>
-            </Body>
-          </CardItem>
-          <Slider
-            style={{ width: 200, alignSelf: "center" }}
-            step={1}
-            maximumValue={this.props.profile.balance}
-            value={idx.amount}
-            onValueChange={value =>
-              this.handleBudgetAmountChange(parseFloat(value), i)
-            }
+      <View key={`${i}`}>
+        <View
+          style={{
+            flex: 1,
+            marginHorizontal: 25,
+            flexDirection: "row"
+          }}
+        >
+          <Card style={styles.circle}>
+            <Text style={styles.number}>{`${i + 1}`}</Text>
+          </Card>
+          <Text style={{ marginTop: 5, fontSize: 20 }}> {idx.label}</Text>
+        </View>
+        <View
+          style={{
+            flex: 1,
+            marginHorizontal: 90,
+            flexDirection: "row",
+            marginVertical: 10
+          }}
+        >
+          <Icon
+            active
+            name="ios-cash"
+            style={{
+              color: "#585858",
+              marginRight: 5
+            }}
           />
+          <Text style={styles.text}>{String(idx.amount)} KWD</Text>
           <Text style={styles.text}>
             {String(
               ((idx.amount / this.props.profile.balance) * 100).toFixed(1)
             )}
             %
           </Text>
-          <Text style={styles.text}>{String(idx.amount)} KWD</Text>
-        </Card>
-      </Row>
+        </View>
+        <Slider
+          minimumTrackTintColor="#258779"
+          style={{ width: 200, alignSelf: "center" }}
+          step={1}
+          maximumValue={this.props.profile.balance}
+          value={idx.amount}
+          onValueChange={value =>
+            this.handleBudgetAmountChange(parseFloat(value), i)
+          }
+        />
+        <View
+          style={{
+            borderBottomColor: "#b2b2b2",
+            borderBottomWidth: 1,
+            marginHorizontal: 25,
+            marginVertical: 20
+          }}
+        />
+      </View>
     ));
 
     return (
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.contentContainer}
-      >
-        <Grid>
-          <H2
-            style={[
-              styles.h3,
-              { fontSize: 35, paddingTop: 20, paddingBottom: 10 }
-            ]}
-          >
-            Your budgets
-          </H2>
-
-          <H2
-            style={[
-              styles.h3,
-              {
-                fontFamily: "quicksand-bold",
-                textShadowOffset: { width: 0, height: 0 }
-              }
-            ]}
-          >
-            Balance {this.props.profile.balance} KD {"\n"} Total Budget{" "}
-            {totalBudget} KD
-          </H2>
-
-          <H2
-            style={[
-              styles.h3,
-              {
-                fontFamily: "quicksand-bold",
-                textShadowOffset: { width: 0, height: 0 }
-              }
-            ]}
-          >
-            {" "}
-          </H2>
-
-          {inputRows}
-        </Grid>
-        <Button style={styles.button} full onPress={() => this.resetBudgets()}>
-          <Text>Reset Budgets</Text>
-        </Button>
-        <Button
-          style={styles.button}
-          block
-          full
-          onPress={() => this.handleSubmitBudget(totalBudget)}
+      <Container style={styles.container}>
+        <LinearGradient
+          colors={[colors.background1, colors.background2]}
+          startPoint={{ x: 1, y: 0 }}
+          endPoint={{ x: 0, y: 1 }}
+          style={styles.gradient}
+        />
+        <H1
+          style={[
+            styles.h3,
+            { fontSize: 35, paddingTop: 20, marginTop: 15, paddingBottom: 10 }
+          ]}
         >
-          <Text>Submit</Text>
-        </Button>
-      </ScrollView>
+          Budgets
+        </H1>
+
+        <View style={{ flexDirection: "row", alignSelf: "center" }}>
+          <Button
+            style={styles.greenbutton}
+            full
+            onPress={() => this.resetBudgets()}
+          >
+            <Text style={styles.buttontext}>Reset</Text>
+          </Button>
+          <Button
+            style={styles.button}
+            block
+            full
+            onPress={() => this.handleSubmitBudget(totalBudget)}
+          >
+            <Text style={styles.buttontext}>Submit</Text>
+          </Button>
+        </View>
+        <Card padder style={styles.mainCard}>
+          <Text
+            style={[
+              styles.text,
+              {
+                color: "#2b2b2b",
+                paddingTop: 20
+              }
+            ]}
+          >
+            These are the suggested budgets for you!
+          </Text>
+
+          <ScrollView contentContainerStyle={styles.contentContainer}>
+            {inputRows}
+          </ScrollView>
+        </Card>
+      </Container>
     );
   }
 }

@@ -24,7 +24,10 @@ class userBudgets extends Component {
     super(props);
     this.state = {
       totalBudget: 0,
-      budgets: [{ category: "", label: "", amount: 0 }],
+      budgets: [
+        { category: "", label: "", amount: 0 },
+        { category: "", label: "", amount: 0 }
+      ],
       value: 50,
       Food: 0.25,
       Health: 0.05,

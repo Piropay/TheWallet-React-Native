@@ -34,7 +34,7 @@ class AddExpenseView extends Component {
     super(props);
     this.state = {
       totalExpense: 0,
-      expenses: [{ label: "", amount: 0 }]
+      expenses: [{ label: "", amount: 0 }, { label: "", amount: 0 }]
     };
     this.handleExpenseLabelChange = this.handleExpenseLabelChange.bind(this);
     this.handleExpenseAmountChange = this.handleExpenseAmountChange.bind(this);
