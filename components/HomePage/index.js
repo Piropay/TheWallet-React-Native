@@ -12,9 +12,10 @@ import {
   Container
 } from "native-base";
 import * as actionCreators from "../../store/actions";
+import { LinearGradient } from "expo";
 
 // Style
-import styles from "./styles";
+import styles, { colors } from "./styles";
 
 class HomePage extends Component {
   componentDidMount() {
@@ -53,8 +54,14 @@ class HomePage extends Component {
   };
   render() {
     return (
-      <Container style={styles.container}>
-        <Content padder>
+      <Container>
+        <LinearGradient
+          colors={[colors.background1, colors.background2]}
+          startPoint={{ x: 1, y: 0 }}
+          endPoint={{ x: 0, y: 1 }}
+          style={styles.gradient}
+        />
+        <Content padder style={styles.container}>
           <View>
             <Image
               style={{

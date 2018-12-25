@@ -25,7 +25,10 @@ import {
   Content,
   Container
 } from "native-base";
-import styles from "./styles";
+
+import styles, { colors } from "./styles";
+import { LinearGradient } from "expo";
+
 class AddExpenseView extends Component {
   constructor(props) {
     super(props);
@@ -107,24 +110,38 @@ class AddExpenseView extends Component {
 
     const inputRows = this.state.expenses.map((idx, i) => (
       <View key={`${i}`}>
-        <Button
-          style={styles.closeButton}
-          type="button"
-          onPress={() => this.handleRemoveExpense(idx, i)}
-        >
-          <Icon
-            active
-            name="key"
-            style={{
-              color: "#585858"
-            }}
-          />
-        </Button>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "space-between",
 
+            marginHorizontal: 25,
+            flexDirection: "row"
+          }}
+        >
+          <Card style={styles.circle}>
+            <Text style={styles.number}>{`${i + 1}`}</Text>
+          </Card>
+          <Button
+            transparent
+            style={styles.remove}
+            onPress={() => this.handleRemoveExpense(idx, i)}
+          >
+            <Icon
+              active
+              type="FontAwesome"
+              name="remove"
+              style={{
+                color: "#585858"
+              }}
+            />
+          </Button>
+        </View>
         <Item style={styles.label}>
           <Icon
             active
-            name="cash"
+            type="Entypo"
+            name="edit"
             style={{
               color: "#585858"
             }}
@@ -134,39 +151,63 @@ class AddExpenseView extends Component {
             onChangeText={value => this.handleExpenseLabelChange(value, i)}
           />
         </Item>
-
-        <Text style={styles.label}>Amount</Text>
-
-        <Item style={styles.label}>
-          <Icon
-            active
-            name="cash"
-            style={{
-              color: "#585858"
-            }}
-          />
-          <Input
-            maximumValue={this.props.profile.income - totalexpenses}
-            placeholder="0.000"
-            keyboardType="numeric"
-            onChangeText={value =>
-              this.handleExpenseAmountChange(parseFloat(value), i)
-            }
-          />
-        </Item>
-        <Text style={styles.text}>
-          {String(
-            (
-              (idx.amount / (this.props.profile.income - totalexpenses)) *
-              100
-            ).toFixed(1)
-          )}
-          %
-        </Text>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "space-between",
+            flexDirection: "row"
+          }}
+        >
+          <Item style={[styles.label, { flex: 1 }]}>
+            <Icon
+              active
+              name="cash"
+              style={{
+                color: "#585858"
+              }}
+            />
+            <Input
+              maximumValue={this.props.profile.income - totalexpenses}
+              placeholder="0.000"
+              keyboardType="numeric"
+              onChangeText={value =>
+                this.handleExpenseAmountChange(parseFloat(value), i)
+              }
+            />
+          </Item>
+          <Text
+            style={[
+              styles.number,
+              { paddingBottom: 0, marginHorizontal: 30, color: "#BDA747" }
+            ]}
+          >
+            {String(
+              (
+                (idx.amount / (this.props.profile.income - totalexpenses)) *
+                100
+              ).toFixed(1)
+            )}
+            %
+          </Text>
+        </View>
+        <View
+          style={{
+            borderBottomColor: "#b2b2b2",
+            borderBottomWidth: 1,
+            marginHorizontal: 25,
+            marginVertical: 20
+          }}
+        />
       </View>
     ));
     return (
       <Container style={styles.container}>
+        <LinearGradient
+          colors={[colors.background1, colors.background2]}
+          startPoint={{ x: 1, y: 0 }}
+          endPoint={{ x: 0, y: 1 }}
+          style={styles.gradient}
+        />
         <H1
           style={[
             styles.h3,

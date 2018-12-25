@@ -1,5 +1,14 @@
 import { StyleSheet } from "react-native";
+export const colors = {
+  black: "#1a1917",
+  gray: "#888888",
+  background1: "#2B2B2B",
+  background2: "#258779"
+};
 const styles = StyleSheet.create({
+  gradient: {
+    ...StyleSheet.absoluteFillObject
+  },
   shadow: {
     alignSelf: "center",
     shadowColor: "#a0a0a0",
@@ -24,7 +33,7 @@ const styles = StyleSheet.create({
     paddingBottom: 13,
     marginTop: 20,
     backgroundColor: "#D5C157",
-    shadowColor: "#595959",
+    shadowColor: "#2b2b2b",
     shadowRadius: 1,
     shadowOpacity: 0.7,
     borderRadius: 5,
@@ -35,14 +44,13 @@ const styles = StyleSheet.create({
     marginRight: 35,
     backgroundColor: "#258779",
     paddingBottom: 13,
-    shadowColor: "#595959",
+    shadowColor: "#2b2b2b",
     shadowRadius: 1,
     shadowOpacity: 0.7,
     borderRadius: 5,
     shadowOffset: { width: 5, height: 5 }
   },
   container: {
-    backgroundColor: "#2B2B2B",
     marginVertical: 30
   },
   contentContainer: {

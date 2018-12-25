@@ -1,5 +1,10 @@
 import { StyleSheet } from "react-native";
-
+export const colors = {
+  black: "#1a1917",
+  gray: "#888888",
+  background1: "#2B2B2B",
+  background2: "#258779"
+};
 const styles = StyleSheet.create({
   container: {
     marginTop: 30,
@@ -18,7 +23,8 @@ const styles = StyleSheet.create({
   },
 
   circle: {
-    marginTop: 20,
+    marginHorizontal: 15,
+    alignSelf: "flex-start",
     width: 35,
     height: 35,
     borderRadius: 35 / 2,
@@ -157,11 +163,17 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     shadowOffset: { width: 3, height: 3 }
   },
+  remove: {
+    alignSelf: "flex-end"
+  },
   header: {
     alignSelf: "center",
     color: "#258779",
     fontFamily: "pacifico-regular",
     fontSize: 25
+  },
+  gradient: {
+    ...StyleSheet.absoluteFillObject
   }
 });
 
