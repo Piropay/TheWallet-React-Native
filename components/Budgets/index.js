@@ -17,7 +17,7 @@ import {
   Body,
   Container,
   H1,
-  Input
+  Input,
   Toast
 } from "native-base";
 class userBudgets extends Component {
@@ -181,7 +181,6 @@ class userBudgets extends Component {
             style={{
               color: "#585858"
             }}
-
           />
           <Input
             placeholder="Title"
@@ -342,9 +341,8 @@ class userBudgets extends Component {
               }
             ]}
           >
-          <Text>
-            Now to add your budgets! 
-{`\n`}
+            Now to add your budgets!
+            {`\n`}
             You can assign an amount of money for different forms of spendings.
           </Text>
           <ScrollView contentContainerStyle={styles.contentContainer}>
@@ -352,7 +350,6 @@ class userBudgets extends Component {
           </ScrollView>
         </Card>
       </Container>
-
     );
   }
 }
