@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   },
 
   popup: {
-    backgroundColor: "#2B2B2B",
+    backgroundColor: "#fff",
     marginTop: 80,
     marginHorizontal: 40,
     borderRadius: 10
@@ -42,8 +42,9 @@ const styles = StyleSheet.create({
   },
   popupContent: {
     //alignItems: 'center',
+
     margin: 5,
-    height: 300
+    height: 350
   },
   popupHeader: {
     marginBottom: 45
@@ -60,14 +61,22 @@ const styles = StyleSheet.create({
     marginVertical: 16
   },
   btnClose: {
-    paddingHorizontal: 10,
-    marginVertical: 5,
-    backgroundColor: "#BA2D17",
+    alignSelf: "center",
+
+    paddingHorizontal: 15,
+
+    borderRadius: 20
+  },
+  Header: {
+    marginRight: 10,
+    marginVertical: 10,
+    backgroundColor: "#278979",
+    paddingHorizontal: 15,
     shadowColor: "#595959",
     shadowRadius: 1,
     shadowOpacity: 0.7,
-    borderRadius: 5,
-    shadowOffset: { width: 5, height: 5 }
+    borderRadius: 20,
+    shadowOffset: { width: 3, height: 3 }
   },
   modalInfo: {
     alignItems: "center",
@@ -78,24 +87,23 @@ const styles = StyleSheet.create({
     fontSize: 30,
     flex: 1,
     alignSelf: "center",
-    color: "#278979",
+    color: "#fff",
     fontWeight: "bold",
     paddingVertical: 10
   },
   position: {
-    fontFamily: "quicksand-regular",
-    fontSize: 14,
+    fontSize: 17,
     flex: 1,
-    alignSelf: "center",
-    color: "#BEA647"
+    alignSelf: "flex-start",
+    color: "#2b2b2b",
+    marginHorizontal: 50
   },
   about: {
-    fontFamily: "quicksand-regular",
-    fontSize: 14,
+    fontSize: 17,
     flex: 1,
-    alignSelf: "center",
-    color: "#BEA647",
-    marginHorizontal: 10
+    alignSelf: "flex-start",
+    color: "#2b2b2b",
+    marginHorizontal: 50
   }
 });
 export default styles;

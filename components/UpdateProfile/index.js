@@ -45,6 +45,30 @@ class UpdateProfile extends Component {
     });
   }
 
+  clacIncome(income) {
+    let expenses = this.props.expenses;
+    let totalExpenses = 0;
+    expenses.forEach(expense => {
+      totalExpenses += parseFloat(expense.amount);
+    });
+    let balance = parseFloat(income) - totalExpenses;
+    if (balance <= 0) {
+      Toast.show({
+        text: "Plese revise your income!",
+        buttonText: "Okay",
+        duration: 6000,
+        type: "danger",
+        buttonTextStyle: { color: "#000" },
+        buttonStyle: {
+          backgroundColor: "#F1C04F",
+          alignSelf: "center"
+        }
+      });
+    } else {
+      this.setState({ income, balance });
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -128,8 +152,9 @@ class UpdateProfile extends Component {
               defaultValue={this.state.income + ""}
               keyboardType="numeric"
               underlineColorAndroid="transparent"
-              onChangeText={income =>
-                this.setState({ income, balance: income })
+              // onChangeText={income => this.clacIncome(income)}
+              onEndEditing={e =>
+                this.clacIncome(parseFloat(e.nativeEvent.text))
               }
             />
             <Image

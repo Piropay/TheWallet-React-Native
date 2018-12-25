@@ -35,10 +35,11 @@ class HomePage extends Component {
     }
   }
   componentDidUpdate(prevProps) {
+    // if (prevProps.user !== this.props.user) {
+    //   this.props.navigation.navigate("Home");
+    // }
     try {
       if (this.props.user !== prevProps.user && this.props.fetched) {
-        console.log("fetched");
-
         if (this.props.profile.income !== null)
           this.props.navigation.navigate("Home");
         else {

@@ -76,11 +76,7 @@ class GoalsCarousel extends Component {
         </Text>
         <Carousel
           data={this.props.budgets}
-          renderItem={
-            isTinder
-              ? this._renderLightItem.bind(this)
-              : this._renderItem.bind(this)
-          }
+          renderItem={this._renderItem.bind(this)}
           sliderWidth={sliderWidth}
           itemWidth={itemWidth}
           containerCustomStyle={styles.slider}

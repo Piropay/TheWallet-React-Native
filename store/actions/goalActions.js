@@ -19,29 +19,29 @@ export const fetchGoals = () => {
   };
 };
 
-export const addGoal = (goal, navigation) => {
-  let date =
-    goal.end_date.getFullYear() +
-    "-" +
-    (goal.end_date.getMonth() + 1) +
-    "-" +
-    goal.end_date.getDate();
+export const addGoal = (goals, navigation) => {
+  // let date =
+  //   goal.end_date.getFullYear() +
+  //   "-" +
+  //   (goal.end_date.getMonth() + 1) +
+  //   "-" +
+  //   goal.end_date.getDate();
   return dispatch => {
+    console.log("goals", goals);
+
     instance
-      .post("create/", {
-        label: goal.label,
-        end_date: date,
-        amount: goal.amount,
-        balance: goal.amount
-      })
+      .post("create/", goals)
       .then(res => res.data)
-      .then(goal => {
+      .then(goals => {
+        console.log("new goals", goals);
+
         dispatch({
           type: actionTypes.ADD_GOAL,
-          payload: goal
+          payload: goals
         });
       })
-      //   .then(() => navigation.navigate("GoalsView"))
+      .then(() => navigation.navigate("GoalsView"))
+
       .catch(err => {
         dispatch(console.log(err.response.data));
       });

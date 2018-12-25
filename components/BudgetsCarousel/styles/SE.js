@@ -63,7 +63,7 @@ export default StyleSheet.create({
     left: 0,
     right: 0,
     height: entryBorderRadius,
-    backgroundColor: "white"
+    backgroundColor: "black"
   },
   radiusMaskEven: {
     backgroundColor: colors.black
@@ -73,15 +73,16 @@ export default StyleSheet.create({
     paddingTop: 20 - entryBorderRadius,
     paddingBottom: 20,
     paddingHorizontal: 16,
-    backgroundColor: "white",
+    backgroundColor: "black",
+    color: "white",
     borderBottomLeftRadius: entryBorderRadius,
     borderBottomRightRadius: entryBorderRadius
   },
   textContainerEven: {
-    backgroundColor: colors.black
+    backgroundColor: "white"
   },
   title: {
-    color: colors.black,
+    color: "white",
     fontSize: 13,
     fontWeight: "bold",
     letterSpacing: 0.5

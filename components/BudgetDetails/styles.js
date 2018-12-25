@@ -68,6 +68,11 @@ const styles = StyleSheet.create({
     color: "#151515",
     fontFamily: "quicksand-regular"
   },
+  popup: {
+    backgroundColor: "#fff",
+    marginHorizontal: 40,
+    borderRadius: 10
+  },
   shadow: {
     shadowColor: "#595959",
     shadowRadius: 1,
@@ -84,18 +89,11 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 1
   },
-  popup: {
-    backgroundColor: "#2B2B2B",
-    marginTop: 40,
-    marginHorizontal: 40,
-    borderRadius: 10
-  },
   popupOverlay: {
     backgroundColor: "#00000057",
     flex: 1
   },
   popupContent: {
-    //alignItems: 'center',
     margin: 5,
     height: 350
   },
@@ -114,14 +112,22 @@ const styles = StyleSheet.create({
     marginVertical: 16
   },
   btnClose: {
-    paddingHorizontal: 10,
-    marginVertical: 5,
-    backgroundColor: "#BA2D17",
+    alignSelf: "center",
+
+    paddingHorizontal: 15,
+
+    borderRadius: 20
+  },
+  Header: {
+    marginRight: 10,
+    marginVertical: 10,
+    backgroundColor: "#278979",
+    paddingHorizontal: 15,
     shadowColor: "#595959",
     shadowRadius: 1,
     shadowOpacity: 0.7,
-    borderRadius: 5,
-    shadowOffset: { width: 5, height: 5 }
+    borderRadius: 20,
+    shadowOffset: { width: 3, height: 3 }
   },
   modalInfo: {
     alignItems: "center",
@@ -132,24 +138,23 @@ const styles = StyleSheet.create({
     fontSize: 30,
     flex: 1,
     alignSelf: "center",
-    color: "#278979",
+    color: "#fff",
     fontWeight: "bold",
     paddingVertical: 10
   },
   position: {
-    fontFamily: "quicksand-regular",
-    fontSize: 14,
+    fontSize: 17,
     flex: 1,
-    alignSelf: "center",
-    color: "#BEA647"
+    alignSelf: "flex-start",
+    color: "#2b2b2b",
+    marginHorizontal: 50
   },
   about: {
-    fontFamily: "quicksand-regular",
-    fontSize: 14,
+    fontSize: 17,
     flex: 1,
-    alignSelf: "center",
-    color: "#BEA647",
-    marginHorizontal: 10
+    alignSelf: "flex-start",
+    color: "#2b2b2b",
+    marginHorizontal: 50
   }
 });
 

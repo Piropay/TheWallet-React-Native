@@ -37,6 +37,23 @@ export default class SliderEntry extends Component {
       <Image source={{ uri: illustration }} style={styles.image} />
     );
   }
+  setColor(category) {
+    if (category === "Personal") {
+      return "#00A6B5";
+    } else if (category === "Emergency") {
+      return "#EB3647";
+    } else if (category === "Entertainment") {
+      return "#F1C04F";
+    } else if (category === "Food") {
+      return "#61C747";
+    } else if (category === "Health") {
+      return "#F1D6B8";
+    } else if (category === "Transportation") {
+      return "#FF9786";
+    } else if (category === "Others") {
+      return "#BDBDBD";
+    }
+  }
 
   render() {
     const {
@@ -45,42 +62,48 @@ export default class SliderEntry extends Component {
     } = this.props;
 
     const uppercaseTitle = label ? (
-      <Text
-        style={[styles.label, even ? styles.titleEven : {}]}
-        numberOfLines={2}
-      >
+      <Text style={{ color: "white" }} numberOfLines={2}>
         {label}
       </Text>
     ) : (
       false
     );
+
     return (
       <TouchableOpacity
         activeOpacity={1}
-        style={styles.slideInnerContainer}
+        style={[styles.slideInnerContainer]}
         onPress={() => {
           this.props.navigation.navigate("BudgetDetails", {
             budget: { label, amount, balance, category, id, transactions }
           });
         }}
       >
-        <View style={styles.shadow} />
+        <View style={[styles.shadow]} />
         <View
-          style={[styles.imageContainer, even ? styles.imageContainerEven : {}]}
+          style={[
+            styles.imageContainer,
+
+            {
+              backgroundColor: this.setColor(category)
+            }
+          ]}
         >
-          {this.image}
-          <View
-            style={[styles.radiusMask, even ? styles.radiusMaskEven : {}]}
+          <Image
+            source={
+              category === "Personal"
+                ? {
+                    uri: "https://img.icons8.com/metro/500/000000/user-male.png"
+                  }
+                : { uri: "https://img.icons8.com/metro/500/000000/suv.png" }
+            }
+            style={styles.image}
           />
+          <View style={[styles.radiusMask]} />
         </View>
-        <View
-          style={[styles.textContainer, even ? styles.textContainerEven : {}]}
-        >
+        <View style={styles.textContainer}>
           {uppercaseTitle}
-          <Text
-            style={[styles.amount, even ? styles.subtitleEven : {}]}
-            numberOfLines={2}
-          >
+          <Text style={{ color: "white" }} numberOfLines={2}>
             {amount}
           </Text>
         </View>

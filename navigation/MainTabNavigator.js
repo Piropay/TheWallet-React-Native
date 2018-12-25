@@ -10,7 +10,7 @@ import HomeScreen from "../screens/HomeScreen";
 import mandatoryInfo from "../components/MandatoryUserInfo";
 import UpdateProfile from "../components/UpdateProfile";
 import userBudgets from "../components/Budgets";
-import BudgetDetails from "../components/BudgetDetails";
+import BudgetDetails from "../components/BudgetDetails/index.1";
 import AddTransactionView from "../components/AddTransactionView";
 import BudgetsView from "../components/BudgetsView";
 import Login from "../components/Login";

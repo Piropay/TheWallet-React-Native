@@ -1,6 +1,7 @@
 import * as actionTypes from "./actionTypes";
 
 import axios from "axios";
+import { updateProfile } from "./authActions";
 const instance = axios.create({
   baseURL: "http://68.183.217.91/api/budget/"
 });
@@ -19,34 +20,54 @@ export const fetchBudgets = () => {
   };
 };
 
-export const addBudget = (budget, navigation) => {
+// export const addBudget = (budget, navigation) => {
+//   return dispatch => {
+//     instance
+//       .post("create/", {
+//         label: budget.label,
+//         category: budget.category,
+//         amount: budget.amount
+//       })
+//       .then(res => res.data)
+//       .then(budget => {
+//         dispatch({
+//           type: actionTypes.ADD_BUDGET,
+//           payload: budget
+//         });
+//       })
+//       .catch(err => {
+//         console.log(err.response.data);
+//       });
+//   };
+// };
+
+export const addBudget = (budgets, navigation, type, profile) => {
   return dispatch => {
-    instance
-      .post("create/", {
-        label: budget.label,
-        category: budget.category,
-        amount: budget.amount
-      })
+    return instance
+      .post("create/", budgets)
       .then(res => res.data)
-      .then(budget => {
+      .then(budgets => {
         dispatch({
           type: actionTypes.ADD_BUDGET,
-          payload: budget
+          payload: budgets
         });
       })
+      .then(() => {
+        if (type === "auto") {
+          profile = { ...profile, automated: true };
+          dispatch(updateProfile(profile));
+          navigation.navigate("Home");
+        } else {
+          navigation.navigate("BudgesView");
+        }
+      })
 
+      .then(() => navigation.navigate("Home"))
       .catch(err => {
         console.log(err.response.data);
       });
   };
 };
-
-// export const addBudgets = budgets => {
-//   return {
-//     type: actionTypes.ADD_BUDGETS,
-//     payload: budgets
-//   };
-// };
 
 export const updateBudget = (budget, navigation) => {
   return dispatch => {

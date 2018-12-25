@@ -29,32 +29,32 @@ class AutoMatedBudgets extends Component {
         {
           category: "Food",
           label: "Food",
-          amount: this.props.profile.balance * 0.25
+          amount: parseFloat(this.props.profile.balance * 0.25).toFixed(1)
         },
         {
           category: "Health",
           label: "Health",
-          amount: this.props.profile.balance * 0.05
+          amount: parseFloat(this.props.profile.balance * 0.05).toFixed(1)
         },
         {
           category: "Emergency",
           label: "Emergency",
-          amount: this.props.profile.balance * 0.1
+          amount: parseFloat(this.props.profile.balance * 0.1).toFixed(1)
         },
         {
           category: "Entertainment",
           label: "Entertainment",
-          amount: this.props.profile.balance * 0.2
+          amount: parseFloat(this.props.profile.balance * 0.2).toFixed(1)
         },
         {
           category: "Transportation",
           label: "Transportation",
-          amount: this.props.profile.balance * 0.05
+          amount: parseFloat(this.props.profile.balance * 0.05).toFixed(1)
         },
         {
           category: "Personal",
           label: "Personal",
-          amount: this.props.profile.balance * 0.2
+          amount: parseFloat(this.props.profile.balance * 0.2).toFixed(1)
         }
       ],
       value: 50
@@ -62,13 +62,14 @@ class AutoMatedBudgets extends Component {
 
     this.handleBudgetAmountChange = this.handleBudgetAmountChange.bind(this);
     this.resetBudgets = this.resetBudgets.bind(this);
+    this.handleSubmitBudget = this.handleSubmitBudget.bind(this);
   }
 
   handleBudgetAmountChange = (value, i) => {
     const newAmount = this.state.budgets.map((budget, sidx) => {
       if (i !== sidx) return budget;
 
-      return { ...budget, amount: value };
+      return { ...budget, amount: value.toFixed(1) };
     });
     this.setState(prevState => ({
       budgets: newAmount,
@@ -77,32 +78,32 @@ class AutoMatedBudgets extends Component {
   };
 
   handleSubmitBudget = totalBudget => {
-    this.state.budgets.forEach(budget => {
-      let { amount, category, label } = { ...budget };
-    });
     if (totalBudget < this.props.profile.balance) {
       this.state.budgets.forEach(budget =>
-        this.props.addBudget(budget, this.props.navigation)
+        this.props.addBudget(
+          [budget],
+          this.props.navigation,
+          this.props.profile
+        )
       );
-      // for (let budget in this.state.budgets) {
-      //   await this.props.addBudget(budget, this.props.navigation);
-      // }
-      let profile = this.props.profile;
-      // let totalE = 0;
-      // this.props.expenses.forEach(expense => (totalE += expense.amount));
 
-      profile.automated = true;
-      // profile.balance = profile.income - totalE;
-      // console.log(profile);
-      profile = { ...profile };
-      console.log(profile);
-
-      this.props.updateProfile(profile, this.props.navigation);
-      // this.props.navigation.navigate("Home");
+      //keep this until Khalid deploys to the server then switch instead of
+      //the for loop
+      // this.props.addBudget(
+      //   this.state.budgets,
+      //   this.props.navigation,
+      //   this.props.profile
+      // );
     } else {
-      alert(
-        "Please make sure that you fill in all the boxes and that you're total budgets don't exceed your current balance"
-      );
+      Toast.show({
+        text:
+          "Please make sure that you're total budgets don't exceed your current balance",
+        buttonText: "Okay",
+        duration: 10000,
+        type: "danger",
+        buttonTextStyle: { color: "#000" },
+        buttonStyle: { backgroundColor: "#F1C04F", alignSelf: "center" }
+      });
     }
   };
 
@@ -113,39 +114,41 @@ class AutoMatedBudgets extends Component {
         {
           category: "Food",
           label: "Food",
-          amount: this.props.profile.balance * 0.25
+          amount: parseFloat(this.props.profile.balance * 0.25).toFixed(1)
         },
         {
           category: "Health",
           label: "Health",
-          amount: this.props.profile.balance * 0.05
+          amount: parseFloat(this.props.profile.balance * 0.05).toFixed(1)
         },
         {
           category: "Emergency",
           label: "Emergency",
-          amount: this.props.profile.balance * 0.1
+          amount: parseFloat(this.props.profile.balance * 0.1).toFixed(1)
         },
         {
           category: "Entertainment",
           label: "Entertainment",
-          amount: this.props.profile.balance * 0.2
+          amount: parseFloat(this.props.profile.balance * 0.2).toFixed(1)
         },
         {
           category: "Transportation",
           label: "Transportation",
-          amount: this.props.profile.balance * 0.05
+          amount: parseFloat(this.props.profile.balance * 0.05).toFixed(1)
         },
         {
           category: "Personal",
           label: "Personal",
-          amount: this.props.profile.balance * 0.2
+          amount: parseFloat(this.props.profile.balance * 0.2).toFixed(1)
         }
       ]
     });
   }
   render() {
     let totalBudget = 0;
-    this.state.budgets.forEach(budget => (totalBudget += budget.amount));
+    this.state.budgets.forEach(
+      budget => (totalBudget += parseFloat(budget.amount))
+    );
     const inputRows = this.state.budgets.map((idx, i) => (
       <View key={`${i}`}>
         <View
@@ -228,6 +231,7 @@ class AutoMatedBudgets extends Component {
             full
             onPress={() => this.resetBudgets()}
           >
+
             <Text style={styles.buttontext}>Reset</Text>
           </Button>
           <Button
@@ -240,17 +244,23 @@ class AutoMatedBudgets extends Component {
           </Button>
         </View>
         <Card padder style={styles.mainCard}>
-          <Text
-            style={[
+          <Text >
+            These are the suggested budgets for you!
+          </Text>
+    <H2  style={[
               styles.text,
               {
                 color: "#2b2b2b",
                 paddingTop: 20
               }
-            ]}
-          >
-            These are the suggested budgets for you!
-          </Text>
+            ]}>
+            Balance {parseFloat(this.props.profile.balance).toFixed(3)} KD{" "}
+            {"\n"} Total Budget
+            {totalBudget.toFixed(3)} KD
+          </H2>
+
+      
+
 
           <ScrollView contentContainerStyle={styles.contentContainer}>
             {inputRows}
@@ -269,8 +279,8 @@ const mapStateToProps = state => ({
 
 const mapActionsToProps = dispatch => {
   return {
-    addBudget: (budget, navigation) =>
-      dispatch(actionCreators.addBudget(budget, navigation)),
+    addBudget: (budgets, navigation, profile) =>
+      dispatch(actionCreators.addBudget(budgets, navigation, "auto", profile)),
 
     updateProfile: (profile, navigation) =>
       dispatch(actionCreators.updateProfile(profile, navigation)),

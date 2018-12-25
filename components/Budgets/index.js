@@ -18,6 +18,7 @@ import {
   Container,
   H1,
   Input
+  Toast
 } from "native-base";
 class userBudgets extends Component {
   constructor(props) {
@@ -70,7 +71,7 @@ class userBudgets extends Component {
       ])
     });
   };
-  handleSubmitBudget = () => {
+  handleSubmitBudget = totalBudget => {
     let filled = false;
     let currentTotalBudget = 0;
 
@@ -85,18 +86,31 @@ class userBudgets extends Component {
     });
     if (
       filled &&
-      currentTotalBudget + this.props.totalUserBudget <
-        this.props.profile.balance
+      currentTotalBudget + totalBudget < this.props.profile.balance
     ) {
-      this.state.budgets.forEach(budget =>
-        this.props.addBudget(budget, this.props.navigation)
-      );
-      this.props.navigation.navigate("Home");
-      alert("Budgets Successfully added!");
+      // this.state.budgets.forEach(budget =>
+      //   this.props.addBudget(budget, this.props.navigation)
+      // );
+      this.props.addBudget(this.state.budgets, this.props.navigation);
+      // this.props.navigation.navigate("Home");
+      Toast.show({
+        text: "Budgets Successfully added!",
+        buttonText: "Okay",
+        duration: 6000,
+        type: "success",
+        buttonTextStyle: { color: "#000" },
+        buttonStyle: { backgroundColor: "#F1C04F", alignSelf: "center" }
+      });
     } else {
-      alert(
-        "Please make sure that you fill in all the boxes and that you're total budgets don't exceed your current balance"
-      );
+      Toast.show({
+        text:
+          "Please make sure that you fill in all the boxes and that you're total budgets don't exceed your current balance!",
+        buttonText: "Okay",
+        duration: 10000,
+        type: "danger",
+        buttonTextStyle: { color: "#000" },
+        buttonStyle: { backgroundColor: "#F1C04F", alignSelf: "center" }
+      });
     }
   };
   handleRemoveBudget = i => {
@@ -126,6 +140,10 @@ class userBudgets extends Component {
     });
   }
   render() {
+    let totalBudget = 0;
+    this.props.budgets.forEach(
+      budget => (totalBudget += parseFloat(budget.amount))
+    );
     const inputRows = this.state.budgets.map((idx, i) => (
       <View key={`${i}`}>
         <View
@@ -163,6 +181,7 @@ class userBudgets extends Component {
             style={{
               color: "#585858"
             }}
+
           />
           <Input
             placeholder="Title"
@@ -217,7 +236,8 @@ class userBudgets extends Component {
             {String(
               (
                 (idx.amount /
-                  (this.props.profile.balance - this.props.totalUserBudget)) *
+                  (parseFloat(this.props.profile.balance) -
+                    parseFloat(totalBudget))) *
                 100
               ).toFixed(1)
             )}
@@ -322,18 +342,9 @@ class userBudgets extends Component {
               }
             ]}
           >
-            Now to add your budgets!
-          </Text>
-          <Text
-            style={[
-              styles.text,
-              {
-                paddingTop: 5,
-                color: "#2b2b2b",
-                paddingBottom: 10
-              }
-            ]}
-          >
+          <Text>
+            Now to add your budgets! 
+{`\n`}
             You can assign an amount of money for different forms of spendings.
           </Text>
           <ScrollView contentContainerStyle={styles.contentContainer}>
@@ -341,19 +352,20 @@ class userBudgets extends Component {
           </ScrollView>
         </Card>
       </Container>
+
     );
   }
 }
 
 const mapStateToProps = state => ({
   profile: state.auth.profile,
-  totalUserBudget: state.budget.totalUserBudget
+  budgets: state.budget.budgets
 });
 
 const mapActionsToProps = dispatch => {
   return {
-    addBudget: (budget, navigation) =>
-      dispatch(actionCreators.addBudget(budget, navigation)),
+    addBudget: (budgets, navigation) =>
+      dispatch(actionCreators.addBudget(budgets, navigation)),
     getBalance: (income, expenses) =>
       dispatch(actionCreators.getBalance(income, expenses))
   };
