@@ -14,6 +14,8 @@ import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions";
 import styles from "./styles";
 import Deposit from "../Deposit";
+import { Icon } from "react-native-elements";
+import { Row, Col } from "react-native-easy-grid";
 
 class GoalView extends React.Component {
   constructor(props) {
@@ -88,11 +90,18 @@ class GoalView extends React.Component {
 
     this.setState({ refreshing: false });
   };
+
   render() {
     const goals = this.props.goals;
     let ListItems;
     if (goals) {
       ListItems = goals.map(goal => this.renderCard(goal));
+    }
+    totalDeposits = 0;
+    if (this.state.goalSelected.label) {
+      this.state.goalSelected.deposits.forEach(deposit => {
+        totalDeposits += parseFloat(deposit.amount);
+      });
     }
     return (
       <View style={styles.container}>
@@ -110,7 +119,6 @@ class GoalView extends React.Component {
         </ScrollView>
         <Button
           block
-
           warning
           onPress={() => this.props.navigation.navigate("Goals")}
         >
@@ -125,35 +133,51 @@ class GoalView extends React.Component {
           <View style={styles.popupOverlay}>
             <Card style={[styles.shadow, styles.popup]}>
               <View style={styles.popupContent}>
-                <ScrollView contentContainerStyle={styles.modalInfo}>
-                  <H2 style={styles.h3}>Your Goal</H2>
+                <Button style={styles.Header}>
                   <H3 style={styles.name}>{this.state.goalSelected.label}</H3>
+                  <Button
+                    transparent
+                    onPress={() => {
+                      this.setModalVisible(false);
+                    }}
+                    style={styles.btnClose}
+                  >
+                    <Text style={{ color: "wheat" }}>X</Text>
+                  </Button>
+                </Button>
+
+                <ScrollView contentContainerStyle={styles.modalInfo}>
+                  {/* <H2 style={styles.h3}>Your Goal</H2> */}
+
+                  <Row>
+                    <Col
+                      style={{
+                        flex: 0.1,
+                        padding: 0
+                      }}
+                    >
+                      <Icon name="calendar" type="evilicon" color="#517fa4" />
+                    </Col>
+                    <Col style={{ flex: 0.3, marginHorizontal: 0, padding: 0 }}>
+                      <Text style={{}}>{this.state.goalSelected.end_date}</Text>
+                    </Col>
+                  </Row>
                   <Text style={styles.position}>
+                    Progress {"\n"} {totalDeposits}/
                     {this.state.goalSelected.amount} KWD
                   </Text>
-                  <Text style={styles.position}>
+                  {/* <Text style={styles.position}>
                     {this.state.goalSelected.balance} KWD left to reach the
                     goal!
-                  </Text>
+                  </Text> */}
+
                   <Text style={styles.about}>
-                    Reach by: {this.state.goalSelected.end_date}
-                  </Text>
-                  <Text style={styles.about}>
-                    Suggested Deposit:
+                    {"\n"}
+                    Suggested Deposit {"\n"}
                     {parseFloat(this.state.mdeposit).toFixed(3)} KWD
                   </Text>
                   <Deposit goal={this.state.goalSelected} />
                 </ScrollView>
-              </View>
-              <View style={styles.popupButtons}>
-                <Button
-                  onPress={() => {
-                    this.setModalVisible(false);
-                  }}
-                  style={styles.btnClose}
-                >
-                  <Text style={{ color: "wheat" }}>Close</Text>
-                </Button>
               </View>
             </Card>
           </View>

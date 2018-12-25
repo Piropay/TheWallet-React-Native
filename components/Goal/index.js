@@ -75,7 +75,14 @@ class Goal extends Component {
 
       // this.props.navigation.navigate("GoalsView");
     } else {
-      alert("Please make sure that you fill in all the boxes");
+      Toast.show({
+        text: "Please make sure that you fill in all the boxes",
+        buttonText: "Okay",
+        duration: 6000,
+        type: "danger",
+        buttonTextStyle: { color: "#000" },
+        buttonStyle: { backgroundColor: "#F1C04F", alignSelf: "center" }
+      });
     }
   };
   handleRemoveGoal = i => {

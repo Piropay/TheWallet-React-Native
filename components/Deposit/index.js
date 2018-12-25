@@ -26,7 +26,14 @@ class AddDeposit extends React.Component {
 
   sendDeposit() {
     if (this.state.amount === 0) {
-      alert("Please enter a valid value");
+      Toast.show({
+        text: "Please enter a valid value",
+        buttonText: "Okay",
+        duration: 6000,
+        type: "danger",
+        buttonTextStyle: { color: "#000" },
+        buttonStyle: { backgroundColor: "#F1C04F", alignSelf: "center" }
+      });
     } else {
       // let setGoal = this.props.goals.find(b => {
       //   if (b.id === this.state.goal.id) {
@@ -58,18 +65,17 @@ class AddDeposit extends React.Component {
                 this.setState({ amount: parseFloat(value) })
               }
             />
+            <Button
+              style={styles.button}
+              block
+              onPress={() => this.sendDeposit()}
+            >
+              <Text style={{ color: "white" }}>+</Text>
+            </Button>
           </Item>
         </Form>
 
-        <View>
-          <Button
-            style={styles.button}
-            block
-            onPress={() => this.sendDeposit()}
-          >
-            <Text style={{ color: "white" }}>ADD</Text>
-          </Button>
-        </View>
+        <View />
       </View>
     );
   }

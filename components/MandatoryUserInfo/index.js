@@ -68,15 +68,22 @@ class mandatoryInfo extends Component {
         filled = false;
       }
     });
-
-    if (filled && totalExpense < this.props.profile.income) {
+    if (this.state.expenses.length === 0) {
+      this.props.navigation.navigate("Automation");
+    } else if (filled && totalExpense < this.props.profile.income) {
       await this.props.addExpenses(this.state.expenses, this.props.navigation);
 
       // this.props.navigation.navigate("Automation");
     } else {
-      alert(
-        "Please fill in all boxes and make sure that your expenses don't exceed your income"
-      );
+      Toast.show({
+        text:
+          "Please fill in all boxes and make sure that your expenses don't exceed your income",
+        buttonText: "Okay",
+        duration: 10000,
+        type: "danger",
+        buttonTextStyle: { color: "#000" },
+        buttonStyle: { backgroundColor: "#F1C04F", alignSelf: "center" }
+      });
     }
   };
   handleRemoveExpense = async (idx, i) => {

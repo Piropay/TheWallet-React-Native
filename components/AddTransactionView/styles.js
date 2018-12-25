@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     width: "90%",
     height: 250,
-    backgroundColor: "#2B2B2B",
+    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center"
   },
@@ -21,10 +21,7 @@ const styles = StyleSheet.create({
     color: "#BDA747",
     fontWeight: "600",
     fontSize: 25,
-    fontFamily: "pacifico-regular",
-    textShadowColor: "#7f7f7f",
-    textShadowOffset: { width: 2, height: 2 },
-    textShadowRadius: 1
+    fontFamily: "pacifico-regular"
   },
   inputs: {
     borderBottomColor: "#FFFFFF",
@@ -37,9 +34,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 50,
     shadowColor: "#595959",
     shadowRadius: 1,
-    shadowOpacity: 0.7,
-    borderRadius: 5,
-    shadowOffset: { width: 5, height: 5 }
+    paddingHorizontal: 15
   }
 });
 

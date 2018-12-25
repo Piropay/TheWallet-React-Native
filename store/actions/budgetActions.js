@@ -42,15 +42,11 @@ export const fetchBudgets = () => {
 // };
 
 export const addBudget = (budgets, navigation, type, profile) => {
-  console.log("budgets", budgets);
-
   return dispatch => {
     return instance
       .post("create/", budgets)
       .then(res => res.data)
       .then(budgets => {
-        console.log("new ", budgets);
-
         dispatch({
           type: actionTypes.ADD_BUDGET,
           payload: budgets

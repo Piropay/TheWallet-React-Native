@@ -13,7 +13,7 @@ import {
   Slider
 } from "react-native";
 
-import { Input, CardItem, Body } from "native-base";
+import { Input, CardItem, Body, Toast } from "native-base";
 
 import { Row, Grid } from "react-native-easy-grid";
 import { Button, H1, Item, Picker, Icon, Card } from "native-base";
@@ -48,9 +48,15 @@ class UpdateBudget extends Component {
       await this.setState({ balance: newBalance });
       this.props.updateBudget(this.state, this.props.navigation);
     } else {
-      alert(
-        "Please make sure that you fill in all the boxes and that you're total budgets don't exceed your current balance"
-      );
+      Toast.show({
+        text:
+          "Please make sure that you're total budgets don't exceed your current balance!",
+        buttonText: "Okay",
+        duration: 10000,
+        type: "danger",
+        buttonTextStyle: { color: "#000" },
+        buttonStyle: { backgroundColor: "#F1C04F", alignSelf: "center" }
+      });
     }
   };
 
@@ -84,7 +90,7 @@ class UpdateBudget extends Component {
               }
             ]}
           >
-            Balance {this.props.profile.balance} KD
+            Balance {parseFloat(this.props.profile.balance).toFixed(3)} KD
           </H1>
           <H1
             style={[
@@ -96,7 +102,7 @@ class UpdateBudget extends Component {
             ]}
           >
             balance left:
-            {this.props.profile.balance - totalBudgets} KD
+            {(this.props.profile.balance - totalBudgets).toFixed(3)} KD
           </H1>
 
           <Row>
@@ -119,7 +125,12 @@ class UpdateBudget extends Component {
               <Slider
                 step={1}
                 style={{ width: 200, alignSelf: "center" }}
-                maximumValue={this.props.profile.balance - totalBudgets}
+                minimumValue={0}
+                maximumValue={
+                  this.props.profile.balance > 0
+                    ? this.props.profile.balance - totalBudgets
+                    : 100
+                }
                 value={this.state.amount}
                 onValueChange={value => this.setState({ amount: value })}
               />

@@ -13,7 +13,8 @@ import {
   Icon,
   Card,
   CardItem,
-  Body
+  Body,
+  Toast
 } from "native-base";
 import styles from "./styles";
 class userBudgets extends Component {
@@ -86,11 +87,24 @@ class userBudgets extends Component {
       // );
       this.props.addBudget(this.state.budgets, this.props.navigation);
       // this.props.navigation.navigate("Home");
-      alert("Budgets Successfully added!");
+      Toast.show({
+        text: "Budgets Successfully added!",
+        buttonText: "Okay",
+        duration: 6000,
+        type: "success",
+        buttonTextStyle: { color: "#000" },
+        buttonStyle: { backgroundColor: "#F1C04F", alignSelf: "center" }
+      });
     } else {
-      alert(
-        "Please make sure that you fill in all the boxes and that you're total budgets don't exceed your current balance"
-      );
+      Toast.show({
+        text:
+          "Please make sure that you fill in all the boxes and that you're total budgets don't exceed your current balance!",
+        buttonText: "Okay",
+        duration: 10000,
+        type: "danger",
+        buttonTextStyle: { color: "#000" },
+        buttonStyle: { backgroundColor: "#F1C04F", alignSelf: "center" }
+      });
     }
   };
   handleRemoveBudget = i => {
@@ -232,7 +246,7 @@ class userBudgets extends Component {
               }
             ]}
           >
-            Balance {this.props.profile.balance} KD
+            Balance {parseFloat(this.props.profile.balance).toFixed(3)} KD
           </H2>
           <H2
             style={[
@@ -244,7 +258,9 @@ class userBudgets extends Component {
             ]}
           >
             balance left:
-            {parseFloat(this.props.profile.balance) - parseFloat(totalBudget)}
+            {(
+              parseFloat(this.props.profile.balance) - parseFloat(totalBudget)
+            ).toFixed(3)}
             KD
           </H2>
 

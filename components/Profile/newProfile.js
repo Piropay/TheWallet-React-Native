@@ -166,6 +166,12 @@ class ProfileView extends Component {
               <Text style={styles.description}>Gender: {prof.gender}</Text>
 
               <TouchableOpacity
+                onPress={() => this.props.navigation.navigate("Report")}
+                style={styles.buttonContainer}
+              >
+                <Text>Report</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
                 onPress={() => this.props.navigation.navigate("UpdateProfile")}
                 style={styles.buttonContainer}
               >
@@ -195,6 +201,15 @@ class ProfileView extends Component {
 
                   <ExpensesList />
                 </ScrollView>
+                <Button
+                  block
+                  warning
+                  onPress={() =>
+                    this.props.navigation.navigate("mandatoryInfo")
+                  }
+                >
+                  <Text style={{ color: "white" }}> ADD Expense</Text>
+                </Button>
               </View>
               <View style={styles.popupButtons}>
                 <Button

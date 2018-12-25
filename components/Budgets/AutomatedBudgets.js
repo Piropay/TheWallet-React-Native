@@ -85,31 +85,24 @@ class AutoMatedBudgets extends Component {
           this.props.profile
         )
       );
+
+      //keep this until Khalid deploys to the server then switch instead of
+      //the for loop
       // this.props.addBudget(
       //   this.state.budgets,
       //   this.props.navigation,
       //   this.props.profile
       // );
-
-      // for (let budget in this.state.budgets) {
-      //   await this.props.addBudget(budget, this.props.navigation);
-      // }
-      // let profile = this.props.profile;
-      // // let totalE = 0;
-      // // this.props.expenses.forEach(expense => (totalE += expense.amount));
-
-      // profile.automated = true;
-      // // profile.balance = profile.income - totalE;
-      // // console.log(profile);
-      // profile = { ...profile };
-      // console.log(profile);
-
-      // await this.props.updateProfile(profile, this.props.navigation);
-      // this.props.navigation.navigate("Home");
     } else {
-      alert(
-        "Please make sure that you fill in all the boxes and that you're total budgets don't exceed your current balance"
-      );
+      Toast.show({
+        text:
+          "Please make sure that you're total budgets don't exceed your current balance",
+        buttonText: "Okay",
+        duration: 10000,
+        type: "danger",
+        buttonTextStyle: { color: "#000" },
+        buttonStyle: { backgroundColor: "#F1C04F", alignSelf: "center" }
+      });
     }
   };
 
@@ -215,8 +208,9 @@ class AutoMatedBudgets extends Component {
               }
             ]}
           >
-            Balance {this.props.profile.balance} KD {"\n"} Total Budget
-            {totalBudget} KD
+            Balance {parseFloat(this.props.profile.balance).toFixed(3)} KD{" "}
+            {"\n"} Total Budget
+            {totalBudget.toFixed(3)} KD
           </H2>
 
           <H2
