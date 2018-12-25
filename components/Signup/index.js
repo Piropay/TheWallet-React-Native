@@ -117,7 +117,17 @@ class Signup extends Component {
                 )
                   this.props.signup(this.state, this.props.navigation);
                 else {
-                  alert("your passwords don't match");
+                  Toast.show({
+                    text: "Your passwords don't match!",
+                    buttonText: "Okay",
+                    duration: 6000,
+                    type: "danger",
+                    buttonTextStyle: { color: "#000" },
+                    buttonStyle: {
+                      backgroundColor: "#F1C04F",
+                      alignSelf: "center"
+                    }
+                  });
                 }
               }}
             >

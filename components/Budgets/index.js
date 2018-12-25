@@ -13,7 +13,8 @@ import {
   Icon,
   Card,
   CardItem,
-  Body
+  Body,
+  Toast
 } from "native-base";
 import styles from "./styles";
 class userBudgets extends Component {
@@ -64,7 +65,7 @@ class userBudgets extends Component {
       ])
     });
   };
-  handleSubmitBudget = () => {
+  handleSubmitBudget = totalBudget => {
     let filled = false;
     let currentTotalBudget = 0;
 
@@ -79,18 +80,31 @@ class userBudgets extends Component {
     });
     if (
       filled &&
-      currentTotalBudget + this.props.totalUserBudget <
-        this.props.profile.balance
+      currentTotalBudget + totalBudget < this.props.profile.balance
     ) {
-      this.state.budgets.forEach(budget =>
-        this.props.addBudget(budget, this.props.navigation)
-      );
-      this.props.navigation.navigate("Home");
-      alert("Budgets Successfully added!");
+      // this.state.budgets.forEach(budget =>
+      //   this.props.addBudget(budget, this.props.navigation)
+      // );
+      this.props.addBudget(this.state.budgets, this.props.navigation);
+      // this.props.navigation.navigate("Home");
+      Toast.show({
+        text: "Budgets Successfully added!",
+        buttonText: "Okay",
+        duration: 6000,
+        type: "success",
+        buttonTextStyle: { color: "#000" },
+        buttonStyle: { backgroundColor: "#F1C04F", alignSelf: "center" }
+      });
     } else {
-      alert(
-        "Please make sure that you fill in all the boxes and that you're total budgets don't exceed your current balance"
-      );
+      Toast.show({
+        text:
+          "Please make sure that you fill in all the boxes and that you're total budgets don't exceed your current balance!",
+        buttonText: "Okay",
+        duration: 10000,
+        type: "danger",
+        buttonTextStyle: { color: "#000" },
+        buttonStyle: { backgroundColor: "#F1C04F", alignSelf: "center" }
+      });
     }
   };
   handleRemoveBudget = i => {
@@ -120,6 +134,10 @@ class userBudgets extends Component {
     });
   }
   render() {
+    let totalBudget = 0;
+    this.props.budgets.forEach(
+      budget => (totalBudget += parseFloat(budget.amount))
+    );
     const inputRows = this.state.budgets.map((idx, i) => (
       <Row key={`${i}`}>
         <Card style={styles.shadow}>
@@ -181,7 +199,7 @@ class userBudgets extends Component {
             style={{ width: 200, alignSelf: "center" }}
             step={1}
             maximumValue={
-              this.props.profile.balance - this.props.totalUserBudget
+              parseFloat(this.props.profile.balance) - parseFloat(totalBudget)
             }
             onValueChange={this.change.bind(this)}
             value={idx.amount}
@@ -193,7 +211,8 @@ class userBudgets extends Component {
             {String(
               (
                 (idx.amount /
-                  (this.props.profile.balance - this.props.totalUserBudget)) *
+                  (parseFloat(this.props.profile.balance) -
+                    parseFloat(totalBudget))) *
                 100
               ).toFixed(1)
             )}
@@ -227,7 +246,7 @@ class userBudgets extends Component {
               }
             ]}
           >
-            Balance {this.props.profile.balance} KD
+            Balance {parseFloat(this.props.profile.balance).toFixed(3)} KD
           </H2>
           <H2
             style={[
@@ -239,7 +258,10 @@ class userBudgets extends Component {
             ]}
           >
             balance left:
-            {this.props.profile.balance - this.props.totalUserBudget} KD
+            {(
+              parseFloat(this.props.profile.balance) - parseFloat(totalBudget)
+            ).toFixed(3)}
+            KD
           </H2>
 
           {inputRows}
@@ -263,7 +285,7 @@ class userBudgets extends Component {
         <Button
           block
           full
-          onPress={() => this.handleSubmitBudget()}
+          onPress={() => this.handleSubmitBudget(totalBudget)}
           style={[styles.button, { backgroundColor: "#278979" }]}
         >
           <Text
@@ -283,13 +305,13 @@ class userBudgets extends Component {
 
 const mapStateToProps = state => ({
   profile: state.auth.profile,
-  totalUserBudget: state.budget.totalUserBudget
+  budgets: state.budget.budgets
 });
 
 const mapActionsToProps = dispatch => {
   return {
-    addBudget: (budget, navigation) =>
-      dispatch(actionCreators.addBudget(budget, navigation)),
+    addBudget: (budgets, navigation) =>
+      dispatch(actionCreators.addBudget(budgets, navigation)),
     getBalance: (income, expenses) =>
       dispatch(actionCreators.getBalance(income, expenses))
   };

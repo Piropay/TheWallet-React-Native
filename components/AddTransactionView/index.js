@@ -1,6 +1,16 @@
 import React from "react";
 import { Platform, ScrollView, StyleSheet, Text, View } from "react-native";
-import { Button, Form, Item, Picker, Icon, Input, H1, H3 } from "native-base";
+import {
+  Button,
+  Form,
+  Item,
+  Picker,
+  Icon,
+  Input,
+  H1,
+  H3,
+  Toast
+} from "native-base";
 import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions";
 import styles from "./styles";
@@ -21,11 +31,32 @@ class AddTransactionView extends React.Component {
 
   sendTransaction() {
     if (this.state.budget === undefined) {
-      alert("Please select a budget");
+      Toast.show({
+        text: "Please select a budget",
+        buttonText: "Okay",
+        duration: 6000,
+        type: "danger",
+        buttonTextStyle: { color: "#000" },
+        buttonStyle: { backgroundColor: "#F1C04F", alignSelf: "center" }
+      });
     } else if (this.state.label === "") {
-      alert("Please enter a label");
+      Toast.show({
+        text: "Please enter a label",
+        buttonText: "Okay",
+        duration: 6000,
+        type: "danger",
+        buttonTextStyle: { color: "#000" },
+        buttonStyle: { backgroundColor: "#F1C04F", alignSelf: "center" }
+      });
     } else if (this.state.amount === 0) {
-      alert("Please enter a valid value");
+      Toast.show({
+        text: "Please enter a valid value",
+        buttonText: "Okay",
+        duration: 6000,
+        type: "danger",
+        buttonTextStyle: { color: "#000" },
+        buttonStyle: { backgroundColor: "#F1C04F", alignSelf: "center" }
+      });
     } else {
       // let setBudget = this.props.budgets.find(b => {
       //   if (b.id === this.state.budget) {
@@ -64,18 +95,15 @@ class AddTransactionView extends React.Component {
                 this.setState({ amount: parseFloat(value) })
               }
             />
+            <Button
+              block
+              style={styles.button}
+              onPress={() => this.sendTransaction()}
+            >
+              <Text style={{ color: "white" }}>+</Text>
+            </Button>
           </Item>
         </Form>
-
-        <View>
-          <Button
-            block
-            style={styles.button}
-            onPress={() => this.sendTransaction()}
-          >
-            <Text style={{ color: "white" }}>ADD</Text>
-          </Button>
-        </View>
       </View>
     );
   }

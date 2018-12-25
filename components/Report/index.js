@@ -4,6 +4,7 @@ import styles from "./style";
 import { connect } from "react-redux";
 import { Button } from "native-base";
 import * as actionCreators from "../../store/actions";
+import { VictoryPie, VictoryLabel } from "victory-native";
 
 class Report extends Component {
   constructor(props) {
@@ -30,7 +31,15 @@ class Report extends Component {
         this.props.navigation
       )
     );
-    alert("Budgets Created Successfully");
+    Toast.show({
+      text: "Budgets Created Successfully",
+      buttonText: "Okay",
+      duration: 10000,
+      type: "success",
+      buttonTextStyle: { color: "#000" },
+      buttonStyle: { backgroundColor: "#F1C04F", alignSelf: "center" }
+    });
+
     this.props.navigation.replace("Budgets");
   }
 
@@ -118,11 +127,17 @@ class Report extends Component {
   }
 
   render() {
+    const prof = this.props.profile;
+
+    let { income, balance, savings } = { ...prof };
+
     let ListItems;
     var today = new Date();
     var compDate = new Date(
       this.props.budgets[this.props.budgets.length - 1].date
     );
+    let totalPreviousBudgets = 0;
+    let totalexpenses = 0;
     if (
       today.getMonth() !== compDate.getMonth() ||
       today.getFullYear() !== compDate.getFullYear()
@@ -132,6 +147,13 @@ class Report extends Component {
         return budDate.getMonth() === compDate.getMonth();
       });
 
+      tempBudgets.expenses.forEach(expense => {
+        totalexpenses += parseFloat(expense.amount);
+      });
+
+      tempBudgets.forEach(budget => {
+        totalPreviousBudgets += parseFloat(budget.amount);
+      });
       ListItems = tempBudgets.map(budget => this.renderCard(budget));
     }
 
@@ -139,15 +161,58 @@ class Report extends Component {
       <ScrollView>
         <View style={styles.container}>
           <View style={[styles.card, styles.profileCard]}>
-            <Image
-              style={styles.avatar}
-              source={{
-                uri: "https://bootdey.com/img/Content/avatar/avatar6.png"
+            <VictoryPie
+              padAngle={3}
+              innerRadius={50}
+              radius={100}
+              padding={100}
+              labelRadius={110}
+              startAngle={90}
+              endAngle={450}
+              labelComponent={<VictoryLabel angle={35} />}
+              colorScale={["#278979", "#BA2D17", "#BEA647"]}
+              animate={{
+                duration: 2000
+              }}
+              data={[
+                {
+                  label: `Balance: \n ${(
+                    (parseFloat(balance - totalPreviousBudgets) / income) *
+                    100
+                  ).toFixed(2)}%`,
+                  x: 1,
+                  y: parseFloat(balance - totalPreviousBudgets)
+                },
+                {
+                  label: `Expenses:\n ${(
+                    (parseFloat(totalexpenses) / income) *
+                    100
+                  ).toFixed(2)}%`,
+                  x: 2,
+                  y: parseFloat(totalexpenses)
+                },
+                {
+                  label: `Budgets:\n ${(
+                    (parseFloat(totalPreviousBudgets) / income) *
+                    100
+                  ).toFixed(2)}%`,
+                  x: 3,
+                  y: parseFloat(totalPreviousBudgets)
+                }
+              ]}
+              style={{
+                marginTop: 100,
+                labels: {
+                  fill: "#158900",
+                  fontSize: 13,
+                  fontWeight: "bold",
+                  fontFamily: "quicksand-regular"
+                }
               }}
             />
             <Text style={styles.name}>
               Your current balance: {this.props.profile.balance + "\n"}
-              Your total used budget: {this.props.totalUserBudget}
+              Your total used budget: {this.props.totalPreviousBudgets}
             </Text>
           </View>
 
@@ -188,6 +253,7 @@ const mapStateToProps = state => ({
   profile: state.auth.profile,
   isAuthenticated: state.auth.isAuthenticated,
   budgets: state.budget.budgets,
+  expenses: state.userInfo.expenses,
   totalUserBudget: state.budget.totalUserBudget
 });
 const mapDispatchToProps = dispatch => ({

@@ -23,26 +23,29 @@ class AddDeposit extends React.Component {
       amount: 0
     };
   }
-  onValueChange2(value) {
-    this.setState({
-      goal: value
-    });
-  }
+
   sendDeposit() {
     if (this.state.amount === 0) {
-      alert("Please enter a valid value");
-    } else {
-      let setGoal = this.props.goals.find(b => {
-        if (b.id === this.state.goal.id) {
-          return b;
-        }
-        return false;
+      Toast.show({
+        text: "Please enter a valid value",
+        buttonText: "Okay",
+        duration: 6000,
+        type: "danger",
+        buttonTextStyle: { color: "#000" },
+        buttonStyle: { backgroundColor: "#F1C04F", alignSelf: "center" }
       });
-      setGoal.amount = setGoal.amount - this.state.amount;
+    } else {
+      // let setGoal = this.props.goals.find(b => {
+      //   if (b.id === this.state.goal.id) {
+      //     return b;
+      //   }
+      //   return false;
+      // });
+      // setGoal.amount = setGoal.amount - this.state.amount;
 
       this.props.addDeposit(
-        { amount: this.state.amount },
-        this.state.goal.id,
+        this.state.amount,
+        this.props.goal.id,
         this.props.navigation
       );
     }
@@ -62,18 +65,17 @@ class AddDeposit extends React.Component {
                 this.setState({ amount: parseFloat(value) })
               }
             />
+            <Button
+              style={styles.button}
+              block
+              onPress={() => this.sendDeposit()}
+            >
+              <Text style={{ color: "white" }}>+</Text>
+            </Button>
           </Item>
         </Form>
 
-        <View>
-          <Button
-            style={styles.button}
-            block
-            onPress={() => this.sendDeposit()}
-          >
-            <Text style={{ color: "white" }}>ADD</Text>
-          </Button>
-        </View>
+        <View />
       </View>
     );
   }
