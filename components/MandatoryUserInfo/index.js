@@ -13,14 +13,28 @@ import {
   Slider
 } from "react-native";
 import { Row, Grid } from "react-native-easy-grid";
-import { Button, H1, Input, Card, CardItem, Body, Item } from "native-base";
-import styles from "./styles";
-class mandatoryInfo extends Component {
+import {
+  Button,
+  H1,
+  Input,
+  Card,
+  CardItem,
+  Body,
+  Item,
+  Icon,
+  Content,
+  Container
+} from "native-base";
+
+import styles, { colors } from "./styles";
+import { LinearGradient } from "expo";
+
+class AddExpenseView extends Component {
   constructor(props) {
     super(props);
     this.state = {
       totalExpense: 0,
-      expenses: [{ label: "", amount: 0 }]
+      expenses: [{ label: "", amount: 0 }, { label: "", amount: 0 }]
     };
     this.handleExpenseLabelChange = this.handleExpenseLabelChange.bind(this);
     this.handleExpenseAmountChange = this.handleExpenseAmountChange.bind(this);
@@ -101,45 +115,78 @@ class mandatoryInfo extends Component {
     });
 
     const inputRows = this.state.expenses.map((idx, i) => (
-      <Row key={`${i}`}>
-        <Card style={styles.shadow}>
+      <View key={`${i}`}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "space-between",
+
+            marginHorizontal: 25,
+            flexDirection: "row"
+          }}
+        >
+          <Card style={styles.circle}>
+            <Text style={styles.number}>{`${i + 1}`}</Text>
+          </Card>
           <Button
-            style={styles.closeButton}
-            type="button"
+            transparent
+            style={styles.remove}
             onPress={() => this.handleRemoveExpense(idx, i)}
           >
-            <Text>x</Text>
-          </Button>
-
-          <CardItem style={{ borderRadius: 10 }}>
-            <Body
+            <Icon
+              active
+              type="FontAwesome"
+              name="remove"
               style={{
-                paddingHorizontal: 40
+                color: "#585858"
               }}
-            >
-              <Item style={styles.label}>
-                <TextInput
-                  style={styles.inputs}
-                  value={idx.label}
-                  onChangeText={value =>
-                    this.handleExpenseLabelChange(value, i)
-                  }
-                />
-              </Item>
-            </Body>
-          </CardItem>
-
-          <Text style={styles.label}>Amount</Text>
-
-          <Slider
-            step={1}
-            maximumValue={this.props.profile.income - totalexpenses}
-            value={idx.amount}
-            onValueChange={value =>
-              this.handleExpenseAmountChange(parseFloat(value), i)
-            }
+            />
+          </Button>
+        </View>
+        <Item style={styles.label}>
+          <Icon
+            active
+            type="Entypo"
+            name="edit"
+            style={{
+              color: "#585858"
+            }}
           />
-          <Text style={styles.text}>
+          <Input
+            placeholder="Title"
+            onChangeText={value => this.handleExpenseLabelChange(value, i)}
+          />
+        </Item>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "space-between",
+            flexDirection: "row"
+          }}
+        >
+          <Item style={[styles.label, { flex: 1 }]}>
+            <Icon
+              active
+              name="cash"
+              style={{
+                color: "#585858"
+              }}
+            />
+            <Input
+              maximumValue={this.props.profile.income - totalexpenses}
+              placeholder="0.000"
+              keyboardType="numeric"
+              onChangeText={value =>
+                this.handleExpenseAmountChange(parseFloat(value), i)
+              }
+            />
+          </Item>
+          <Text
+            style={[
+              styles.number,
+              { paddingBottom: 0, marginHorizontal: 30, color: "#BDA747" }
+            ]}
+          >
             {String(
               (
                 (idx.amount / (this.props.profile.income - totalexpenses)) *
@@ -148,55 +195,71 @@ class mandatoryInfo extends Component {
             )}
             %
           </Text>
-          <Text style={styles.text}>{String(idx.amount)} KWD</Text>
-        </Card>
-      </Row>
+        </View>
+        <View
+          style={{
+            borderBottomColor: "#b2b2b2",
+            borderBottomWidth: 1,
+            marginHorizontal: 25,
+            marginVertical: 20
+          }}
+        />
+      </View>
     ));
     return (
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.contentContainer}
-      >
-        <Grid>
-          <H1
-            style={[
-              styles.h3,
-              { fontSize: 35, paddingTop: 20, paddingBottom: 10 }
-            ]}
+      <Container style={styles.container}>
+        <LinearGradient
+          colors={[colors.background1, colors.background2]}
+          startPoint={{ x: 1, y: 0 }}
+          endPoint={{ x: 0, y: 1 }}
+          style={styles.gradient}
+        />
+        <H1
+          style={[
+            styles.h3,
+            { fontSize: 35, paddingTop: 20, marginTop: 15, paddingBottom: 10 }
+          ]}
+        >
+          Mandatory expenses
+        </H1>
+
+        <View style={{ flexDirection: "row", alignSelf: "center" }}>
+          <Button
+            style={styles.greenbutton}
+            rounded
+            dark
+            onPress={() => this.handleAddExpense()}
           >
-            Mandatory expenses
-          </H1>
-          <H1
+            <Text style={styles.buttontext}>Add</Text>
+          </Button>
+          <Button
+            style={[styles.button]}
+            rounded
+            dark
+            onPress={() => this.handleSubmitExpenses()}
+          >
+            <Text style={styles.buttontext}>Submit</Text>
+          </Button>
+        </View>
+        <Card padder style={styles.mainCard}>
+          <Text
             style={[
-              styles.h3,
+              styles.text,
               {
-                fontFamily: "quicksand-bold",
-                textShadowOffset: { width: 0, height: 0 }
+                color: "#2b2b2b",
+                paddingTop: 20,
+                paddingBottom: 10
               }
             ]}
           >
-            Your Income: {this.props.profile.income}{" "}
-          </H1>
-
-          {inputRows}
-        </Grid>
-        <Button
-          style={styles.button}
-          block
-          full
-          onPress={() => this.handleAddExpense()}
-        >
-          <Text>Add</Text>
-        </Button>
-        <Button
-          style={[styles.button, { backgroundColor: "#278979" }]}
-          block
-          full
-          onPress={() => this.handleSubmitExpenses()}
-        >
-          <Text>Submit</Text>
-        </Button>
-      </ScrollView>
+            Pleasse add your rent, installments, bills... etc or any reccuring
+            monthly spendings.
+          </Text>
+          <ScrollView contentContainerStyle={styles.contentContainer}>
+            <Content>{inputRows}</Content>
+          </ScrollView>
+        </Card>
+      </Container>
     );
   }
 }
@@ -219,4 +282,4 @@ const mapActionsToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapActionsToProps
-)(mandatoryInfo);
+)(AddExpenseView);

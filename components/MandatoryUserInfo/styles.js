@@ -1,10 +1,44 @@
 import { StyleSheet } from "react-native";
-
+export const colors = {
+  black: "#1a1917",
+  gray: "#888888",
+  background1: "#2B2B2B",
+  background2: "#258779"
+};
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-
+    marginTop: 30,
     backgroundColor: "#2B2B2B"
+  },
+  mainCard: {
+    top: 15,
+    shadowColor: "#595959",
+    shadowRadius: 1,
+    shadowOpacity: 0.7,
+    shadowOffset: { width: 8, height: 8 },
+    marginLeft: 10,
+    marginRight: 10,
+    borderRadius: 10,
+    flex: 1
+  },
+
+  circle: {
+    marginHorizontal: 15,
+    alignSelf: "flex-start",
+    width: 35,
+    height: 35,
+    borderRadius: 35 / 2,
+    backgroundColor: "#258779",
+    borderColor: "#fff",
+    justifyContent: "center"
+  },
+  number: {
+    color: "#fff",
+    alignSelf: "center",
+    fontWeight: "bold",
+    fontFamily: "pacifico-regular",
+    fontSize: 30,
+    paddingBottom: 60
   },
   shadow: {
     shadowColor: "#595959",
@@ -18,11 +52,16 @@ const styles = StyleSheet.create({
     marginVertical: 5
   },
   label: {
+    color: "#258779",
+    marginTop: 15,
+    marginLeft: 40,
+    marginRight: 40,
     textAlign: "center"
   },
+
   h3: {
     textAlign: "center",
-    color: "#BDA747",
+    color: "#fff",
     fontWeight: "bold",
     fontFamily: "pacifico-regular",
     textShadowColor: "#7f7f7f",
@@ -30,10 +69,18 @@ const styles = StyleSheet.create({
     textShadowRadius: 1,
     paddingTop: 10
   },
+  buttontext: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontFamily: "pacifico-regular",
+    fontSize: 20,
+    paddingBottom: 40
+  },
   text: {
     textAlign: "center",
     color: "#BDA747",
-    fontFamily: "quicksand-regular"
+    paddingHorizontal: 10,
+    paddingVertical: 10
   },
   contentContainer: {
     paddingTop: 30
@@ -53,16 +100,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     marginBottom: 10
   },
-  inputdate: {
-    fontSize: 14,
-    marginBottom: -12,
-    color: "#6a4595"
-  },
-  inputcvv: {
-    fontSize: 14,
-    marginBottom: -12,
-    color: "#6a4595"
-  },
+
   inputs: {
     marginLeft: 16,
     borderBottomColor: "#FFFFFF",
@@ -84,9 +122,10 @@ const styles = StyleSheet.create({
     marginRight: 10,
     elevation: 5
   },
-  button: {
+  greenbutton: {
     marginVertical: 5,
-    backgroundColor: "#BDA747",
+    marginHorizontal: 5,
+    backgroundColor: "#258779",
     paddingHorizontal: 50,
     shadowColor: "#595959",
     shadowRadius: 1,
@@ -95,7 +134,24 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 5, height: 5 },
     paddingBottom: 13
   },
+  button: {
+    marginHorizontal: 5,
+    marginVertical: 5,
+    backgroundColor: "#BDA747",
+    paddingHorizontal: 50,
+    shadowColor: "#595959",
+    shadowRadius: 1,
+    shadowOpacity: 0.7,
+    borderRadius: 5,
+    shadowOffset: { width: 3, height: 5 },
+    paddingBottom: 13
+  },
   closeButton: {
+    marginTop: 20,
+    width: 35,
+    height: 35,
+    borderRadius: 35 / 2,
+    justifyContent: "center",
     alignSelf: "flex-end",
     marginRight: 10,
     marginVertical: 10,
@@ -106,6 +162,18 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.7,
     borderRadius: 20,
     shadowOffset: { width: 3, height: 3 }
+  },
+  remove: {
+    alignSelf: "flex-end"
+  },
+  header: {
+    alignSelf: "center",
+    color: "#258779",
+    fontFamily: "pacifico-regular",
+    fontSize: 25
+  },
+  gradient: {
+    ...StyleSheet.absoluteFillObject
   }
 });
 

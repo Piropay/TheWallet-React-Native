@@ -41,11 +41,11 @@ const HomeStack = createStackNavigator(
       headerTintColor: "#fff",
       headerStyle: {
         fontWeight: "bold",
-        backgroundColor: "transparent"
+        backgroundColor: "transparent",
+        borderBottomWidth: 0
       },
       headerTextStyle: {
-        fontWeight: "bold",
-        fontFamily: "pacifico-regular"
+        fontWeight: "bold"
       }
     },
     cardStyle: {
@@ -82,7 +82,8 @@ const LinksStack = createStackNavigator(
       headerTintColor: "#fff",
       headerStyle: {
         fontWeight: "bold",
-        backgroundColor: "transparent"
+        backgroundColor: "transparent",
+        borderBottomWidth: 0
       },
       headerTextStyle: {
         fontWeight: "bold",
@@ -116,7 +117,9 @@ const GoalsStack = createStackNavigator(
       headerTintColor: "#fff",
       headerStyle: {
         fontWeight: "bold",
-        backgroundColor: "transparent"
+        backgroundColor: "#2b2b2b",
+
+        borderBottomWidth: 0
       },
       headerTextStyle: {
         fontWeight: "bold",

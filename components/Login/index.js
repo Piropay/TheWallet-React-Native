@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions/authActions";
-import styles from "./styles";
-
+import styles, { colors } from "./styles";
+import { LinearGradient } from "expo";
 import { StyleSheet, View, StatusBar, Image, ScrollView } from "react-native";
 import {
   Thumbnail,
@@ -40,8 +40,14 @@ class Login extends Component {
     // console.log(this.props.error);
 
     return (
-      <Container style={styles.container}>
-        <Content padder>
+      <Container>
+        <LinearGradient
+          colors={[colors.background1, colors.background2]}
+          startPoint={{ x: 1, y: 0 }}
+          endPoint={{ x: 0, y: 1 }}
+          style={styles.gradient}
+        />
+        <Content padder style={styles.container}>
           <Image
             style={{
               alignSelf: "center",

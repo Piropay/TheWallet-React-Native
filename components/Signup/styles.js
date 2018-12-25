@@ -1,8 +1,16 @@
 import { StyleSheet } from "react-native";
-
+export const colors = {
+  black: "#1a1917",
+  gray: "#888888",
+  background1: "#2B2B2B",
+  background2: "#258779"
+};
 const styles = StyleSheet.create({
+  gradient: {
+    ...StyleSheet.absoluteFillObject
+  },
   shadow: {
-    shadowColor: "#595959",
+    shadowColor: "#2b2b2b",
     shadowRadius: 1,
     shadowOpacity: 0.7,
     shadowOffset: { width: 8, height: 8 },
@@ -18,7 +26,6 @@ const styles = StyleSheet.create({
     paddingBottom: 40
   },
   container: {
-    backgroundColor: "#2B2B2B",
     paddingVertical: 20
   },
   contentContainer: {
@@ -30,9 +37,9 @@ const styles = StyleSheet.create({
   button: {
     top: 30,
     marginBottom: 10,
-    backgroundColor: "#258779",
+    backgroundColor: "#BDA747",
     paddingHorizontal: 50,
-    shadowColor: "#595959",
+    shadowColor: "#2b2b2b",
     shadowRadius: 1,
     shadowOpacity: 0.7,
     borderRadius: 5,

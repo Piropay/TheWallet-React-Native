@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions";
 
 import { Text, View, TextInput, ScrollView, Slider } from "react-native";
-
+import styles, { colors } from "./styles";
+import { LinearGradient } from "expo";
 import { Row, Grid } from "react-native-easy-grid";
 import {
   Button,
@@ -14,15 +15,20 @@ import {
   Card,
   CardItem,
   Body,
+  Container,
+  H1,
+  Input
   Toast
 } from "native-base";
-import styles from "./styles";
 class userBudgets extends Component {
   constructor(props) {
     super(props);
     this.state = {
       totalBudget: 0,
-      budgets: [{ category: "", label: "", amount: 0 }],
+      budgets: [
+        { category: "", label: "", amount: 0 },
+        { category: "", label: "", amount: 0 }
+      ],
       value: 50,
       Food: 0.25,
       Health: 0.05,
@@ -139,75 +145,94 @@ class userBudgets extends Component {
       budget => (totalBudget += parseFloat(budget.amount))
     );
     const inputRows = this.state.budgets.map((idx, i) => (
-      <Row key={`${i}`}>
-        <Card style={styles.shadow}>
+      <View key={`${i}`}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "space-between",
+            marginHorizontal: 25,
+            flexDirection: "row"
+          }}
+        >
+          <Card style={styles.circle}>
+            <Text style={styles.number}>{`${i + 1}`}</Text>
+          </Card>
           <Button
-            type="button"
+            transparent
             onPress={() => this.handleRemoveBudget(i)}
-            style={styles.closeButton}
+            style={styles.remove}
           >
-            <Text>x</Text>
-          </Button>
-          <CardItem style={{ borderRadius: 10 }}>
-            <Body
+            <Icon
+              active
+              type="FontAwesome"
+              name="remove"
               style={{
-                paddingHorizontal: 40
+                color: "#585858"
               }}
-            >
-              <Item style={styles.label}>
-                <TextInput
-                  placeholder="Food, etc..."
-                  value={idx.label}
-                  style={styles.inputs}
-                  onChangeText={value => this.handleBudgetLabelChange(value, i)}
-                />
-              </Item>
-            </Body>
-          </CardItem>
+            />
+          </Button>
+        </View>
 
-          <Row style={{ alignSelf: "center" }}>
-            <Item picker>
-              <Picker
-                mode="dropdown"
-                iosIcon={<Icon name="ios-arrow-dropdown" />}
-                placeholder="Select the Budget"
-                placeholderStyle={{ color: "#278979" }}
-                placeholderIconColor="#007aff"
-                selectedValue={idx.category}
-                onValueChange={value => this.onValueChange2(value, i)}
-              >
-                <Picker.Item key={1} label={"Food"} value={"Food"} />
-                <Picker.Item key={2} label={"Health"} value={"Health"} />
-                <Picker.Item key={3} label={"Emergency"} value={"Emergency"} />
-                <Picker.Item
-                  key={4}
-                  label={"Entertainment"}
-                  value={"Entertainment"}
-                />
-                <Picker.Item
-                  key={5}
-                  label={"Transportation"}
-                  value={"Transportation"}
-                />
-                <Picker.Item key={6} label={"Personal"} value={"Personal"} />
+        <Item style={[styles.label, { marginHorizontal: 40 }]}>
+          <Icon
+            active
+            type="Entypo"
+            name="edit"
+            style={{
+              color: "#585858"
+            }}
 
-                <Picker.Item key={7} label={"Others"} value={"Others"} />
-              </Picker>
-            </Item>
-          </Row>
-          <Slider
-            style={{ width: 200, alignSelf: "center" }}
-            step={1}
-            maximumValue={
-              parseFloat(this.props.profile.balance) - parseFloat(totalBudget)
-            }
-            onValueChange={this.change.bind(this)}
-            value={idx.amount}
-            onValueChange={value =>
-              this.handleBudgetAmountChange(parseFloat(value), i)
-            }
           />
-          <Text style={styles.text}>
+          <Input
+            placeholder="Title"
+            onChangeText={value => this.handleBudgetLabelChange(value, i)}
+          />
+        </Item>
+
+        <Row
+          style={{
+            alignSelf: "center",
+            marginVertical: 15,
+            marginHorizontal: 10
+          }}
+        >
+          <Item
+            picker
+            style={{
+              width: 165
+            }}
+          >
+            <Picker
+              mode="dropdown"
+              iosIcon={<Icon name="ios-arrow-dropdown" />}
+              placeholder="Select Budget"
+              placeholderIconColor="#585858"
+              selectedValue={idx.category}
+              onValueChange={value => this.onValueChange2(value, i)}
+            >
+              <Picker.Item key={1} label={"Food"} value={"Food"} />
+              <Picker.Item key={2} label={"Health"} value={"Health"} />
+              <Picker.Item key={3} label={"Emergency"} value={"Emergency"} />
+              <Picker.Item
+                key={4}
+                label={"Entertainment"}
+                value={"Entertainment"}
+              />
+              <Picker.Item
+                key={5}
+                label={"Transportation"}
+                value={"Transportation"}
+              />
+              <Picker.Item key={6} label={"Personal"} value={"Personal"} />
+              <Picker.Item key={7} label={"Others"} value={"Others"} />
+            </Picker>
+          </Item>
+          <Text
+            style={[
+              styles.number,
+              { paddingBottom: 0, marginHorizontal: 20, color: "#BDA747" }
+            ]}
+          >
             {String(
               (
                 (idx.amount /
@@ -218,87 +243,116 @@ class userBudgets extends Component {
             )}
             %
           </Text>
-          <Text style={styles.text}>{String(idx.amount)} KWD</Text>
-        </Card>
-      </Row>
+        </Row>
+
+        <Text
+          style={[
+            styles.number,
+            {
+              alignSelf: "flex-start",
+              paddingBottom: 0,
+              marginHorizontal: 50,
+              fontSize: 20,
+              color: "#BDA747"
+            }
+          ]}
+        >
+          <Icon
+            active
+            name="ios-cash"
+            style={{
+              color: "#585858"
+            }}
+          />
+          {"  "}
+          {String(idx.amount.toFixed(3))}{" "}
+        </Text>
+        <Slider
+          minimumTrackTintColor="#258779"
+          style={{ width: 250, alignSelf: "center" }}
+          step={1}
+          maximumValue={this.props.profile.balance - this.props.totalUserBudget}
+          onValueChange={this.change.bind(this)}
+          value={idx.amount}
+          onValueChange={value =>
+            this.handleBudgetAmountChange(parseFloat(value), i)
+          }
+        />
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "space-between",
+            flexDirection: "row"
+          }}
+        />
+        <View
+          style={{
+            borderBottomColor: "#b2b2b2",
+            borderBottomWidth: 1,
+            marginHorizontal: 25,
+            marginVertical: 20
+          }}
+        />
+      </View>
     ));
 
     return (
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.contentContainer}
-      >
-        <Grid>
-          <H2
-            style={[
-              styles.h3,
-              { fontSize: 35, paddingTop: 23, paddingBottom: 10 }
-            ]}
-          >
-            Your budgets
-          </H2>
-          <H2
-            style={[
-              styles.h3,
-              {
-                fontFamily: "quicksand-bold",
-                textShadowOffset: { width: 0, height: 0 }
-              }
-            ]}
-          >
-            Balance {parseFloat(this.props.profile.balance).toFixed(3)} KD
-          </H2>
-          <H2
-            style={[
-              styles.h3,
-              {
-                fontFamily: "quicksand-bold",
-                textShadowOffset: { width: 0, height: 0 }
-              }
-            ]}
-          >
-            balance left:
-            {(
-              parseFloat(this.props.profile.balance) - parseFloat(totalBudget)
-            ).toFixed(3)}
-            KD
-          </H2>
+      <Container style={styles.container}>
+        <LinearGradient
+          colors={[colors.background1, colors.background2]}
+          startPoint={{ x: 1, y: 0 }}
+          endPoint={{ x: 0, y: 1 }}
+          style={styles.gradient}
+        />
+        <H1
+          style={[
+            styles.h3,
+            { fontSize: 35, paddingTop: 20, marginTop: 15, paddingBottom: 10 }
+          ]}
+        >
+          Budgets
+        </H1>
 
-          {inputRows}
-        </Grid>
-        <Button
-          style={styles.button}
-          block
-          full
-          onPress={() => this.handleAddBudget()}
-        >
-          <Text
-            style={{
-              fontFamily: "pacifico-regular",
-              color: "white",
-              fontSize: 15
-            }}
+        <View style={{ flexDirection: "row", alignSelf: "center" }}>
+          <Button
+            style={styles.greenbutton}
+            rounded
+            dark
+            onPress={() => this.handleAddBudget()}
           >
-            Add
-          </Text>
-        </Button>
-        <Button
-          block
-          full
-          onPress={() => this.handleSubmitBudget(totalBudget)}
-          style={[styles.button, { backgroundColor: "#278979" }]}
-        >
-          <Text
-            style={{
-              fontFamily: "pacifico-regular",
-              color: "white",
-              fontSize: 15
-            }}
+            <Text style={styles.buttontext}>Add</Text>
+          </Button>
+          <Button
+            style={[styles.button]}
+            rounded
+            dark
+            onPress={() => this.handleSubmitBudget()}
           >
-            Submit
+            <Text style={styles.buttontext}>Submit</Text>
+          </Button>
+        </View>
+
+        <Card padder style={styles.mainCard}>
+          <Text
+            style={[
+              styles.text,
+              {
+                color: "#2b2b2b",
+                paddingTop: 20
+              }
+            ]}
+          >
+          <Text>
+            Now to add your budgets! 
+{`\n`}
+            You can assign an amount of money for different forms of spendings.
           </Text>
-        </Button>
-      </ScrollView>
+          <ScrollView contentContainerStyle={styles.contentContainer}>
+            {inputRows}
+          </ScrollView>
+        </Card>
+      </Container>
+
     );
   }
 }

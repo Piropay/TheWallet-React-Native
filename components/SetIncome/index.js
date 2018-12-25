@@ -17,8 +17,8 @@ import {
   H1
 } from "native-base";
 import { Row } from "react-native-easy-grid";
-import styles from "./styles";
-
+import styles, { colors } from "./styles";
+import { LinearGradient } from "expo";
 import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions/";
 
@@ -42,6 +42,12 @@ class IncomePage extends Component {
   render() {
     return (
       <Container style={styles.container}>
+        <LinearGradient
+          colors={[colors.background1, colors.background2]}
+          startPoint={{ x: 1, y: 0 }}
+          endPoint={{ x: 0, y: 1 }}
+          style={styles.gradient}
+        />
         <Content padder>
           <Image
             style={{
@@ -53,18 +59,30 @@ class IncomePage extends Component {
             source={require("../../assets/images/logo2.png")}
             resizeMode="contain"
           />
-
+          <H1
+            style={[
+              styles.h3,
+              { fontSize: 45, paddingTop: 25, marginTop: 15, paddingBottom: 10 }
+            ]}
+          >
+            Income
+          </H1>
           <Card style={styles.shadow}>
             <CardItem style={{ borderRadius: 10 }}>
               <Body>
-                <Row>
-                  <Card style={styles.circle}>
-                    <Text style={styles.number}>1</Text>
-                  </Card>
-                  <Text style={styles.header}>
-                    Please enter your income below!
-                  </Text>
-                </Row>
+                <Text
+                  style={{
+                    alignSelf: "center",
+                    textAlign: "center",
+                    marginHorizontal: 10,
+                    paddingVertical: 15,
+                    color: "#2b2b2b",
+                    paddingTop: 20,
+                    paddingBottom: 10
+                  }}
+                >
+                  Please enter your income below!
+                </Text>
                 <Item style={styles.label}>
                   <Icon
                     active

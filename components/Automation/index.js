@@ -2,11 +2,20 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import { StyleSheet, View, StatusBar, Image, ScrollView } from "react-native";
-import { Thumbnail, Card, Button, Content, Text, H1 } from "native-base";
+import {
+  Thumbnail,
+  Card,
+  Button,
+  Content,
+  Text,
+  H1,
+  Container
+} from "native-base";
 import * as actionCreators from "../../store/actions";
 
 // Style
-import styles from "./styles";
+import styles, { colors } from "./styles";
+import { LinearGradient } from "expo";
 
 class Automation extends Component {
   static navigationOptions = {
@@ -18,44 +27,49 @@ class Automation extends Component {
   render() {
     let profile = this.props.profile;
     return (
-      <ScrollView
-        contentContainerStyle={{ top: 0, alignItems: "center" }}
-        style={{ backgroundColor: "transparent" }}
-      >
-        <Image
-          style={{
-            alignSelf: "center",
-            height: 230,
-            width: 230
-          }}
-          source={require("../../assets/images/logo2.png")}
-          resizeMode="contain"
+      <Container>
+        <LinearGradient
+          colors={[colors.background1, colors.background2]}
+          startPoint={{ x: 1, y: 0 }}
+          endPoint={{ x: 0, y: 1 }}
+          style={styles.gradient}
         />
+        <Content padder style={styles.container}>
+          <Image
+            style={{
+              alignSelf: "center",
+              height: 230,
+              width: 230
+            }}
+            source={require("../../assets/images/logo2.png")}
+            resizeMode="contain"
+          />
 
-        <Text style={styles.header}>
-          Would you like to automate your budgets?
-        </Text>
-        <Button
-          rounded
-          block
-          dark
-          style={styles.login}
-          onPress={() => {
-            this.props.navigation.navigate("Automated");
-          }}
-        >
-          <Text style={styles.text}>Yes</Text>
-        </Button>
-        <Button
-          rounded
-          block
-          dark
-          style={styles.signup}
-          onPress={() => this.props.navigation.navigate("CreateBudgets")}
-        >
-          <Text style={styles.text}>No</Text>
-        </Button>
-      </ScrollView>
+          <Text style={styles.header}>
+            Would you like to automate your budgets?
+          </Text>
+          <Button
+            rounded
+            block
+            dark
+            style={styles.login}
+            onPress={() => {
+              this.props.navigation.navigate("Automated");
+            }}
+          >
+            <Text style={styles.text}>Yes</Text>
+          </Button>
+          <Button
+            rounded
+            block
+            dark
+            style={styles.signup}
+            onPress={() => this.props.navigation.navigate("CreateBudgets")}
+          >
+            <Text style={styles.text}>No</Text>
+          </Button>
+        </Content>
+      </Container>
     );
   }
 }
