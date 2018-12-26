@@ -101,7 +101,7 @@ LinksStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === "ios" ? "ios-link" : "md-link"}
+      name={Platform.OS === "ios" ? `ios-cash` : "md-link"}
     />
   )
 };
@@ -137,7 +137,11 @@ GoalsStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === "ios" ? "ios-link" : "md-link"}
+      name={
+        Platform.OS === "ios"
+          ? `ios-star${focused ? "" : "-outline"}`
+          : "md-link"
+      }
     />
   )
 };

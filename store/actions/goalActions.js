@@ -27,14 +27,10 @@ export const addGoal = (goals, navigation) => {
   //   "-" +
   //   goal.end_date.getDate();
   return dispatch => {
-    console.log("goals", goals);
-
     instance
       .post("create/", goals)
       .then(res => res.data)
       .then(goals => {
-        console.log("new goals", goals);
-
         dispatch({
           type: actionTypes.ADD_GOAL,
           payload: goals
@@ -76,11 +72,11 @@ export const updateGoal = (goal, navigation) => {
   };
 };
 
-// export const updateBudget = (budget, amount) => {
-//   return dispatch => {
-//     dispatch({
-//       type: actionTypes.UPDATE_BUDGET,
-//       payload: { id: budget, amount: amount }
-//     });
-//   };
-// };
+export const updateGoalBalance = goal => {
+  return dispatch => {
+    dispatch({
+      type: actionTypes.UPDATE_GOAL,
+      payload: goal
+    });
+  };
+};

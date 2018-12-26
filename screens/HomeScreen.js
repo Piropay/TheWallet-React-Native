@@ -44,7 +44,7 @@ class HomeScreen extends React.Component {
         <ScrollView>
           <BudgetsCarousel navigation={this.props.navigation} />
 
-          <GoalsCarousel />
+          <GoalsCarousel navigation={this.props.navigation} />
         </ScrollView>
       </View>
     );

@@ -10,7 +10,18 @@ import {
   RefreshControl,
   Dimensions
 } from "react-native";
-import { Button, List, Card, CardItem, Body, H2, H3, Toast } from "native-base";
+import {
+  Button,
+  List,
+  Card,
+  CardItem,
+  Body,
+  H2,
+  H3,
+  Toast,
+  Container,
+  Content
+} from "native-base";
 import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions";
 import styles from "./styles";
@@ -182,6 +193,7 @@ class GoalView extends React.Component {
                     value={
                       (totalDeposits / this.state.goalSelected.amount) * 100
                     }
+                    maxValue={parseFloat(this.state.goalSelected.amount)}
                     onComplete={() => {
                       Toast.show({
                         text: "Congrats! You reached your goal!",
@@ -197,12 +209,23 @@ class GoalView extends React.Component {
                     }}
                   />
 
-                  <Text style={styles.about}>
-                    {"\n"}
-                    Suggested Deposit {"\n"}
-                    {parseFloat(this.state.mdeposit).toFixed(3)} KWD
-                  </Text>
-                  <Deposit goal={this.state.goalSelected} />
+                  {parseFloat(this.state.goalSelected.balance) > 0 ? (
+                    <Content
+                      contentContainerStyle={{
+                        alignItems: "center",
+                        justifyContent: "center"
+                      }}
+                    >
+                      <Text style={styles.about}>
+                        {"\n"}
+                        Suggested Deposit {"\n"}
+                        {parseFloat(this.state.mdeposit).toFixed(3)} KWD
+                      </Text>
+                      <Deposit goal={this.state.goalSelected} />
+                    </Content>
+                  ) : (
+                    <H2 style={styles.h3}>You reached your goal!</H2>
+                  )}
                 </ScrollView>
               </View>
             </Card>

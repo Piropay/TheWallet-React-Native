@@ -13,7 +13,8 @@ import {
   Input,
   Card,
   CardItem,
-  Body
+  Body,
+  Toast
 } from "native-base";
 import styles from "./styles";
 

@@ -34,8 +34,6 @@ export const addDeposit = (deposit, goal_id, navigation) => {
       })
       .then(res => res.data)
       .then(deposit => {
-        console.log(deposit);
-
         dispatch({
           type: actionTypes.ADD_DEPOSIT,
           payload: deposit

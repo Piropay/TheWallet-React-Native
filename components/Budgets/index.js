@@ -101,7 +101,7 @@ class userBudgets extends Component {
         buttonStyle: { backgroundColor: "#F1C04F", alignSelf: "center" }
       });
     } else {
-      console.log(parseFloat(totalBudget));
+      parseFloat(totalBudget);
 
       Toast.show({
         text:
@@ -185,6 +185,7 @@ class userBudgets extends Component {
           />
           <Input
             placeholder="Title"
+            value={idx.label}
             onChangeText={value => this.handleBudgetLabelChange(value, i)}
           />
         </Item>

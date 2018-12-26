@@ -23,6 +23,7 @@ const reducer = (state = initialState, action) => {
         goals: state.goals.filter(goal => {
           if (goal.id === action.payload.id) {
             goal.amount = action.payload.amount;
+            goal.balance = action.payload.balance;
             goal.label = action.payload.label;
             goal.end_date = action.payload.end_date;
             return goal;

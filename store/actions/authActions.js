@@ -9,6 +9,7 @@ import { fetchTransactions } from "./transactionActions";
 import { fetchExpenses } from "./userInfo";
 import { AsyncStorage } from "react-native";
 import { StackActions, NavigationActions } from "react-navigation";
+import { Toast } from "native-base";
 
 const instance = axios.create({
   baseURL: "http://68.183.217.91/api/"
@@ -61,7 +62,47 @@ export const login = (userData, navigation, type) => {
         }
       })
 
-      .catch(err => dispatch(setErrors(err.response.data)));
+      .catch(err => {
+        if (err.response.data.username) {
+          Toast.show({
+            text: "Username: " + err.response.data.username,
+            buttonText: "Okay",
+            duration: 6000,
+            type: "warning",
+            buttonTextStyle: { color: "#000" },
+            buttonStyle: {
+              backgroundColor: "#F1C04F",
+              alignSelf: "center"
+            }
+          });
+        }
+        if (err.response.data.password) {
+          Toast.show({
+            text: "Password: " + err.response.data.password,
+            buttonText: "Okay",
+            duration: 6000,
+            type: "warning",
+            buttonTextStyle: { color: "#000" },
+            buttonStyle: {
+              backgroundColor: "#F1C04F",
+              alignSelf: "center"
+            }
+          });
+        }
+        if (err.response.data.non_field_errors) {
+          Toast.show({
+            text: err.response.data.non_field_errors,
+            buttonText: "Okay",
+            duration: 6000,
+            type: "warning",
+            buttonTextStyle: { color: "#000" },
+            buttonStyle: {
+              backgroundColor: "#F1C04F",
+              alignSelf: "center"
+            }
+          });
+        }
+      });
   };
 };
 
@@ -73,7 +114,47 @@ export const signup = (userData, navigation) => {
       .then(() => {
         dispatch(login(userData, navigation, "signup"));
       })
-      .catch(err => dispatch(setErrors(err.response.data)));
+      .catch(err => {
+        if (err.response.data.username) {
+          Toast.show({
+            text: "Username: " + err.response.data.username,
+            buttonText: "Okay",
+            duration: 6000,
+            type: "warning",
+            buttonTextStyle: { color: "#000" },
+            buttonStyle: {
+              backgroundColor: "#F1C04F",
+              alignSelf: "center"
+            }
+          });
+        }
+        if (err.response.data.password) {
+          Toast.show({
+            text: "Password: " + err.response.data.password,
+            buttonText: "Okay",
+            duration: 6000,
+            type: "warning",
+            buttonTextStyle: { color: "#000" },
+            buttonStyle: {
+              backgroundColor: "#F1C04F",
+              alignSelf: "center"
+            }
+          });
+        }
+        if (err.response.data.non_field_errors) {
+          Toast.show({
+            text: err.response.data.non_field_errors,
+            buttonText: "Okay",
+            duration: 6000,
+            type: "warning",
+            buttonTextStyle: { color: "#000" },
+            buttonStyle: {
+              backgroundColor: "#F1C04F",
+              alignSelf: "center"
+            }
+          });
+        }
+      });
   };
 };
 

@@ -17,5 +17,10 @@ export {
   updateTransaction
 } from "./transactionActions";
 
-export { addGoal, updateGoal, fetchGoals } from "./goalActions";
+export {
+  addGoal,
+  updateGoal,
+  fetchGoals,
+  updateGoalBalance
+} from "./goalActions";
 export { addDeposit, fetchDeposits, updateDeposit } from "./depositActions";
