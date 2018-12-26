@@ -19,6 +19,7 @@ import {
   Header
 } from "native-base";
 import { Platform, ScrollView, StyleSheet, View } from "react-native";
+import { Toast } from "native-base";
 
 // BackgroundTask.define(() => {
 //   console.log("Hello from a background task");
@@ -33,26 +34,16 @@ class Location extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      location: this.props.location,
-      appState: AppState.currentState
+      location: this.props.location
     };
   }
   async componentDidMount() {
     await this.props.getCurrentPositionThunk();
-    // BackgroundTask.schedule({
-    //   period: 30 // Aim to run every 30 mins - more conservative on battery
-    // });
-    AppState.addEventListener("change", this._handleAppStateChange);
   }
 
-  _handleAppStateChange = nextAppState => {
-    if (this.state.appState.match(/inactive|background/)) {
-      this.render();
-      console.log("setting interval");
-      setInterval(this.render(), 10000);
-    }
-    this.setState({ appState: AppState.currentState });
-  };
+  updating(profile) {
+    this.props.updateProfile(profile, this.props.navigation);
+  }
 
   toRad = function(num) {
     return (num * Math.PI) / 180;
@@ -106,12 +97,26 @@ class Location extends Component {
           profile.longitude = this.props.location.coords.longitude;
           profile.latitude = this.props.location.coords.latitude;
           profile.accuracy = this.props.location.coords.accuracy;
-          alert(
-            " Your location has changed by " +
+          // alert(
+          //   " Your location has changed by " +
+          //     (d / 1000).toFixed(2) +
+          //     " KMs dont forget to add any transactions you made"
+          // );
+          Toast.show({
+            text:
+              " Your location has changed by " +
               (d / 1000).toFixed(2) +
-              " KMs dont forget to add any transactions you made"
-          );
-          this.props.updateProfile(profile, this.props.navigation);
+              " KMs dont forget to add any transactions you made",
+            buttonText: "Okay",
+            duration: 30000,
+            type: "warning",
+            buttonTextStyle: { color: "#000" },
+            buttonStyle: {
+              backgroundColor: "#F1C04F",
+              alignSelf: "center"
+            }
+          });
+          this.updating(profile);
           // create notification
         }
       }
