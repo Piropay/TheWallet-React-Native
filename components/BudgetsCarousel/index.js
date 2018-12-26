@@ -65,7 +65,16 @@ class GoalsCarousel extends Component {
 
   layoutExample(number, title, type) {
     const isTinder = type === "tinder";
-
+    var today = new Date();
+    const budgets = this.props.budgets.filter(budget => {
+      let date = new Date(budget.date);
+      if (
+        date.getMonth() === today.getMonth() &&
+        date.getFullYear() === today.getFullYear()
+      ) {
+        return budget;
+      }
+    });
     return (
       <View style={[styles.exampleContainer]}>
         <Text
@@ -75,7 +84,7 @@ class GoalsCarousel extends Component {
           {title}
         </Text>
         <Carousel
-          data={this.props.budgets}
+          data={budgets}
           renderItem={this._renderItem.bind(this)}
           sliderWidth={sliderWidth}
           itemWidth={itemWidth}
