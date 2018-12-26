@@ -184,9 +184,8 @@ class Report extends Component {
     let tempBudgets = [];
     if (
       //Uncomment this when testing for previous budgets
-      // today.getMonth() !== compDate.getMonth() ||
-      // today.getFullYear() !== compDate.getFullYear()
-      true
+      today.getMonth() !== compDate.getMonth() ||
+      today.getFullYear() !== compDate.getFullYear()
     ) {
       tempBudgets = this.props.budgets.filter(budget => {
         let budDate = new Date(budget.date);
