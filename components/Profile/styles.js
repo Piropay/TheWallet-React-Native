@@ -1,36 +1,71 @@
 import { StyleSheet } from "react-native";
+export const colors = {
+  black: "#1a1917",
+  gray: "#888888",
+  background1: "#2B2B2B",
+  background2: "#BEA647"
+};
 const styles = StyleSheet.create({
-  header: {
-    backgroundColor: "#00BFFF"
+  gradient: {
+    ...StyleSheet.absoluteFillObject
   },
-  container: {
-    flex: 1,
-
-    backgroundColor: "#DCDCDC"
+  header: { color: "#fff" },
+  mainCard: {
+    top: 15,
+    shadowColor: "#2b2b2b",
+    shadowRadius: 1,
+    shadowOpacity: 0.7,
+    shadowOffset: { width: 8, height: 8 },
+    marginLeft: 10,
+    marginRight: 10,
+    borderRadius: 10,
+    flex: 1
   },
-
-  body: {
-    marginTop: 40
+  buttontext: {
+    paddingTop: 10,
+    paddingHorizontal: 5,
+    color: "#fff",
+    fontWeight: "bold",
+    fontFamily: "pacifico-regular",
+    fontSize: 20,
+    paddingBottom: 40
   },
-  bodyContent: {
-    alignItems: "center",
-    padding: 30
+  headerContent: {
+    padding: 10,
+    alignItems: "center"
   },
   name: {
-    fontSize: 28,
-    color: "#696969",
+    fontSize: 22,
+    color: "#fff",
     fontWeight: "600"
   },
-  info: {
-    fontSize: 16,
-    color: "#00BFFF",
-    marginTop: 10
+  profileDetail: {
+    alignSelf: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    backgroundColor: "#ffffff"
   },
-  description: {
-    fontSize: 16,
-    color: "#696969",
-    marginTop: 10,
-    textAlign: "center"
+  detailContent: {
+    margin: 10,
+    alignItems: "center"
+  },
+  title: {
+    fontSize: 20,
+    color: "#BEA647"
+  },
+  count: {
+    fontSize: 18
+  },
+  bodyContent: {
+    flex: 1,
+    alignItems: "center",
+    padding: 30,
+    marginTop: 40
+  },
+  textInfo: {
+    fontSize: 18,
+    marginTop: 20,
+    color: "#696969"
   },
   buttonContainer: {
     marginTop: 10,
@@ -41,7 +76,13 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     width: 250,
     borderRadius: 30,
-    backgroundColor: "#00BFFF"
+    backgroundColor: "#278979"
+  },
+  description: {
+    fontSize: 20,
+    color: "#BEA647",
+    marginTop: 10,
+    textAlign: "center"
   },
   popup: {
     backgroundColor: "#2B2B2B",
@@ -104,13 +145,19 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   name: {
-    fontFamily: "quicksand-bold",
+    fontFamily: "pacifico-regular",
     fontSize: 30,
     flex: 1,
     alignSelf: "center",
-    color: "#278979",
+    color: "#fff",
     fontWeight: "bold",
-    paddingVertical: 10
+    paddingVertical: 10,
+    shadowColor: "#2b2b2b",
+    shadowRadius: 1,
+    shadowOpacity: 0.7,
+    borderRadius: 5,
+    shadowOffset: { width: 3, height: 3 },
+    paddingBottom: 13
   },
   position: {
     fontFamily: "quicksand-regular",
@@ -126,6 +173,30 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     color: "#BEA647",
     marginHorizontal: 10
+  },
+  greenbutton: {
+    marginVertical: 5,
+    marginHorizontal: 5,
+    backgroundColor: "#258779",
+    paddingHorizontal: 50,
+    shadowColor: "#2b2b2b",
+    shadowRadius: 1,
+    shadowOpacity: 0.7,
+    borderRadius: 5,
+    shadowOffset: { width: 5, height: 5 },
+    paddingBottom: 13
+  },
+  button: {
+    marginHorizontal: 5,
+    marginVertical: 5,
+    backgroundColor: "#BDA747",
+    paddingHorizontal: 50,
+    shadowColor: "#2b2b2b",
+    shadowRadius: 1,
+    shadowOpacity: 0.7,
+    borderRadius: 5,
+    shadowOffset: { width: 3, height: 5 },
+    paddingBottom: 13
   }
 });
 export default styles;

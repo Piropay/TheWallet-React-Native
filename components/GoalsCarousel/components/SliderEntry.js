@@ -69,7 +69,7 @@ class SliderEntry extends Component {
       borderRadius: 20,
       borderColor: "#43B863"
     };
-    const barWidth = Dimensions.get("screen").width - 100;
+    const barWidth = Dimensions.get("screen").width - 130;
 
     return (
       <TouchableOpacity

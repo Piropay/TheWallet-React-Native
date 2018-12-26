@@ -158,7 +158,8 @@ const ProfileStack = createStackNavigator(
       headerTintColor: "#fff",
       headerStyle: {
         fontWeight: "bold",
-        backgroundColor: "transparent"
+        backgroundColor: "transparent",
+        borderBottomWidth: 0
       },
       headerTextStyle: {
         fontWeight: "bold",
@@ -172,7 +173,7 @@ const ProfileStack = createStackNavigator(
 );
 
 ProfileStack.navigationOptions = {
-  tabBarLabel: false,
+  tabBarLabel: "Profile",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
