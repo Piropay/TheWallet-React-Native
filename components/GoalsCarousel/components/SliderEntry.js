@@ -81,7 +81,7 @@ class SliderEntry extends Component {
       >
         <View style={styles.shadow} />
         <View style={[styles.imageContainer, { backgroundColor: color }]}>
-          <H3 style={styles.h3}>{label.toUpperCase()}</H3>
+          <H3 style={styles.h3}>{label}</H3>
           <Row style={{ alignItems: "flex-end", top: 0 }}>
             <Col
               style={{

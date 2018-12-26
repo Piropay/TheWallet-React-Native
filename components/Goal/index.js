@@ -14,7 +14,7 @@ import {
   Card,
   CardItem,
   Body,
-  Toast
+  Toast,
   Content,
   Container
 } from "native-base";

@@ -73,7 +73,7 @@ class ProfileView extends Component {
                 labelRadius={110}
                 startAngle={90}
                 endAngle={450}
-                labelComponent={<VictoryLabel angle={35} />}
+                labelComponent={<VictoryLabel angle={0} />}
                 colorScale={["#278979", "#BA2D17", "#BEA647"]}
                 animate={{
                   duration: 2000
