@@ -10,7 +10,12 @@ export {
 } from "./authActions";
 
 export { addIncome, addExpenses, getBalance, fetchExpenses } from "./userInfo";
-export { addBudget, updateBudget, fetchBudgets } from "./budgetActions";
+export {
+  addBudget,
+  updateBudget,
+  fetchBudgets,
+  setBudgetsLoading
+} from "./budgetActions";
 export {
   addTransaction,
   fetchTransactions,

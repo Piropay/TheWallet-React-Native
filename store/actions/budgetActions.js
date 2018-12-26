@@ -3,11 +3,12 @@ import * as actionTypes from "./actionTypes";
 import axios from "axios";
 import { updateProfile } from "./authActions";
 const instance = axios.create({
-  baseURL: "http://192.168.100.39/api/budget/"
+  baseURL: "http://68.183.217.91/api/budget/"
 });
 
 export const fetchBudgets = () => {
   return dispatch => {
+    dispatch(setBudgetsLoading());
     instance
       .get("list/")
       .then(res => res.data)
@@ -91,6 +92,10 @@ export const updateBudget = (budget, navigation) => {
       });
   };
 };
+
+export const setBudgetsLoading = () => ({
+  type: actionTypes.SET_BUDGETS_LOADING
+});
 
 // export const updateBudget = (budget, amount) => {
 //   return dispatch => {

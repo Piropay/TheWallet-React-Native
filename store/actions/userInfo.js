@@ -2,7 +2,7 @@ import * as actionTypes from "./actionTypes";
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "http://192.168.100.39/api/expense/"
+  baseURL: "http://68.183.217.91/api/expense/"
 });
 
 export const addExpenses = (expenses, navigation) => {

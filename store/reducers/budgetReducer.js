@@ -16,12 +16,18 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         budgets: action.payload,
-        totalUserBudget
+        totalUserBudget,
+        loading: false
       };
     case actionTypes.ADD_BUDGET:
       return {
         ...state,
         budgets: state.budgets.concat(action.payload)
+      };
+    case actionTypes.SET_BUDGETS_LOADING:
+      return {
+        ...state,
+        loading: true
       };
     case actionTypes.UPDATE_BUDGET:
       var newBudget = state.budgets.find(

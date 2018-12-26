@@ -12,7 +12,7 @@ import { StackActions, NavigationActions } from "react-navigation";
 import { Toast } from "native-base";
 
 const instance = axios.create({
-  baseURL: "http://192.168.100.39/api/"
+  baseURL: "http://68.183.217.91/api/"
 });
 
 const setAuthToken = token => {

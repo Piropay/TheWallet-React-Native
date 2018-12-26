@@ -21,6 +21,7 @@ export const FETCH_BUDGETS = "FETCH_BUDGETS";
 export const UPDATE_BUDGET = "UPDATE_BUDGET";
 export const ADD_BUDGET = "ADD_BUDGET";
 export const SUBTRACT_BUDGET = "SUBTRACT_BUDGET";
+export const SET_BUDGETS_LOADING = "SET_BUDGETS_LOADING";
 
 //Deposits Actions
 export const ADD_DEPOSIT = "ADD_DEPOSIT";
