@@ -1,8 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions";
-
-import { Text, View, TextInput, ScrollView, Slider } from "react-native";
+import { Keyboard } from "react-native";
+import {
+  Text,
+  View,
+  TextInput,
+  ScrollView,
+  Slider,
+  KeyboardAvoidingView
+} from "react-native";
 import styles, { colors } from "./styles";
 import { LinearGradient } from "expo";
 import { Row, Grid } from "react-native-easy-grid";
@@ -24,6 +31,8 @@ class userBudgets extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      keyboardHeight: 0,
+      inputHeight: 40,
       totalBudget: 0,
       budgets: [
         { category: "", label: "", amount: 0 },
@@ -139,6 +148,18 @@ class userBudgets extends Component {
       };
     });
   }
+  componentDidMount() {
+    Keyboard.addListener("keyboardDidShow", this._keyboardDidShow.bind(this));
+    Keyboard.addListener("keyboardDidHide", this._keyboardDidHide.bind(this));
+  }
+
+  _keyboardDidShow(e) {
+    this.setState({ keyboardHeight: e.endCoordinates.height });
+  }
+
+  _keyboardDidHide(e) {
+    this.setState({ keyboardHeight: 0 });
+  }
   render() {
     let totalBudget = 0;
     this.props.budgets.forEach(
@@ -173,7 +194,7 @@ class userBudgets extends Component {
           </Button>
         </View>
 
-        <Item style={[styles.label, { marginHorizontal: 40 }]}>
+        <Item style={[styles.label, { marginHorizontal: 40, marginTop: 0 }]}>
           <Icon
             active
             type="Entypo"
@@ -345,7 +366,13 @@ class userBudgets extends Component {
             {`\n`}
             You can assign an amount of money for different forms of spendings.
           </Text>
-          <ScrollView contentContainerStyle={styles.contentContainer}>
+
+          <ScrollView
+            contentContainerStyle={[
+              styles.contentContainer,
+              { paddingBottom: 30 }
+            ]}
+          >
             {inputRows}
           </ScrollView>
         </Card>

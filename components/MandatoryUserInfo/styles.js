@@ -70,6 +70,8 @@ const styles = StyleSheet.create({
     paddingTop: 10
   },
   buttontext: {
+    paddingTop: 10,
+    paddingHorizontal: 5,
     color: "#fff",
     fontWeight: "bold",
     fontFamily: "pacifico-regular",
@@ -127,7 +129,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     backgroundColor: "#258779",
     paddingHorizontal: 50,
-    shadowColor: "#595959",
+    shadowColor: "#2b2b2b",
     shadowRadius: 1,
     shadowOpacity: 0.7,
     borderRadius: 5,
@@ -139,7 +141,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     backgroundColor: "#BDA747",
     paddingHorizontal: 50,
-    shadowColor: "#595959",
+    shadowColor: "#2b2b2b",
     shadowRadius: 1,
     shadowOpacity: 0.7,
     borderRadius: 5,
