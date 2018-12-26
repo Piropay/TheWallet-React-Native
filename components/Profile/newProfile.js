@@ -78,10 +78,10 @@ class ProfileView extends Component {
                   innerRadius={50}
                   radius={100}
                   padding={100}
-                  labelRadius={110}
+                  labelRadius={115}
                   startAngle={90}
                   endAngle={450}
-                  labelComponent={<VictoryLabel angle={35} />}
+                  labelComponent={<VictoryLabel angle={0} />}
                   colorScale={["#278979", "#BA2D17", "#BEA647"]}
                   animate={{
                     duration: 2000
@@ -175,6 +175,12 @@ class ProfileView extends Component {
                 }
               ]}
             >
+              <Button
+                onPress={() => this.props.navigation.navigate("Report")}
+                style={[styles.button, { backgroundColor: "#BA2B15" }]}
+              >
+                <Text style={styles.buttontext}>Report</Text>
+              </Button>
               <Button
                 onPress={() => this.props.logout(this.props.navigation)}
                 style={[styles.button, { backgroundColor: "#BA2B15" }]}

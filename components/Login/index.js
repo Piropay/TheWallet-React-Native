@@ -18,8 +18,7 @@ import {
   Input,
   Container,
   Icon,
-  H1,
-  Toast
+  H1
 } from "native-base";
 class Login extends Component {
   static navigationOptions = {
@@ -117,46 +116,6 @@ class Login extends Component {
                 style={styles.button}
                 onPress={() => {
                   this.props.login(this.state, this.props.navigation, "login");
-
-                  // if (this.props.error.username) {
-                  //   Toast.show({
-                  //     text: "Username: " + this.props.error.username,
-                  //     buttonText: "Okay",
-                  //     duration: 6000,
-                  //     type: "warning",
-                  //     buttonTextStyle: { color: "#000" },
-                  //     buttonStyle: {
-                  //       backgroundColor: "#F1C04F",
-                  //       alignSelf: "center"
-                  //     }
-                  //   });
-                  // }
-                  // if (this.props.error.password) {
-                  //   Toast.show({
-                  //     text: "Password: " + this.props.error.password,
-                  //     buttonText: "Okay",
-                  //     duration: 6000,
-                  //     type: "warning",
-                  //     buttonTextStyle: { color: "#000" },
-                  //     buttonStyle: {
-                  //       backgroundColor: "#F1C04F",
-                  //       alignSelf: "center"
-                  //     }
-                  //   });
-                  // }
-                  // if (this.props.error.non_field_errors) {
-                  //   Toast.show({
-                  //     text: this.props.error.non_field_errors,
-                  //     buttonText: "Okay",
-                  //     duration: 6000,
-                  //     type: "warning",
-                  //     buttonTextStyle: { color: "#000" },
-                  //     buttonStyle: {
-                  //       backgroundColor: "#F1C04F",
-                  //       alignSelf: "center"
-                  //     }
-                  //   });
-                  // }
                 }}
               >
                 <Text style={styles.text}>Login</Text>

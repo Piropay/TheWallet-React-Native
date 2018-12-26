@@ -182,9 +182,6 @@ ProfileStack.navigationOptions = {
   )
 };
 
-import { Component } from "react";
-import { View, Text } from "react-native";
-
 export default createMaterialBottomTabNavigator(
   {
     HomeStack,

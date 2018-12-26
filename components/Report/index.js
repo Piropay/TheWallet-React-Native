@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import styles, { colors } from "./style";
 import { connect } from "react-redux";
-import { Button, Container } from "native-base";
+import { Button, Container, Toast } from "native-base";
 import * as actionCreators from "../../store/actions";
 import { VictoryPie, VictoryLabel } from "victory-native";
 import ProgressBarAnimated from "react-native-progress-bar-animated";

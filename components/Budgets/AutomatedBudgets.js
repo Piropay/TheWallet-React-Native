@@ -13,7 +13,7 @@ import {
   Slider
 } from "react-native";
 
-import { Input, CardItem, Body } from "native-base";
+import { Input, CardItem, Body, Toast } from "native-base";
 
 import { Row, Grid } from "react-native-easy-grid";
 import { Button, H2, H1, Item, Picker, Icon, Container } from "native-base";
@@ -233,7 +233,6 @@ class AutoMatedBudgets extends Component {
           </Button>
         </View>
         <Card padder style={styles.mainCard}>
-
           <Text>These are the suggested budgets for you!</Text>
 
           <H2
@@ -246,12 +245,9 @@ class AutoMatedBudgets extends Component {
               }
             ]}
           >
-
             Balance {parseFloat(this.props.profile.balance).toFixed(3)} KD{" "}
             {"\n"} Total Budget
-            {totalBudget.toFixed(3)} KD
-
-            Total Budget {totalBudget.toFixed(3)} KD
+            {totalBudget.toFixed(3)} KD Total Budget {totalBudget.toFixed(3)} KD
           </H2>
           <ScrollView
             contentContainerStyle={{ paddingBottom: 150, paddingTop: 30 }}
