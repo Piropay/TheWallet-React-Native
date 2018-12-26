@@ -14,7 +14,7 @@ import {
   Alert,
   ScrollView
 } from "react-native";
-import { H1, Item, Picker, Icon, DatePicker } from "native-base";
+import { H1, Item, Picker, Icon, DatePicker, Toast } from "native-base";
 import styles from "./styles";
 import { Card } from "react-native-paper";
 
