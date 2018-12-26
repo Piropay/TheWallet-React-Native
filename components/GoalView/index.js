@@ -7,20 +7,34 @@ import {
   Text,
   View,
   Modal,
-  RefreshControl
+  RefreshControl,
+  Dimensions
 } from "react-native";
-import { Button, List, Card, CardItem, Body, H2, H3, Toast } from "native-base";
+import {
+  Button,
+  List,
+  Card,
+  CardItem,
+  Body,
+  H2,
+  H3,
+  Toast,
+  Container,
+  Content
+} from "native-base";
 import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions";
 import styles from "./styles";
 import Deposit from "../Deposit";
 import { Icon } from "react-native-elements";
 import { Row, Col } from "react-native-easy-grid";
+import ProgressBarAnimated from "react-native-progress-bar-animated";
 
 class GoalView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      progress: 90,
       modalVisible: false,
       goalSelected: [],
       mdeposit: 0
@@ -92,6 +106,12 @@ class GoalView extends React.Component {
   };
 
   render() {
+    const barWidth = Dimensions.get("screen").width - 70;
+    const progressCustomStyles = {
+      backgroundColor: "#F1C04F",
+      borderRadius: 20,
+      borderColor: "orange"
+    };
     const goals = this.props.goals;
     let ListItems;
     if (goals) {
@@ -99,8 +119,9 @@ class GoalView extends React.Component {
     }
     totalDeposits = 0;
     if (this.state.goalSelected.label) {
-      this.state.goalSelected.deposits.forEach(deposit => {
-        totalDeposits += parseFloat(deposit.amount);
+      this.props.deposits.forEach(deposit => {
+        if (deposit.goal === this.state.goalSelected.id)
+          totalDeposits += parseFloat(deposit.amount);
       });
     }
     return (
@@ -166,17 +187,45 @@ class GoalView extends React.Component {
                     Progress {"\n"} {totalDeposits}/
                     {this.state.goalSelected.amount} KWD
                   </Text>
-                  {/* <Text style={styles.position}>
-                    {this.state.goalSelected.balance} KWD left to reach the
-                    goal!
-                  </Text> */}
+                  <ProgressBarAnimated
+                    {...progressCustomStyles}
+                    width={barWidth}
+                    value={
+                      (totalDeposits / this.state.goalSelected.amount) * 100
+                    }
+                    maxValue={parseFloat(this.state.goalSelected.amount)}
+                    onComplete={() => {
+                      Toast.show({
+                        text: "Congrats! You reached your goal!",
+                        buttonText: "Okay",
+                        duration: 6000,
+                        type: "success",
+                        buttonTextStyle: { color: "#000" },
+                        buttonStyle: {
+                          backgroundColor: "#F1C04F",
+                          alignSelf: "center"
+                        }
+                      });
+                    }}
+                  />
 
-                  <Text style={styles.about}>
-                    {"\n"}
-                    Suggested Deposit {"\n"}
-                    {parseFloat(this.state.mdeposit).toFixed(3)} KWD
-                  </Text>
-                  <Deposit goal={this.state.goalSelected} />
+                  {parseFloat(this.state.goalSelected.balance) > 0 ? (
+                    <Content
+                      contentContainerStyle={{
+                        alignItems: "center",
+                        justifyContent: "center"
+                      }}
+                    >
+                      <Text style={styles.about}>
+                        {"\n"}
+                        Suggested Deposit {"\n"}
+                        {parseFloat(this.state.mdeposit).toFixed(3)} KWD
+                      </Text>
+                      <Deposit goal={this.state.goalSelected} />
+                    </Content>
+                  ) : (
+                    <H2 style={styles.h3}>You reached your goal!</H2>
+                  )}
                 </ScrollView>
               </View>
             </Card>
@@ -189,7 +238,8 @@ class GoalView extends React.Component {
 
 const mapStateToProps = state => ({
   profile: state.auth.profile,
-  goals: state.goal.goals
+  goals: state.goal.goals,
+  deposits: state.deposit.deposits
 });
 const mapDispatchToProps = dispatch => ({
   fetchGoals: () => dispatch(actionCreators.fetchGoals())

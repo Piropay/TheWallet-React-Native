@@ -111,14 +111,12 @@ export default StyleSheet.create({
     shadowOffset: { width: 8, height: 8 }
   },
   h3: {
+    marginTop: 10,
     padding: 10,
-    textAlign: "center",
-    color: "#BDA747",
+    textAlign: "left",
+    color: "#fff",
     fontWeight: "600",
-    fontFamily: "pacifico-regular",
-    textShadowColor: "#7f7f7f",
-    textShadowOffset: { width: 2, height: 2 },
-    textShadowRadius: 1
+    fontFamily: "pacifico-regular"
   },
   popupOverlay: {
     position: "relative",
@@ -180,5 +178,18 @@ export default StyleSheet.create({
     alignSelf: "center",
     color: "#BEA647",
     marginHorizontal: 10
+  },
+  number: {
+    color: "#F1C04F",
+    alignSelf: "flex-end",
+    fontWeight: "bold",
+    fontFamily: "pacifico-regular",
+    fontSize: 20
+  },
+  date: {
+    fontSize: 25,
+    fontFamily: "pacifico-regular",
+    color: "#fff",
+    marginBottom: 5
   }
 });

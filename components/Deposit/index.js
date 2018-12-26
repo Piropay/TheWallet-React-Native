@@ -7,7 +7,16 @@ import {
   Text,
   View
 } from "react-native";
-import { Button, Form, Item, Picker, Icon, Input, H3 } from "native-base";
+import {
+  Button,
+  Form,
+  Item,
+  Picker,
+  Icon,
+  Input,
+  H3,
+  Toast
+} from "native-base";
 import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions";
 import styles from "./styles";
@@ -34,15 +43,22 @@ class AddDeposit extends React.Component {
         buttonTextStyle: { color: "#000" },
         buttonStyle: { backgroundColor: "#F1C04F", alignSelf: "center" }
       });
+    } else if (this.state.amount > this.state.goal.balance) {
+      Toast.show({
+        text: "Please make sure you don't exceed your goal balance!",
+        buttonText: "Okay",
+        duration: 6000,
+        type: "danger",
+        buttonTextStyle: { color: "#000" },
+        buttonStyle: { backgroundColor: "#F1C04F", alignSelf: "center" }
+      });
     } else {
-      // let setGoal = this.props.goals.find(b => {
-      //   if (b.id === this.state.goal.id) {
-      //     return b;
-      //   }
-      //   return false;
-      // });
-      // setGoal.amount = setGoal.amount - this.state.amount;
-
+      let newGoal = this.props.goals.find(
+        goal => goal.id === this.state.goal.id
+      );
+      newGoal.balance -= this.state.amount;
+      newGoal = { ...newGoal };
+      this.props.updateGoal(newGoal);
       this.props.addDeposit(
         this.state.amount,
         this.props.goal.id,
@@ -87,8 +103,7 @@ const mapStateToProps = state => ({
   deposits: state.deposit.deposits
 });
 const mapDispatchToProps = dispatch => ({
-  updateGoal: (goal, navigation) =>
-    dispatch(actionCreators.updateGoal(goal, navigation)),
+  updateGoal: goal => dispatch(actionCreators.updateGoalBalance(goal)),
   addDeposit: (deposit, goal_id, navigation) =>
     dispatch(actionCreators.addDeposit(deposit, goal_id, navigation))
 });

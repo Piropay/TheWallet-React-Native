@@ -5,7 +5,8 @@ import {
   ScrollView,
   Text,
   StatusBar,
-  SafeAreaView
+  SafeAreaView,
+  TouchableOpacity
 } from "react-native";
 import { LinearGradient } from "expo";
 import Carousel, { Pagination } from "react-native-snap-carousel";
@@ -66,92 +67,29 @@ class GoalsCarousel extends Component {
     );
   }
 
-  mainExample(number, title) {
-    const { slider1ActiveSlide } = this.state;
-
-    return (
-      <View style={styles.exampleContainer}>
-        <Text style={styles.title}>{`Example ${number}`}</Text>
-        <Text style={styles.subtitle}>{title}</Text>
-        <Carousel
-          ref={c => (this._slider1Ref = c)}
-          data={ENTRIES1}
-          renderItem={
-            isTinder
-              ? this._renderLightItem.bind(this)
-              : this._renderItem.bind(this)
-          }
-          sliderWidth={sliderWidth}
-          itemWidth={itemWidth}
-          hasParallaxImages={true}
-          firstItem={SLIDER_1_FIRST_ITEM}
-          inactiveSlideScale={0.94}
-          inactiveSlideOpacity={0.7}
-          // inactiveSlideShift={20}
-          containerCustomStyle={styles.slider}
-          contentContainerCustomStyle={styles.sliderContentContainer}
-          loop={true}
-          loopClonesPerSide={2}
-          autoplay={true}
-          autoplayDelay={500}
-          autoplayInterval={3000}
-          onSnapToItem={index => this.setState({ slider1ActiveSlide: index })}
-        />
-        <Pagination
-          dotsLength={ENTRIES1.length}
-          activeDotIndex={slider1ActiveSlide}
-          containerStyle={styles.paginationContainer}
-          dotColor={"rgba(255, 255, 255, 0.92)"}
-          dotStyle={styles.paginationDot}
-          inactiveDotColor={colors.black}
-          inactiveDotOpacity={0.4}
-          inactiveDotScale={0.6}
-          carouselRef={this._slider1Ref}
-          tappableDots={!!this._slider1Ref}
-        />
-      </View>
-    );
-  }
-
-  momentumExample(number, title) {
-    return (
-      <View style={styles.exampleContainer}>
-        <Text style={styles.title}>{`Example ${number}`}</Text>
-        <Text style={styles.subtitle}>{title}</Text>
-        <Carousel
-          data={this.props.budgets}
-          renderItem={this._renderItem}
-          sliderWidth={sliderWidth}
-          itemWidth={itemWidth}
-          inactiveSlideScale={0.95}
-          inactiveSlideOpacity={1}
-          enableMomentum={true}
-          activeSlideAlignment={"start"}
-          containerCustomStyle={styles.slider}
-          contentContainerCustomStyle={styles.sliderContentContainer}
-          activeAnimationType={"spring"}
-          activeAnimationOptions={{
-            friction: 4,
-            tension: 40
-          }}
-        />
-      </View>
-    );
-  }
-
   layoutExample(number, title, type) {
     const isTinder = type === "tinder";
 
     return (
       <View style={[styles.exampleContainer]}>
-        <Text
-          style={[styles.title, isTinder ? {} : styles.titleLight]}
-        >{`Goals`}</Text>
-        <Text style={[styles.subtitle, isTinder ? {} : styles.titleLight]}>
-          {title}
-        </Text>
+        <TouchableOpacity
+          activeOpacity={1}
+          onPress={() => {
+            this.props.navigation.navigate("GoalsView");
+          }}
+        >
+          <Text
+            style={[styles.title, isTinder ? {} : styles.titleLight]}
+          >{`Goals`}</Text>
+          <Text style={[styles.subtitle, isTinder ? {} : styles.titleLight]}>
+            {title}
+          </Text>
+        </TouchableOpacity>
         <Carousel
-          data={this.props.goals}
+          data={this.props.goals.slice(
+            this.props.goals.length - 5,
+            this.props.goals.length
+          )}
           renderItem={
             isTinder
               ? this._renderLightItem.bind(this)
@@ -168,42 +106,6 @@ class GoalsCarousel extends Component {
     );
   }
 
-  customExample(number, title, refNumber, renderItemFunc) {
-    const isEven = refNumber % 2 === 0;
-
-    // Do not render examples on Android; because of the zIndex bug, they won't work as is
-    return !IS_ANDROID ? (
-      <View
-        style={[
-          styles.exampleContainer,
-          isEven ? styles.exampleContainerDark : styles.exampleContainerLight
-        ]}
-      >
-        <Text
-          style={[styles.title, isEven ? {} : styles.titleDark]}
-        >{`Example ${number}`}</Text>
-        <Text style={[styles.subtitle, isEven ? {} : styles.titleDark]}>
-          {title}
-        </Text>
-        <Carousel
-          data={isEven ? ENTRIES2 : ENTRIES1}
-          renderItem={renderItemFunc}
-          sliderWidth={sliderWidth}
-          itemWidth={itemWidth}
-          containerCustomStyle={styles.slider}
-          contentContainerCustomStyle={styles.sliderContentContainer}
-          scrollInterpolator={
-            scrollInterpolators[`scrollInterpolator${refNumber}`]
-          }
-          slideInterpolatedStyle={animatedStyles[`animatedStyles${refNumber}`]}
-          useScrollView={true}
-        />
-      </View>
-    ) : (
-      false
-    );
-  }
-
   get gradient() {
     return (
       <LinearGradient
@@ -216,18 +118,7 @@ class GoalsCarousel extends Component {
   }
 
   render() {
-    const example2 = this.momentumExample(
-      2,
-      "Momentum | Left-aligned | Active animation"
-    );
     const example3 = this.layoutExample(3, "The key is to deposit!", "stack");
-
-    const example8 = this.customExample(
-      8,
-      "Custom animation 4",
-      4,
-      this._renderLightItem
-    );
 
     return (
       <SafeAreaView style={styles.safeArea}>

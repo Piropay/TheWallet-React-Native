@@ -58,14 +58,6 @@ class AddTransactionView extends React.Component {
         buttonStyle: { backgroundColor: "#F1C04F", alignSelf: "center" }
       });
     } else {
-      // let setBudget = this.props.budgets.find(b => {
-      //   if (b.id === this.state.budget) {
-      //     return b;
-      //   }
-      //   return false;
-      // });
-      // setBudget.balance = setBudget.balance - this.state.amount;
-      // await this.props.updateBudget(setBudget, this.props.navigation);
       this.props.makeTransaction(
         { label: this.state.label, amount: this.state.amount },
         this.state.budget.id,

@@ -14,10 +14,12 @@ const styles = StyleSheet.create({
   },
 
   popup: {
+    alignSelf: "center",
     backgroundColor: "#fff",
     marginTop: 80,
     marginHorizontal: 40,
-    borderRadius: 10
+    borderRadius: 10,
+    width: "95%"
   },
   shadow: {
     shadowColor: "#595959",
@@ -30,10 +32,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#BDA747",
     fontWeight: "600",
-    fontFamily: "pacifico-regular",
-    textShadowColor: "#7f7f7f",
-    textShadowOffset: { width: 2, height: 2 },
-    textShadowRadius: 1
+    fontFamily: "pacifico-regular"
   },
   popupOverlay: {
     backgroundColor: "#00000057",

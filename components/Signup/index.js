@@ -19,7 +19,8 @@ import {
   Input,
   Container,
   Icon,
-  H1
+  H1,
+  Toast
 } from "native-base";
 
 class Signup extends Component {
@@ -118,12 +119,7 @@ class Signup extends Component {
               dark
               style={styles.button}
               onPress={() => {
-                if (
-                  this.state.password === this.state.confirm &&
-                  this.state.username !== ""
-                )
-                  this.props.signup(this.state, this.props.navigation);
-                else {
+                if (this.state.password !== this.state.confirm) {
                   Toast.show({
                     text: "Your passwords don't match!",
                     buttonText: "Okay",
@@ -135,6 +131,8 @@ class Signup extends Component {
                       alignSelf: "center"
                     }
                   });
+                } else {
+                  this.props.signup(this.state, this.props.navigation);
                 }
               }}
             >
@@ -149,7 +147,8 @@ class Signup extends Component {
 
 const mapStateToProps = state => ({
   user: state.auth.user,
-  profile: state.auth.profile
+  profile: state.auth.profile,
+  error: state.auth.error
 });
 
 const mapDispatchToProps = dispatch => ({

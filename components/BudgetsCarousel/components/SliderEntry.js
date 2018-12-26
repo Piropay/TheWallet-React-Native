@@ -55,6 +55,38 @@ export default class SliderEntry extends Component {
     }
   }
 
+  setImage(category) {
+    if (category === "Personal") {
+      return {
+        uri: "https://img.icons8.com/metro/500/000000/user-male.png"
+      };
+    } else if (category === "Emergency") {
+      return {
+        uri: "https://img.icons8.com/metro/500/000000/siren.png"
+      };
+    } else if (category === "Entertainment") {
+      return {
+        uri: "https://img.icons8.com/metro/500/000000/dancing.png"
+      };
+    } else if (category === "Food") {
+      return {
+        uri: "https://img.icons8.com/metro/500/000000/meal.png"
+      };
+    } else if (category === "Health") {
+      return {
+        uri: "https://img.icons8.com/metro/500/000000/clinic.png"
+      };
+    } else if (category === "Transportation") {
+      return {
+        uri: "https://img.icons8.com/metro/500/000000/ground-transportation.png"
+      };
+    } else if (category === "Others") {
+      return {
+        uri: "https://img.icons8.com/metro/500/000000/stack-of-money.png"
+      };
+    }
+  }
+
   render() {
     const {
       data: { label, amount, balance, category, id, transactions },
@@ -89,16 +121,7 @@ export default class SliderEntry extends Component {
             }
           ]}
         >
-          <Image
-            source={
-              category === "Personal"
-                ? {
-                    uri: "https://img.icons8.com/metro/500/000000/user-male.png"
-                  }
-                : { uri: "https://img.icons8.com/metro/500/000000/suv.png" }
-            }
-            style={styles.image}
-          />
+          <Image source={this.setImage(category)} style={styles.image} />
           <View style={[styles.radiusMask]} />
         </View>
         <View style={styles.textContainer}>

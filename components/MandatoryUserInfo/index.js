@@ -153,6 +153,7 @@ class AddExpenseView extends Component {
             }}
           />
           <Input
+            value={idx.label}
             placeholder="Title"
             onChangeText={value => this.handleExpenseLabelChange(value, i)}
           />

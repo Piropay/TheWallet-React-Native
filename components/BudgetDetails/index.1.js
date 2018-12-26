@@ -207,45 +207,6 @@ class BudgetDetails extends Component {
               </Card>
             )}
           </ScrollView>
-          {/* <Modal
-            animationType={"fade"}
-            transparent={true}
-            onRequestClose={() => this.setModalVisible(false)}
-            visible={this.state.modalVisible}
-          >
-            <View style={styles.popupOverlay}>
-              <Card
-                style={[
-                  styles.shadow,
-                  styles.popup,
-                  { position: "relative", bottom: deviceHeight * 0.2 }
-                ]}
-              >
-                <View style={styles.popupContent}>
-                  <ScrollView contentContainerStyle={styles.modalInfo}>
-                    <H2 style={styles.h3}>Your Budget</H2>
-                    <H3 style={styles.name}>{budget.label}</H3>
-                    <Text style={styles.position}>{budget.amount} KWD</Text>
-                    <Text style={styles.position}>
-                      {budget.balance} KWD left to in your budget!
-                    </Text>
-
-                    <Transaction budget={budget} />
-                  </ScrollView>
-                </View>
-                <View style={styles.popupButtons}>
-                  <Button
-                    onPress={() => {
-                      this.setModalVisible(false);
-                    }}
-                    style={styles.btnClose}
-                  >
-                    <Text style={{ color: "wheat" }}>Close</Text>
-                  </Button>
-                </View>
-              </Card>
-            </View>
-          </Modal> */}
 
           <Modal
             animationType={"slide"}
@@ -273,7 +234,7 @@ class BudgetDetails extends Component {
                     {/* <H2 style={styles.h3}>Your Goal</H2> */}
 
                     <Text style={styles.position}>
-                      Progress {"\n"} {budget.balance}/{budget.amount} KWD
+                      Progress {"\n"} {totalTransactions}/{budget.amount} KWD
                     </Text>
                     {/* <Text style={styles.position}>
                     {budget.balance} KWD left to reach the

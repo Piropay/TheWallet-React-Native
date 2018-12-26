@@ -31,6 +31,7 @@ class userBudgets extends Component {
   constructor(props) {
     super(props);
     this.state = {
+
       keyboardHeight: 0,
       inputHeight: 40,
       totalBudget: 0,
@@ -88,7 +89,7 @@ class userBudgets extends Component {
       let { amount, category, label } = { ...budget };
       if (category !== "" && label !== "" && amount !== 0) {
         filled = true;
-        currentTotalBudget += amount;
+        currentTotalBudget += parseFloat(amount);
       } else {
         filled = false;
       }
@@ -111,6 +112,8 @@ class userBudgets extends Component {
         buttonStyle: { backgroundColor: "#F1C04F", alignSelf: "center" }
       });
     } else {
+      parseFloat(totalBudget);
+
       Toast.show({
         text:
           "Please make sure that you fill in all the boxes and that you're total budgets don't exceed your current balance!",
@@ -205,6 +208,7 @@ class userBudgets extends Component {
           />
           <Input
             placeholder="Title"
+            value={idx.label}
             onChangeText={value => this.handleBudgetLabelChange(value, i)}
           />
         </Item>
@@ -284,14 +288,14 @@ class userBudgets extends Component {
               color: "#585858"
             }}
           />
-          {"  "}
-          {String(idx.amount.toFixed(3))}{" "}
+
+          {String(idx.amount.toFixed(3))}
         </Text>
         <Slider
           minimumTrackTintColor="#258779"
           style={{ width: 250, alignSelf: "center" }}
           step={1}
-          maximumValue={this.props.profile.balance - this.props.totalUserBudget}
+          maximumValue={this.props.profile.balance - totalBudget}
           onValueChange={this.change.bind(this)}
           value={idx.amount}
           onValueChange={value =>
@@ -332,7 +336,32 @@ class userBudgets extends Component {
         >
           Budgets
         </H1>
-
+        <H2
+          style={[
+            styles.h3,
+            {
+              fontFamily: "quicksand-bold",
+              textShadowOffset: { width: 0, height: 0 }
+            }
+          ]}
+        >
+          Balance {parseFloat(this.props.profile.balance).toFixed(3)} KD
+        </H2>
+        <H2
+          style={[
+            styles.h3,
+            {
+              fontFamily: "quicksand-bold",
+              textShadowOffset: { width: 0, height: 0 }
+            }
+          ]}
+        >
+          balance left:
+          {(
+            parseFloat(this.props.profile.balance) - parseFloat(totalBudget)
+          ).toFixed(3)}
+          KD
+        </H2>
         <View style={{ flexDirection: "row", alignSelf: "center" }}>
           <Button
             style={styles.greenbutton}
@@ -346,7 +375,7 @@ class userBudgets extends Component {
             style={[styles.button]}
             rounded
             dark
-            onPress={() => this.handleSubmitBudget()}
+            onPress={() => this.handleSubmitBudget(totalBudget)}
           >
             <Text style={styles.buttontext}>Submit</Text>
           </Button>
