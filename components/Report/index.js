@@ -31,16 +31,9 @@ class Report extends Component {
       let compDate = new Date(this.props.budgets[0].date);
       return budDate.getMonth() === compDate.getMonth();
     });
-    oldBudgets.forEach(budget =>
-      this.props.addBudget(
-        {
-          label: budget.label,
-          category: budget.category,
-          amount: budget.amount
-        },
-        this.props.navigation
-      )
-    );
+
+    this.props.addBudget(oldBudgets, this.props.navigation);
+
     Toast.show({
       text: "Budgets Created Successfully",
       buttonText: "Okay",
@@ -50,7 +43,7 @@ class Report extends Component {
       buttonStyle: { backgroundColor: "#F1C04F", alignSelf: "center" }
     });
 
-    this.props.navigation.replace("Budgets");
+    this.props.navigation.navigate("Budgets");
   }
 
   componentWillUnmount() {
@@ -181,6 +174,10 @@ class Report extends Component {
     let totalPreviousBudgets = 0;
     let totalPreviousBalance = 0;
     let TotalTransactions = 0;
+    let totalExpenses = 0;
+    this.props.expenses.forEach(expense => {
+      totalExpenses += parseFloat(expense.amount);
+    });
     let tempBudgets = [];
     if (
       //Uncomment this when testing for previous budgets
@@ -241,11 +238,11 @@ class Report extends Component {
                     },
                     {
                       label: `Expenses:\n ${(
-                        (parseFloat(TotalTransactions) / income) *
+                        (parseFloat(totalExpenses) / income) *
                         100
                       ).toFixed(2)}%`,
                       x: 2,
-                      y: parseFloat(TotalTransactions)
+                      y: parseFloat(totalExpenses)
                     },
                     {
                       label: `Budgets:\n ${(
