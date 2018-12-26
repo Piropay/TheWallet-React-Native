@@ -31,7 +31,6 @@ class userBudgets extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
       keyboardHeight: 0,
       inputHeight: 40,
       totalBudget: 0,
@@ -356,7 +355,7 @@ class userBudgets extends Component {
             }
           ]}
         >
-          balance left:
+          Balance left:
           {(
             parseFloat(this.props.profile.balance) - parseFloat(totalBudget)
           ).toFixed(3)}
