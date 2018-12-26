@@ -13,9 +13,12 @@ import {
   Input,
   Card,
   CardItem,
-  Body
+  Body,
+  Content,
+  Container
 } from "native-base";
-import styles from "./styles";
+import styles, { colors } from "./styles";
+import { LinearGradient } from "expo";
 
 class Goal extends Component {
   constructor(props) {
@@ -112,100 +115,163 @@ class Goal extends Component {
 
   render() {
     const inputRows = this.state.goals.map((idx, i) => (
-      <Row key={`${i}`}>
-        <Card style={styles.shadow}>
-          <Button
-            type="button"
-            onPress={() => this.handleRemoveGoal(i)}
-            style={styles.closeButton}
-          >
-            <Text>x</Text>
-          </Button>
-          <CardItem style={{ borderRadius: 10 }}>
-            <Body
-              style={{
-                paddingHorizontal: 40
-              }}
-            >
-              <Item style={styles.label}>
-                <TextInput
-                  value={idx.label}
-                  style={styles.inputs}
-                  onChangeText={value => this.handleGoalLabelChange(value, i)}
-                />
-              </Item>
-              <Text style={styles.label}>Label</Text>
-            </Body>
-          </CardItem>
+      <View key={`${i}`}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "space-between",
 
-          <CardItem style={{ borderRadius: 10 }}>
-            <Body
+            marginHorizontal: 25,
+            flexDirection: "row"
+          }}
+        >
+          <Card style={styles.circle}>
+            <Text style={styles.number}>{`${i + 1}`}</Text>
+          </Card>
+          <Button
+            transparent
+            style={styles.remove}
+            onPress={() => this.handleRemoveGoal(i)}
+          >
+            <Icon
+              active
+              type="FontAwesome"
+              name="remove"
               style={{
-                paddingHorizontal: 40
+                color: "#585858"
               }}
-            >
-              <Item style={styles.label}>
-                <Input
-                  style={styles.inputs}
-                  keyboardType="numeric"
-                  value={idx.amount}
-                  clearTextOnFocus={true}
-                  onChangeText={value =>
-                    this.handleGoalAmountChange(parseFloat(value), i)
-                  }
-                />
-              </Item>
-              <Text style={styles.label}>Amount</Text>
-            </Body>
-          </CardItem>
-          <Row style={{ alignSelf: "center" }}>
-            <Item picker>
-              <DatePicker
-                defaultDate={new Date()}
-                minimumDate={new Date()}
-                selectedValue={idx.end_date}
-                locale={"en"}
-                timeZoneOffsetInMinutes={undefined}
-                modalTransparent={false}
-                animationType={"fade"}
-                androidMode={"default"}
-                placeHolderText="Select date"
-                textStyle={{ color: "green" }}
-                placeHolderTextStyle={{ color: "#278979" }}
-                onDateChange={value => this.onValueChange2(value, i)}
-              />
-              <Icon name="ios-arrow-dropdown" />
-            </Item>
-          </Row>
-        </Card>
-      </Row>
+            />
+          </Button>
+        </View>
+
+        <Item style={[styles.label, { marginTop: 0 }]}>
+          <Icon
+            active
+            type="Entypo"
+            name="edit"
+            style={{
+              color: "#585858"
+            }}
+          />
+          <Input
+            value={idx.label}
+            placeholder="Title"
+            onChangeText={value => this.handleGoalLabelChange(value, i)}
+          />
+        </Item>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "space-between",
+            flexDirection: "row"
+          }}
+        >
+          <Item style={[styles.label, { flex: 1 }]}>
+            <Icon
+              active
+              name="cash"
+              style={{
+                color: "#585858"
+              }}
+            />
+            <Input
+              placeholder="0.000"
+              keyboardType="numeric"
+              value={idx.amount}
+              clearTextOnFocus={true}
+              onChangeText={value =>
+                this.handleGoalAmountChange(parseFloat(value), i)
+              }
+            />
+          </Item>
+
+          <Item picker style={[styles.label, { marginLeft: 0, flex: 1 }]}>
+            <DatePicker
+              defaultDate={new Date()}
+              minimumDate={new Date()}
+              selectedValue={idx.end_date}
+              locale={"en"}
+              timeZoneOffsetInMinutes={undefined}
+              modalTransparent={false}
+              animationType={"fade"}
+              androidMode={"default"}
+              placeHolderText="Select date"
+              placeHolderTextStyle={{ color: "#585858" }}
+              onDateChange={value => this.onValueChange2(value, i)}
+            />
+            <Icon
+              name="calendar"
+              type="Entypo"
+              style={{
+                color: "#585858"
+              }}
+            />
+          </Item>
+        </View>
+        <View
+          style={{
+            borderBottomColor: "#b2b2b2",
+            borderBottomWidth: 1,
+            marginHorizontal: 25,
+            marginVertical: 20
+          }}
+        />
+      </View>
     ));
     return (
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.contentContainer}
-      >
-        <Grid>
-          <H1 style={styles.h3}>Your Goals</H1>
-          {inputRows}
-        </Grid>
-        <Button
-          style={styles.button}
-          block
-          full
-          onPress={() => this.handleAddGoal()}
+      <Container>
+        <LinearGradient
+          colors={[colors.background1, colors.background2]}
+          startPoint={{ x: 1, y: 0 }}
+          endPoint={{ x: 0, y: 1 }}
+          style={styles.gradient}
+        />
+        <H1
+          style={[
+            styles.h3,
+            { fontSize: 35, paddingTop: 20, paddingBottom: 10 }
+          ]}
         >
-          <Text>Add</Text>
-        </Button>
-        <Button
-          style={styles.button}
-          block
-          full
-          onPress={() => this.handleSubmitGoal()}
-        >
-          <Text>Submit</Text>
-        </Button>
-      </ScrollView>
+          Goals
+        </H1>
+
+        <View style={{ flexDirection: "row", alignSelf: "center" }}>
+          <Button
+            style={styles.greenbutton}
+            rounded
+            dark
+            onPress={() => this.handleAddGoal()}
+          >
+            <Text style={styles.buttontext}>Add</Text>
+          </Button>
+          <Button
+            style={[styles.button]}
+            rounded
+            dark
+            onPress={() => this.handleSubmitGoal()}
+          >
+            <Text style={styles.buttontext}>Submit</Text>
+          </Button>
+        </View>
+        <Card padder style={styles.mainCard}>
+          <Text
+            style={[
+              styles.text,
+              {
+                color: "#2b2b2b",
+                paddingTop: 20,
+                paddingBottom: 10
+              }
+            ]}
+          >
+            You can add your goals here, you'll get a monthly recommendation of
+            how much to deposit!
+          </Text>
+          <ScrollView contentContainerStyle={styles.contentContainer}>
+            {inputRows}
+          </ScrollView>
+        </Card>
+      </Container>
     );
   }
 }

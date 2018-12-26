@@ -70,6 +70,8 @@ const styles = StyleSheet.create({
     paddingTop: 10
   },
   buttontext: {
+    paddingTop: 10,
+    paddingHorizontal: 5,
     color: "#fff",
     fontWeight: "bold",
     fontFamily: "pacifico-regular",

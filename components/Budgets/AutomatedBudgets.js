@@ -190,7 +190,7 @@ class AutoMatedBudgets extends Component {
         <Slider
           minimumTrackTintColor="#258779"
           style={{ width: 200, alignSelf: "center" }}
-          step={1}
+          step={10}
           maximumValue={this.props.profile.balance}
           value={idx.amount}
           onValueChange={value =>
