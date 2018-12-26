@@ -12,7 +12,7 @@ import { StackActions, NavigationActions } from "react-navigation";
 import { Toast } from "native-base";
 
 const instance = axios.create({
-  baseURL: "http://68.183.217.91/api/"
+  baseURL: "http://192.168.100.39/api/"
 });
 
 const setAuthToken = token => {
@@ -191,6 +191,9 @@ export const updateProfile = (profile, navigation) => {
         income: profile.income,
         balance: profile.balance,
         savings: profile.savings,
+        longitude: profile.longitude,
+        latitude: profile.latitude,
+        accuracy: profile.accuracy,
         automated: profile.automated
       })
       .then(res => res.data)
