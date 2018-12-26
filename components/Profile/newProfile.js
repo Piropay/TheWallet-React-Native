@@ -13,7 +13,7 @@ import { VictoryPie, VictoryLabel } from "victory-native";
 import { connect } from "react-redux";
 import ExpensesList from "../ExpensesList/ExpensesList";
 import { Modal } from "react-native-paper";
-import { Card, H2, Text, Button, H3, Container } from "native-base";
+import { Card, H2, Text, Button, H3, Container, Row } from "native-base";
 import styles, { colors } from "./styles";
 import { LinearGradient } from "expo";
 class ProfileView extends Component {
@@ -170,18 +170,27 @@ class ProfileView extends Component {
               style={[
                 {
                   marginVertical: 30,
-                  flexDirection: "row",
                   alignSelf: "center"
                 }
               ]}
             >
               <Button
+                block
+                onPress={() => this.props.navigation.navigate("ExpensesList")}
+                style={[styles.button, { backgroundColor: "#BEA647" }]}
+              >
+                <Text style={styles.buttontext}>Expenses</Text>
+              </Button>
+              <Button
+                block
                 onPress={() => this.props.navigation.navigate("Report")}
-                style={[styles.button, { backgroundColor: "#BA2B15" }]}
+                style={[styles.button, { backgroundColor: "#258779" }]}
               >
                 <Text style={styles.buttontext}>Report</Text>
               </Button>
+
               <Button
+                block
                 onPress={() => this.props.logout(this.props.navigation)}
                 style={[styles.button, { backgroundColor: "#BA2B15" }]}
               >

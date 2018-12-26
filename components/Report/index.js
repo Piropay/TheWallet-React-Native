@@ -286,26 +286,41 @@ class Report extends Component {
 
             {ListItems}
           </View>
-          {this.state.show ? (
+          {this.state.show || compDate.getMonth() === new Date().getMonth() ? (
             <View>
-              <Button block onPress={() => this.sameBudget()}>
-                <Text>Continue on same budget</Text>
+              <Button
+                block
+                style={[
+                  styles.greenbutton,
+                  { marginHorizontal: 15, marginBottom: 10 }
+                ]}
+                onPress={() => this.sameBudget()}
+              >
+                <Text style={[styles.buttontext]}>Keep Same Budget</Text>
               </Button>
               {this.props.profile.automated ? (
                 <Button
                   block
+                  style={[
+                    styles.greenbutton,
+                    { marginHorizontal: 15, marginBottom: 10 }
+                  ]}
                   onPress={() =>
                     this.props.navigation.navigate("AutomatedBudgets")
                   }
                 >
-                  <Text>Set New Budget</Text>
+                  <Text style={styles.buttontext}>Set New Budget</Text>
                 </Button>
               ) : (
                 <Button
                   block
+                  style={[
+                    styles.greenbutton,
+                    { marginHorizontal: 15, marginBottom: 10 }
+                  ]}
                   onPress={() => this.props.navigation.navigate("userBudgets")}
                 >
-                  <Text>Set New Budget</Text>
+                  <Text style={styles.buttontext}> Set New Budget</Text>
                 </Button>
               )}
             </View>

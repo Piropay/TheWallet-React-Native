@@ -79,6 +79,18 @@ class BudgetsView extends React.Component {
           style={styles.gradient}
         />
         <View style={styles.container}>
+          {!this.props.profile.automated && (
+            <Button
+              block
+              style={[
+                styles.greenbutton,
+                { marginHorizontal: 15, marginBottom: 10 }
+              ]}
+              onPress={() => this.props.navigation.navigate("userBudgets")}
+            >
+              <Text style={styles.buttontext}> Add Budget</Text>
+            </Button>
+          )}
           <ScrollView
             style={styles.container}
             contentContainerStyle={styles.contentContainer}
@@ -91,17 +103,7 @@ class BudgetsView extends React.Component {
           >
             <List>{ListItems}</List>
           </ScrollView>
-          <View>
-            {!this.props.profile.automated && (
-              <Button
-                block
-                warning
-                onPress={() => this.props.navigation.navigate("userBudgets")}
-              >
-                <Text style={{ color: "white" }}> ADD Budget</Text>
-              </Button>
-            )}
-          </View>
+          <View />
         </View>
       </Container>
     );
