@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions/authActions";
-import styles from "./styles";
+import styles, { colors } from "./styles";
+import { LinearGradient } from "expo";
 
 import { StyleSheet, View, StatusBar, Image, ScrollView } from "react-native";
 import {
@@ -18,7 +19,8 @@ import {
   Input,
   Container,
   Icon,
-  H1
+  H1,
+  Toast
 } from "native-base";
 
 class Signup extends Component {
@@ -29,23 +31,21 @@ class Signup extends Component {
     super(props);
     this.state = {
       username: "",
-      password: ""
+      password: "",
+      confirm: ""
     };
   }
-  componentDidMount() {
-    if (this.props.user) {
-      this.props.navigation.replace("Goals");
-    }
-  }
-  componentDidUpdate(prevProps) {
-    if (prevProps.profile !== this.props.profile) {
-      this.props.navigation.replace("Goals");
-    }
-  }
+
   render() {
     return (
-      <Container style={styles.container}>
-        <Content padder>
+      <Container>
+        <LinearGradient
+          colors={[colors.background1, colors.background2]}
+          startPoint={{ x: 1, y: 0 }}
+          endPoint={{ x: 0, y: 1 }}
+          style={styles.gradient}
+        />
+        <Content padder style={styles.container}>
           <Image
             style={{
               alignSelf: "center",
@@ -106,6 +106,9 @@ class Signup extends Component {
                   <Input
                     placeholder="Confirm Password"
                     secureTextEntry={true}
+                    autoCorrect={false}
+                    autoCapitalize="none"
+                    onChangeText={value => this.setState({ confirm: value })}
                   />
                 </Item>
               </Body>
@@ -115,9 +118,23 @@ class Signup extends Component {
               rounded
               dark
               style={styles.button}
-              onPress={() =>
-                this.props.signup(this.state, this.props.navigation)
-              }
+              onPress={() => {
+                if (this.state.password !== this.state.confirm) {
+                  Toast.show({
+                    text: "Your passwords don't match!",
+                    buttonText: "Okay",
+                    duration: 6000,
+                    type: "danger",
+                    buttonTextStyle: { color: "#000" },
+                    buttonStyle: {
+                      backgroundColor: "#F1C04F",
+                      alignSelf: "center"
+                    }
+                  });
+                } else {
+                  this.props.signup(this.state, this.props.navigation);
+                }
+              }}
             >
               <Text style={styles.text}>Signup</Text>
             </Button>
@@ -130,7 +147,8 @@ class Signup extends Component {
 
 const mapStateToProps = state => ({
   user: state.auth.user,
-  profile: state.auth.profile
+  profile: state.auth.profile,
+  error: state.auth.error
 });
 
 const mapDispatchToProps = dispatch => ({

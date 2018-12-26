@@ -2,22 +2,37 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions";
 import { Text, View, TextInput, ScrollView } from "react-native";
-import { Input } from "native-base";
 import { Row, Grid } from "react-native-easy-grid";
-import { Button, H1, Item, Picker, DatePicker, Icon } from "native-base";
-import styles from "./styles";
+import {
+  Button,
+  H1,
+  Item,
+  Picker,
+  DatePicker,
+  Icon,
+  Input,
+  Card,
+  CardItem,
+  Body,
+  Toast,
+  Content,
+  Container
+} from "native-base";
+import styles, { colors } from "./styles";
+import { LinearGradient } from "expo";
 
 class Goal extends Component {
   constructor(props) {
     super(props);
     this.state = {
       totalGoal: 0,
-      goals: [{ end_date: "", label: "", amount: "0" }]
+      goals: [{ end_date: "", label: "", amount: "0", balance: "0" }]
     };
     this.handleAddGoal = this.handleAddGoal.bind(this);
     this.handleGoalLabelChange = this.handleGoalLabelChange.bind(this);
     this.handleGoalAmountChange = this.handleGoalAmountChange.bind(this);
     this.onValueChange2 = this.onValueChange2.bind(this);
+    this.handleRemoveGoal = this.handleRemoveGoal.bind(this);
   }
 
   handleGoalLabelChange = (value, i) => {
@@ -32,7 +47,6 @@ class Goal extends Component {
   handleGoalAmountChange = (value, i) => {
     let oldAmount = 0;
 
-    console.log(this.state.goals);
     const newAmount = this.state.goals.map((goal, sidx) => {
       if (i !== sidx) return goal;
       oldAmount = goal.amount;
@@ -46,7 +60,9 @@ class Goal extends Component {
 
   handleAddGoal = () => {
     this.setState({
-      goals: this.state.goals.concat([{ end_date: "", label: "", amount: "0" }])
+      goals: this.state.goals.concat([
+        { end_date: "", label: "", amount: "0", balance: "0" }
+      ])
     });
   };
   handleSubmitGoal = () => {
@@ -59,28 +75,38 @@ class Goal extends Component {
       }
     });
     if (filled) {
-      let today = new Date();
+      this.props.addGoal(this.state.goals, this.props.navigation);
 
-      this.state.goals.forEach(goal => {
-        this.props.addGoal(goal, this.props.navigation);
-      });
-      this.props.navigation.navigate("GoalsView");
+      // this.props.navigation.navigate("GoalsView");
     } else {
-      alert("Please make sure that you fill in all the boxes");
+      Toast.show({
+        text: "Please make sure that you fill in all the boxes",
+        buttonText: "Okay",
+        duration: 6000,
+        type: "danger",
+        buttonTextStyle: { color: "#000" },
+        buttonStyle: { backgroundColor: "#F1C04F", alignSelf: "center" }
+      });
     }
   };
   handleRemoveGoal = i => {
     this.setState({
-      gaols: this.state.goals.filter((goal, sidx) => {
+      goals: this.state.goals.filter((goal, sidx) => {
         if (i !== sidx) return goal;
       })
     });
   };
 
   onValueChange2(value, i) {
+    let date =
+      value.getFullYear() +
+      "-" +
+      (value.getMonth() + 1) +
+      "-" +
+      value.getDate();
     const newEndDate = this.state.goals.map((goal, sidx) => {
       if (i !== sidx) return goal;
-      return { ...goal, end_date: value };
+      return { ...goal, end_date: date };
     });
 
     this.setState({
@@ -90,23 +116,67 @@ class Goal extends Component {
 
   render() {
     const inputRows = this.state.goals.map((idx, i) => (
-      <Row key={`${i}`}>
-        <View style={styles.inputWrap}>
-          <Text style={styles.label}>Label</Text>
-          <View style={styles.inputContainer}>
-            <TextInput
-              value={idx.label}
-              style={styles.inputs}
-              onChangeText={value => this.handleGoalLabelChange(value, i)}
+      <View key={`${i}`}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "space-between",
+
+            marginHorizontal: 25,
+            flexDirection: "row"
+          }}
+        >
+          <Card style={styles.circle}>
+            <Text style={styles.number}>{`${i + 1}`}</Text>
+          </Card>
+          <Button
+            transparent
+            style={styles.remove}
+            onPress={() => this.handleRemoveGoal(i)}
+          >
+            <Icon
+              active
+              type="FontAwesome"
+              name="remove"
+              style={{
+                color: "#585858"
+              }}
             />
-          </View>
+          </Button>
         </View>
 
-        <View style={styles.inputWrap}>
-          <Text style={styles.label}>Amount</Text>
-          <View style={styles.inputContainer}>
+        <Item style={[styles.label, { marginTop: 0 }]}>
+          <Icon
+            active
+            type="Entypo"
+            name="edit"
+            style={{
+              color: "#585858"
+            }}
+          />
+          <Input
+            value={idx.label}
+            placeholder="Title"
+            onChangeText={value => this.handleGoalLabelChange(value, i)}
+          />
+        </Item>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "space-between",
+            flexDirection: "row"
+          }}
+        >
+          <Item style={[styles.label, { flex: 1 }]}>
+            <Icon
+              active
+              name="cash"
+              style={{
+                color: "#585858"
+              }}
+            />
             <Input
-              style={styles.inputs}
+              placeholder="0.000"
               keyboardType="numeric"
               value={idx.amount}
               clearTextOnFocus={true}
@@ -114,36 +184,9 @@ class Goal extends Component {
                 this.handleGoalAmountChange(parseFloat(value), i)
               }
             />
-          </View>
-        </View>
-        <Button
-          type="button"
-          onPress={() => this.handleRemoveGoal(i)}
-          style={{ width: 30, justifyContent: "center", marginTop: 13 }}
-        >
-          <Text>x</Text>
-        </Button>
-        <Row>
-          <Item picker>
-            {/* <Picker
-              mode="dropdown"
-              iosIcon={<Icon name="ios-arrow-dropdown" />}
-              placeholder="Select the Goal"
-              placeholderStyle={{ color: "#bfc6ea" }}
-              placeholderIconColor="#007aff"
-              selectedValue={idx.end_date}
-              onValueChange={value => this.onValueChange2(value, i)}
-            >
-              <Picker.Item key={1} label={"Food"} value={"Food"} />
-              <Picker.Item key={2} label={"Health"} value={"Health"} />
-              <Picker.Item key={3} label={"Emergency"} value={"Emergency"} />
-              <Picker.Item
-                key={4}
-                label={"Entertainment"}
-                value={"Entertainment"}
-              />
-              <Picker.Item key={5} label={"Others"} value={"Others"} />
-            </Picker> */}
+          </Item>
+
+          <Item picker style={[styles.label, { marginLeft: 0, flex: 1 }]}>
             <DatePicker
               defaultDate={new Date()}
               minimumDate={new Date()}
@@ -154,35 +197,82 @@ class Goal extends Component {
               animationType={"fade"}
               androidMode={"default"}
               placeHolderText="Select date"
-              textStyle={{ color: "green" }}
-              placeHolderTextStyle={{ color: "#d3d3d3" }}
+              placeHolderTextStyle={{ color: "#585858" }}
               onDateChange={value => this.onValueChange2(value, i)}
             />
+            <Icon
+              name="calendar"
+              type="Entypo"
+              style={{
+                color: "#585858"
+              }}
+            />
           </Item>
-        </Row>
-      </Row>
+        </View>
+        <View
+          style={{
+            borderBottomColor: "#b2b2b2",
+            borderBottomWidth: 1,
+            marginHorizontal: 25,
+            marginVertical: 20
+          }}
+        />
+      </View>
     ));
     return (
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.contentContainer}
-      >
-        <Grid>
-          <H1>Your Goals</H1>
-          {inputRows}
-        </Grid>
-        <Button block full onPress={() => this.handleAddGoal()}>
-          <Text>Add</Text>
-        </Button>
-        <Button
-          block
-          full
-          onPress={() => this.handleSubmitGoal()}
-          style={{ marginTop: 10 }}
+      <Container>
+        <LinearGradient
+          colors={[colors.background1, colors.background2]}
+          startPoint={{ x: 1, y: 0 }}
+          endPoint={{ x: 0, y: 1 }}
+          style={styles.gradient}
+        />
+        <H1
+          style={[
+            styles.h3,
+            { fontSize: 35, paddingTop: 20, paddingBottom: 10 }
+          ]}
         >
-          <Text>Submit</Text>
-        </Button>
-      </ScrollView>
+          Goals
+        </H1>
+
+        <View style={{ flexDirection: "row", alignSelf: "center" }}>
+          <Button
+            style={styles.greenbutton}
+            rounded
+            dark
+            onPress={() => this.handleAddGoal()}
+          >
+            <Text style={styles.buttontext}>Add</Text>
+          </Button>
+          <Button
+            style={[styles.button]}
+            rounded
+            dark
+            onPress={() => this.handleSubmitGoal()}
+          >
+            <Text style={styles.buttontext}>Submit</Text>
+          </Button>
+        </View>
+        <Card padder style={styles.mainCard}>
+          <Text
+            style={[
+              styles.text,
+              {
+                color: "#2b2b2b",
+                paddingTop: 20,
+                paddingBottom: 10
+              }
+            ]}
+          >
+            You can add your goals here, you'll get a monthly recommendation of
+            how much to deposit!
+          </Text>
+          <ScrollView contentContainerStyle={styles.contentContainer}>
+            {inputRows}
+          </ScrollView>
+        </Card>
+      </Container>
     );
   }
 }
@@ -193,8 +283,8 @@ const mapStateToProps = state => ({
 
 const mapActionsToProps = dispatch => {
   return {
-    addGoal: (goal, navigation) =>
-      dispatch(actionCreators.addGoal(goal, navigation))
+    addGoal: (goals, navigation) =>
+      dispatch(actionCreators.addGoal(goals, navigation))
   };
 };
 

@@ -5,20 +5,10 @@ const instance = axios.create({
   baseURL: "http://192.168.100.39/api/expense/"
 });
 
-export const addIncome = income => {
-  return {
-    type: actionTypes.ADD_INCOME,
-    payload: income
-  };
-};
-
-export const addExpenses = (expense, navigation) => {
+export const addExpenses = (expenses, navigation) => {
   return dispatch => {
     instance
-      .post("create/", {
-        label: expense.label,
-        amount: expense.amount
-      })
+      .post("create/", expenses)
       .then(res => res.data)
       .then(expense => {
         dispatch({
@@ -26,7 +16,21 @@ export const addExpenses = (expense, navigation) => {
           payload: expense
         });
       })
-      .then(() => navigation.navigate("Home"))
+      .then(() => navigation.navigate("Automation"))
+      .catch(err => {
+        dispatch(console.log(err.response));
+      });
+  };
+};
+
+export const fetchExpenses = () => {
+  return dispatch => {
+    instance
+      .get("list/")
+      .then(res => res.data)
+      .then(expenses => {
+        dispatch({ type: actionTypes.FETCH_EXPENSES, payload: expenses });
+      })
       .catch(err => {
         dispatch(console.log(err.response.data));
       });

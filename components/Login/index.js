@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions/authActions";
-import styles from "./styles";
-
+import styles, { colors } from "./styles";
+import { LinearGradient } from "expo";
 import { StyleSheet, View, StatusBar, Image, ScrollView } from "react-native";
 import {
   Thumbnail,
@@ -18,9 +18,9 @@ import {
   Input,
   Container,
   Icon,
-  H1
+  H1,
+  Toast
 } from "native-base";
-
 class Login extends Component {
   static navigationOptions = {
     title: "Login"
@@ -32,23 +32,27 @@ class Login extends Component {
       password: ""
     };
   }
-  componentDidMount() {
-    if (this.props.user) {
-      this.props.navigation.replace("Main");
-    }
-  }
-  componentDidUpdate(prevProps) {
-    if (prevProps.profile !== this.props.profile) {
-      this.props.navigation.replace("Main");
-    }
-  }
+
   static navigationOptions = {
     header: null
   };
+
+  isEmpty(obj) {
+    for (let key in obj) {
+      if (obj.hasOwnProperty(key)) return false;
+    }
+    return true;
+  }
   render() {
     return (
-      <Container style={styles.container}>
-        <Content padder>
+      <Container>
+        <LinearGradient
+          colors={[colors.background1, colors.background2]}
+          startPoint={{ x: 1, y: 0 }}
+          endPoint={{ x: 0, y: 1 }}
+          style={styles.gradient}
+        />
+        <Content padder style={styles.container}>
           <Image
             style={{
               alignSelf: "center",
@@ -79,7 +83,9 @@ class Login extends Component {
                     placeholder="Username"
                     autoCorrect={false}
                     autoCapitalize="none"
-                    onChangeText={value => this.setState({ username: value })}
+                    onChangeText={value => {
+                      this.setState({ username: value });
+                    }}
                   />
                 </Item>
                 <Item style={styles.label}>
@@ -109,9 +115,49 @@ class Login extends Component {
                 rounded
                 dark
                 style={styles.button}
-                onPress={() =>
-                  this.props.login(this.state, this.props.navigation)
-                }
+                onPress={() => {
+                  this.props.login(this.state, this.props.navigation, "login");
+
+                  // if (this.props.error.username) {
+                  //   Toast.show({
+                  //     text: "Username: " + this.props.error.username,
+                  //     buttonText: "Okay",
+                  //     duration: 6000,
+                  //     type: "warning",
+                  //     buttonTextStyle: { color: "#000" },
+                  //     buttonStyle: {
+                  //       backgroundColor: "#F1C04F",
+                  //       alignSelf: "center"
+                  //     }
+                  //   });
+                  // }
+                  // if (this.props.error.password) {
+                  //   Toast.show({
+                  //     text: "Password: " + this.props.error.password,
+                  //     buttonText: "Okay",
+                  //     duration: 6000,
+                  //     type: "warning",
+                  //     buttonTextStyle: { color: "#000" },
+                  //     buttonStyle: {
+                  //       backgroundColor: "#F1C04F",
+                  //       alignSelf: "center"
+                  //     }
+                  //   });
+                  // }
+                  // if (this.props.error.non_field_errors) {
+                  //   Toast.show({
+                  //     text: this.props.error.non_field_errors,
+                  //     buttonText: "Okay",
+                  //     duration: 6000,
+                  //     type: "warning",
+                  //     buttonTextStyle: { color: "#000" },
+                  //     buttonStyle: {
+                  //       backgroundColor: "#F1C04F",
+                  //       alignSelf: "center"
+                  //     }
+                  //   });
+                  // }
+                }}
               >
                 <Text style={styles.text}>Login</Text>
               </Button>
@@ -125,12 +171,14 @@ class Login extends Component {
 
 const mapStateToProps = state => ({
   user: state.auth.user,
+  error: state.auth.error,
   profile: state.auth.profile
 });
 
 const mapDispatchToProps = dispatch => ({
   login: (userData, navigation) =>
-    dispatch(actionCreators.login(userData, navigation))
+    dispatch(actionCreators.login(userData, navigation, "login")),
+  reserError: () => dispatch(actionCreators.setErrors())
 });
 
 export default connect(

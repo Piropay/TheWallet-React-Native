@@ -6,7 +6,10 @@ import { fetchBudgets } from "./budgetActions";
 import { fetchDeposits } from "./depositActions";
 import { fetchGoals } from "./goalActions";
 import { fetchTransactions } from "./transactionActions";
+import { fetchExpenses } from "./userInfo";
 import { AsyncStorage } from "react-native";
+import { StackActions, NavigationActions } from "react-navigation";
+import { Toast } from "native-base";
 
 const instance = axios.create({
   baseURL: "http://192.168.100.39/api/"
@@ -37,14 +40,12 @@ export const checkForExpiredToken = () => {
         if (user.exp >= currentTime) {
           setAuthToken(token).then(() => dispatch(setCurrentUser(user)));
         }
-      } else {
-        logout();
       }
     });
   };
 };
 
-export const login = (userData, navigation) => {
+export const login = (userData, navigation, type) => {
   return dispatch => {
     instance
       .post("login/", userData)
@@ -54,10 +55,54 @@ export const login = (userData, navigation) => {
         setAuthToken(user.token).then(() =>
           dispatch(setCurrentUser(decodedUser))
         );
-        navigation.replace("Main");
+        if (type === "login") {
+          navigation.navigate("Home");
+        } else {
+          navigation.navigate("SetIncome");
+        }
       })
 
-      .catch(err => console.error(err.response.data));
+      .catch(err => {
+        if (err.response.data.username) {
+          Toast.show({
+            text: "Username: " + err.response.data.username,
+            buttonText: "Okay",
+            duration: 6000,
+            type: "warning",
+            buttonTextStyle: { color: "#000" },
+            buttonStyle: {
+              backgroundColor: "#F1C04F",
+              alignSelf: "center"
+            }
+          });
+        }
+        if (err.response.data.password) {
+          Toast.show({
+            text: "Password: " + err.response.data.password,
+            buttonText: "Okay",
+            duration: 6000,
+            type: "warning",
+            buttonTextStyle: { color: "#000" },
+            buttonStyle: {
+              backgroundColor: "#F1C04F",
+              alignSelf: "center"
+            }
+          });
+        }
+        if (err.response.data.non_field_errors) {
+          Toast.show({
+            text: err.response.data.non_field_errors,
+            buttonText: "Okay",
+            duration: 6000,
+            type: "warning",
+            buttonTextStyle: { color: "#000" },
+            buttonStyle: {
+              backgroundColor: "#F1C04F",
+              alignSelf: "center"
+            }
+          });
+        }
+      });
   };
 };
 
@@ -67,14 +112,54 @@ export const signup = (userData, navigation) => {
       .post("register/", userData)
       .then(res => res.data)
       .then(() => {
-        dispatch(login(userData));
+        dispatch(login(userData, navigation, "signup"));
       })
-      .catch(err => console.error(err.response.data));
+      .catch(err => {
+        if (err.response.data.username) {
+          Toast.show({
+            text: "Username: " + err.response.data.username,
+            buttonText: "Okay",
+            duration: 6000,
+            type: "warning",
+            buttonTextStyle: { color: "#000" },
+            buttonStyle: {
+              backgroundColor: "#F1C04F",
+              alignSelf: "center"
+            }
+          });
+        }
+        if (err.response.data.password) {
+          Toast.show({
+            text: "Password: " + err.response.data.password,
+            buttonText: "Okay",
+            duration: 6000,
+            type: "warning",
+            buttonTextStyle: { color: "#000" },
+            buttonStyle: {
+              backgroundColor: "#F1C04F",
+              alignSelf: "center"
+            }
+          });
+        }
+        if (err.response.data.non_field_errors) {
+          Toast.show({
+            text: err.response.data.non_field_errors,
+            buttonText: "Okay",
+            duration: 6000,
+            type: "warning",
+            buttonTextStyle: { color: "#000" },
+            buttonStyle: {
+              backgroundColor: "#F1C04F",
+              alignSelf: "center"
+            }
+          });
+        }
+      });
   };
 };
 
 export const logout = navigation => {
-  navigation.replace("Home");
+  navigation.navigate("HomePage");
 
   setAuthToken();
   return setCurrentUser(null);
@@ -82,14 +167,16 @@ export const logout = navigation => {
 
 const setCurrentUser = user => {
   return dispatch => {
-    dispatch({ type: actionTypes.SET_CURRENT_USER, payload: user });
-
     if (user) {
+      dispatch({ type: actionTypes.SET_CURRENT_USER, payload: user });
       dispatch(fetchBudgets());
       dispatch(fetchProfile());
       dispatch(fetchTransactions());
       dispatch(fetchGoals());
+      dispatch(fetchExpenses());
       dispatch(fetchDeposits());
+    } else {
+      dispatch({ type: actionTypes.LOGOUT_USER, payload: user });
     }
   };
 };
@@ -123,6 +210,33 @@ export const updateProfile = (profile, navigation) => {
   };
 };
 
+export const updateBalance = (profile, navigation) => {
+  return dispatch => {
+    instance
+      .put(`profile/update/`, {
+        phoneNo: profile.phoneNo,
+        dob: profile.dob,
+        gender: profile.gender,
+        income: profile.income,
+        balance: profile.balance,
+        savings: profile.savings,
+        automated: profile.automated
+      })
+      .then(res => res.data)
+      .then(profile => {
+        dispatch({
+          type: actionTypes.UPDATE_PROFILE,
+          payload: profile
+        });
+        navigation.navigate("Expanses");
+      })
+
+      .catch(err => {
+        dispatch(console.log(err.response.data.data));
+      });
+  };
+};
+
 export const fetchProfile = () => {
   return dispatch => {
     instance
@@ -139,3 +253,8 @@ export const fetchProfile = () => {
       });
   };
 };
+
+export const setErrors = errors => ({
+  type: actionTypes.SET_ERROR,
+  payload: errors
+});

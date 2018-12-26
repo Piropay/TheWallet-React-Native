@@ -24,9 +24,7 @@ const reducer = (state = initialState, action) => {
         budgets: state.budgets.concat(action.payload)
       };
     case actionTypes.UPDATE_BUDGET:
-      console.log(action.payload);
-
-      let newBudget = state.budgets.find(
+      var newBudget = state.budgets.find(
         budget => budget.id === action.payload.id
       );
 
@@ -35,9 +33,20 @@ const reducer = (state = initialState, action) => {
         newBudget.label = action.payload.label;
         newBudget.category = action.payload.category;
         newBudget.balance = action.payload.balance;
-        console.log(newBudget);
       }
-      // console.log(state.budgets);
+      bud = [...state.budgets];
+      return {
+        ...state,
+        budgets: bud
+      };
+    case actionTypes.SUBTRACT_BUDGET:
+      var newBudget = state.budgets.find(
+        budget => budget.id === action.payload.budget
+      );
+
+      if (newBudget) {
+        newBudget.balance = newBudget.balance - action.payload.amount;
+      }
       bud = [...state.budgets];
       return {
         ...state,

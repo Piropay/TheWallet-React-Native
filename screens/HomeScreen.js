@@ -7,9 +7,11 @@ import {
   View,
   TouchableOpacity
 } from "react-native";
-
+import GoalsCarousel from "../components/GoalsCarousel";
+import BudgetsCarousel from "../components/BudgetsCarousel";
 import { Button } from "native-base";
 import { connect } from "react-redux";
+import { Row, Grid } from "react-native-easy-grid";
 
 // Actions
 import * as actionCreators from "../store/actions";
@@ -20,25 +22,18 @@ class HomeScreen extends React.Component {
   };
 
   async componentDidMount() {
-    if (this.props.profile) {
-      if (this.props.budgets) {
-        var today = new Date();
-        if (this.props.budgets.length !== 0) {
-          var compDate = new Date(
-            this.props.budgets[this.props.budgets.length - 1].date
-          );
-          if (
-            (today.getMonth() !== compDate.getMonth()) |
-            (today.getFullYear() !== compDate.getFullYear())
-          ) {
-            this.props.navigation.replace("Report");
-          }
-        } else if (!this.props.profile.income) {
-          this.props.navigation.replace("UpdateProfile");
-        } else {
-          console.log("sdefafaf", this.props.profile.income);
 
-          this.props.navigation.replace("Home");
+    if (this.props.budgets) {
+      var today = new Date();
+      if (this.props.budgets.length !== 0) {
+        var compDate = new Date(
+          this.props.budgets[this.props.budgets.length - 1].date
+        );
+        if (
+          (today.getMonth() !== compDate.getMonth()) |
+          (today.getFullYear() !== compDate.getFullYear())
+        ) {
+          this.props.navigation.replace("Report");
         }
       }
     }
@@ -47,61 +42,11 @@ class HomeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView
-          style={styles.container}
-          contentContainerStyle={styles.contentContainer}
-        >
-          <Text> Home</Text>
+        <ScrollView>
+          <BudgetsCarousel navigation={this.props.navigation} />
+
+          <GoalsCarousel navigation={this.props.navigation} />
         </ScrollView>
-        <View>
-          <Button
-            block
-            success
-            onPress={() => this.props.navigation.navigate("AutomatedBudgets")}
-          >
-            <Text style={{ color: "white" }}>Move</Text>
-          </Button>
-          <Button
-            block
-            success
-            onPress={() => this.props.navigation.navigate("Goals")}
-          >
-            <Text style={{ color: "white" }}>Goals</Text>
-          </Button>
-          <Button
-            block
-            success
-            onPress={() => this.props.navigation.navigate("GoalsView")}
-          >
-            <Text style={{ color: "white" }}>Goals View</Text>
-          </Button>
-
-          {/* {!this.props.user ? (
-            <Button
-              block
-              onPress={() => this.props.navigation.navigate("Login")}
-            >
-              <Text>Login</Text>
-            </Button>
-          ) : (
-            
-          )} */}
-          <Button
-            block
-            onPress={() => this.props.navigation.navigate("mandatoryInfo")}
-          >
-            <Text>Expenses</Text>
-          </Button>
-
-          <Button
-            block
-            danger
-            onPress={() => this.props.logout(this.props.navigation)}
-            style={styles.buttonContainer}
-          >
-            <Text>Logout</Text>
-          </Button>
-        </View>
       </View>
     );
   }
@@ -122,89 +67,6 @@ export default connect(
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#fff"
-  },
-  developmentModeText: {
-    marginBottom: 20,
-    color: "rgba(0,0,0,0.4)",
-    fontSize: 14,
-    lineHeight: 19,
-    textAlign: "center"
-  },
-  contentContainer: {
-    paddingTop: 30
-  },
-  welcomeContainer: {
-    alignItems: "center",
-    marginTop: 10,
-    marginBottom: 20
-  },
-  welcomeImage: {
-    width: 100,
-    height: 80,
-    resizeMode: "contain",
-    marginTop: 3,
-    marginLeft: -10
-  },
-  getStartedContainer: {
-    alignItems: "center",
-    marginHorizontal: 50
-  },
-  homeScreenFilename: {
-    marginVertical: 7
-  },
-  codeHighlightText: {
-    color: "rgba(96,100,109, 0.8)"
-  },
-  codeHighlightContainer: {
-    backgroundColor: "rgba(0,0,0,0.05)",
-    borderRadius: 3,
-    paddingHorizontal: 4
-  },
-  getStartedText: {
-    fontSize: 17,
-    color: "rgba(96,100,109, 1)",
-    lineHeight: 24,
-    textAlign: "center"
-  },
-  tabBarInfoContainer: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    ...Platform.select({
-      ios: {
-        shadowColor: "black",
-        shadowOffset: { height: -3 },
-        shadowOpacity: 0.1,
-        shadowRadius: 3
-      },
-      android: {
-        elevation: 20
-      }
-    }),
-    alignItems: "center",
-    backgroundColor: "#fbfbfb",
-    paddingVertical: 20
-  },
-  tabBarInfoText: {
-    fontSize: 17,
-    color: "rgba(96,100,109, 1)",
-    textAlign: "center"
-  },
-  navigationFilename: {
-    marginTop: 5
-  },
-  helpContainer: {
-    marginTop: 15,
-    alignItems: "center"
-  },
-  helpLink: {
-    paddingVertical: 15
-  },
-  helpLinkText: {
-    fontSize: 14,
-    color: "#2e78b7"
+    flex: 1
   }
 });

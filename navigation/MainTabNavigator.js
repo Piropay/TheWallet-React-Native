@@ -7,16 +7,16 @@ import {
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 import TabBarIcon from "../components/TabBarIcon";
 import HomeScreen from "../screens/HomeScreen";
-import LinksScreen from "../screens/LinksScreen";
-import SettingsScreen from "../screens/SettingsScreen";
 import mandatoryInfo from "../components/MandatoryUserInfo";
 import UpdateProfile from "../components/UpdateProfile";
 import userBudgets from "../components/Budgets";
-import BudgetDetails from "../components/BudgetDetails";
+import BudgetDetails from "../components/BudgetDetails/index.1";
 import AddTransactionView from "../components/AddTransactionView";
 import BudgetsView from "../components/BudgetsView";
 import Login from "../components/Login";
 import Profile from "../components/Profile";
+import ProfileView from "../components/Profile/newProfile";
+
 import Goals from "../components/Goal";
 import Deposit from "../components/Deposit";
 import GoalsView from "../components/GoalView";
@@ -27,15 +27,9 @@ import UpdateBudget from "../components/Budgets/UpdateBudget";
 const HomeStack = createStackNavigator(
   {
     Home: HomeScreen,
-
     mandatoryInfo: mandatoryInfo,
-
-    UpdateProfile: UpdateProfile,
     Login: Login,
     Profile: Profile,
-    Goals: Goals,
-    Deposit: Deposit,
-    GoalsView: GoalsView,
     AutomatedBudgets: AutomatedBudgets,
     Report: Report,
     userBudgets: userBudgets,
@@ -47,11 +41,11 @@ const HomeStack = createStackNavigator(
       headerTintColor: "#fff",
       headerStyle: {
         fontWeight: "bold",
-        backgroundColor: "transparent"
+        backgroundColor: "transparent",
+        borderBottomWidth: 0
       },
       headerTextStyle: {
-        fontWeight: "bold",
-        fontFamily: "pacifico-regular"
+        fontWeight: "bold"
       }
     },
     cardStyle: {
@@ -75,44 +69,127 @@ HomeStack.navigationOptions = {
   )
 };
 
-const LinksStack = createStackNavigator({
-  Budgets: BudgetsView,
-  userBudgets: userBudgets,
-  Add: AddTransactionView,
-  BudgetDetails: BudgetDetails,
-  UpdateBudget: UpdateBudget
-});
+const LinksStack = createStackNavigator(
+  {
+    Budgets: BudgetsView,
+    userBudgets: userBudgets,
+    Add: AddTransactionView,
+    BudgetDetails: BudgetDetails,
+    UpdateBudget: UpdateBudget
+  },
+  {
+    navigationOptions: {
+      headerTintColor: "#fff",
+      headerStyle: {
+        fontWeight: "bold",
+        backgroundColor: "transparent",
+        borderBottomWidth: 0
+      },
+      headerTextStyle: {
+        fontWeight: "bold",
+        fontFamily: "pacifico-regular"
+      }
+    },
+    cardStyle: {
+      backgroundColor: "#2B2B2B"
+    }
+  }
+);
 
 LinksStack.navigationOptions = {
-  tabBarLabel: "Links",
+  tabBarLabel: "Budgets",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === "ios" ? "ios-link" : "md-link"}
+      name={Platform.OS === "ios" ? `ios-cash` : "md-link"}
     />
   )
 };
 
-const SettingsStack = createStackNavigator({
-  Profile: Profile,
-  Report: Report
-});
+const GoalsStack = createStackNavigator(
+  {
+    GoalsView: GoalsView,
+    Deposit: Deposit,
+    Goals: Goals
+  },
+  {
+    navigationOptions: {
+      headerTintColor: "#fff",
+      headerStyle: {
+        fontWeight: "bold",
+        backgroundColor: "#2b2b2b",
 
-SettingsStack.navigationOptions = {
+        borderBottomWidth: 0
+      },
+      headerTextStyle: {
+        fontWeight: "bold",
+        fontFamily: "pacifico-regular"
+      }
+    },
+    cardStyle: {
+      backgroundColor: "#2B2B2B"
+    }
+  }
+);
+
+GoalsStack.navigationOptions = {
+  tabBarLabel: "Goals",
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={
+        Platform.OS === "ios"
+          ? `ios-star${focused ? "" : "-outline"}`
+          : "md-link"
+      }
+    />
+  )
+};
+
+const ProfileStack = createStackNavigator(
+  {
+    // Profile: Profile,
+    Profile: ProfileView,
+    UpdateProfile: UpdateProfile,
+    Report: Report
+  },
+  {
+    navigationOptions: {
+      headerTintColor: "#fff",
+      headerStyle: {
+        fontWeight: "bold",
+        backgroundColor: "transparent"
+      },
+      headerTextStyle: {
+        fontWeight: "bold",
+        fontFamily: "pacifico-regular"
+      }
+    },
+    cardStyle: {
+      backgroundColor: "#2B2B2B"
+    }
+  }
+);
+
+ProfileStack.navigationOptions = {
   tabBarLabel: "Profile",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === "ios" ? "ios-options" : "md-options"}
+      name={Platform.OS === "ios" ? "md-person" : "md-person"}
     />
   )
 };
 
+import { Component } from "react";
+import { View, Text } from "react-native";
+
 export default createMaterialBottomTabNavigator(
   {
     HomeStack,
+    GoalsStack,
     LinksStack,
-    SettingsStack
+    ProfileStack
   },
   {
     activeColor: "#D5C157",

@@ -9,6 +9,7 @@ export const UPDATE_PROFILE = "UPDATE_PROFILE";
 export const ADD_INCOME = "ADD_INCOME";
 export const ADD_EXPENSES = "ADD_EXPENSES";
 export const GET_BALANCE = "GET_BALANCE";
+export const FETCH_EXPENSES = "FETCH_EXPENSES";
 
 //Transaction Actions
 export const ADD_TRANSACTION = "ADD_TRANSACTION";
@@ -19,6 +20,7 @@ export const FETCH_TRANSACTIONS = "FETCH_TRANSACTIONS";
 export const FETCH_BUDGETS = "FETCH_BUDGETS";
 export const UPDATE_BUDGET = "UPDATE_BUDGET";
 export const ADD_BUDGET = "ADD_BUDGET";
+export const SUBTRACT_BUDGET = "SUBTRACT_BUDGET";
 
 //Deposits Actions
 export const ADD_DEPOSIT = "ADD_DEPOSIT";

@@ -1,14 +1,19 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { CheckBox } from "react-native-elements";
-
+import { PieChart } from "react-native-svg-charts";
+import Svg, { Circle, G, Line, Rect } from "react-native-svg";
+import { Text as SvgText } from "react-native-svg";
 import { Col, Row, Grid } from "react-native-easy-grid";
+import { VictoryPie, VictoryLabel } from "victory-native";
+
 import {
   StyleSheet,
   View,
   Image,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
+  Dimensions
 } from "react-native";
 // NativeBase Components
 import { Text } from "native-base";
@@ -40,10 +45,36 @@ class Profile extends Component {
   }
   render() {
     const prof = this.props.profile;
+    let { income, balance, savings, budgets } = { ...prof };
+    let totalexpenses = 0;
+    this.props.expenses.forEach(expense => {
+      totalexpenses += parseFloat(expense.amount);
+    });
+
+    let totalBudgets = 0;
+
+    budgets.forEach(budget => {
+      totalBudgets += parseFloat(budget.amount);
+    });
     return (
       <ScrollView>
         <View style={styles.container}>
           <View style={styles.header} />
+
+          <VictoryPie
+            animate={{
+              duration: 2000
+            }}
+            padAngle={3}
+            innerRadius={50}
+            radius={100}
+            colorScale={["tomato", "orange", "gold", "cyan", "navy"]}
+            data={[
+              { x: "Balance", y: parseFloat(balance - totalBudgets) },
+              { x: "Expenses", y: parseFloat(totalexpenses) },
+              { x: "Budgets", y: parseFloat(totalBudgets) }
+            ]}
+          />
           <View style={styles.body}>
             <CheckBox
               center
@@ -90,7 +121,8 @@ class Profile extends Component {
 }
 const mapStateToProps = state => ({
   user: state.auth.user,
-  profile: state.auth.profile
+  profile: state.auth.profile,
+  expenses: state.userInfo.expenses
 });
 
 const mapActionsToProps = dispatch => ({

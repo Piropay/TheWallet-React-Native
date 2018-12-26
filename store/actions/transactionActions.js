@@ -1,6 +1,7 @@
 import * as actionTypes from "./actionTypes";
 
 import axios from "axios";
+import { Toast } from "native-base";
 const instance = axios.create({
   baseURL: "http://192.168.100.39/api/transaction/"
 });
@@ -38,10 +39,28 @@ export const addTransaction = (transaction, budget_id, navigation) => {
           type: actionTypes.ADD_TRANSACTION,
           payload: transaction
         });
+        dispatch({
+          type: actionTypes.SUBTRACT_BUDGET,
+          payload: transaction
+        });
+
+        navigation.navigate("Budgets");
       })
-      .then(() => navigation.navigate("Budgets"))
+      .then(() =>
+        Toast.show({
+          text: "Transaction added!",
+          buttonText: "Okay",
+          duration: 6000,
+          type: "success",
+          buttonTextStyle: { color: "#000" },
+          buttonStyle: {
+            backgroundColor: "#F1C04F",
+            alignSelf: "center"
+          }
+        })
+      )
       .catch(err => {
-        dispatch(console.log(err.response.data));
+        //dispatch(console.log(err.response));
       });
   };
 };
@@ -67,7 +86,7 @@ export const updateTransaction = (
         });
       })
       .catch(err => {
-        dispatch(console.log(err.response.data));
+        // dispatch(console.log(err.response.data));
       });
   };
 };

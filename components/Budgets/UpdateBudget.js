@@ -13,10 +13,10 @@ import {
   Slider
 } from "react-native";
 
-import { Input } from "native-base";
+import { Input, CardItem, Body, Toast } from "native-base";
 
 import { Row, Grid } from "react-native-easy-grid";
-import { Button, H1, Item, Picker, Icon } from "native-base";
+import { Button, H1, Item, Picker, Icon, Card } from "native-base";
 import styles from "./styles";
 
 class UpdateBudget extends Component {
@@ -25,14 +25,15 @@ class UpdateBudget extends Component {
     let budget = this.props.navigation.getParam("budget", {});
 
     this.state = {
+      id: budget.id,
       category: budget.category,
       label: budget.label,
-      amount: parseFloat(budget.amount),
+      amount: parseFloat(budget.balance),
       balance: budget.balance
     };
   }
 
-  handleSubmitBudget = async budget => {
+  handleSubmitBudget = async (budget, totalBudgets) => {
     let filled = false;
     let newBalance = 0;
     let { amount, category, label, balance } = { ...this.state };
@@ -42,58 +43,93 @@ class UpdateBudget extends Component {
       filled = false;
     }
     newBalance = this.state.amount - budget.amount + parseFloat(balance);
-    console.log(this.state.amount);
-    console.log(budget.amount);
-    console.log(balance);
-    console.log(newBalance);
 
-    if (
-      filled &&
-      amount + this.props.totalUserBudget < this.props.profile.balance
-    ) {
+    if (filled && amount + totalBudgets < this.props.profile.balance) {
       await this.setState({ balance: newBalance });
-      this.props.updateBudget(this.state, budget.id, this.props.navigation);
+      this.props.updateBudget(this.state, this.props.navigation);
     } else {
-      alert(
-        "Please make sure that you fill in all the boxes and that you're total budgets don't exceed your current balance"
-      );
+      Toast.show({
+        text:
+          "Please make sure that you're total budgets don't exceed your current balance!",
+        buttonText: "Okay",
+        duration: 10000,
+        type: "danger",
+        buttonTextStyle: { color: "#000" },
+        buttonStyle: { backgroundColor: "#F1C04F", alignSelf: "center" }
+      });
     }
   };
 
   render() {
     let budget = this.props.navigation.getParam("budget", {});
+    let totalBudgets = 0;
+
+    this.props.profile.budgets.forEach(budget => {
+      totalBudgets += parseFloat(budget.amount);
+    });
     return (
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.contentContainer}
       >
         <Grid>
-          <H1>Current Balance {this.props.profile.balance} KD</H1>
-          <H1>
-            Current balance left:
-            {this.props.profile.balance - this.props.totalUserBudget} KD
+          <H1
+            style={[
+              styles.h3,
+              { fontSize: 35, paddingTop: 20, paddingBottom: 10 }
+            ]}
+          >
+            Your budget
+          </H1>
+          <H1
+            style={[
+              styles.h3,
+              {
+                fontFamily: "quicksand-bold",
+                textShadowOffset: { width: 0, height: 0 }
+              }
+            ]}
+          >
+            Balance {parseFloat(this.props.profile.balance).toFixed(3)} KD
+          </H1>
+          <H1
+            style={[
+              styles.h3,
+              {
+                fontFamily: "quicksand-bold",
+                textShadowOffset: { width: 0, height: 0 }
+              }
+            ]}
+          >
+            balance left:
+            {(this.props.profile.balance - totalBudgets).toFixed(3)} KD
           </H1>
 
-          <H1>Your budget</H1>
           <Row>
-            <Grid>
-              <Row>
-                <View style={styles.inputWrap}>
-                  <Text style={styles.label}>Label</Text>
-                  <View style={styles.inputContainer}>
+            <Card style={styles.shadow}>
+              <CardItem style={{ borderRadius: 10 }}>
+                <Body
+                  style={{
+                    paddingHorizontal: 40
+                  }}
+                >
+                  <Item style={styles.label}>
                     <TextInput
                       value={this.state.label}
                       style={styles.inputs}
                       onChangeText={value => this.setState({ label: value })}
                     />
-                  </View>
-                </View>
-              </Row>
-
+                  </Item>
+                </Body>
+              </CardItem>
               <Slider
                 step={1}
+                style={{ width: 200, alignSelf: "center" }}
+                minimumValue={0}
                 maximumValue={
-                  this.props.profile.balance - this.props.totalUserBudget
+                  this.props.profile.balance > 0
+                    ? this.props.profile.balance - totalBudgets
+                    : 100
                 }
                 value={this.state.amount}
                 onValueChange={value => this.setState({ amount: value })}
@@ -102,22 +138,21 @@ class UpdateBudget extends Component {
                 {String(
                   (
                     (this.state.amount /
-                      (this.props.profile.balance -
-                        this.props.totalUserBudget)) *
+                      (this.props.profile.balance - totalBudgets)) *
                     100
                   ).toFixed(1)
                 )}
                 %
               </Text>
-              <Text>{String(this.state.amount)} KWD</Text>
-            </Grid>
+              <Text style={styles.text}>{String(this.state.amount)} KWD</Text>
+            </Card>
           </Row>
         </Grid>
         <Button
+          style={styles.button}
           block
           full
-          onPress={() => this.handleSubmitBudget(budget)}
-          style={{ marginTop: 10 }}
+          onPress={() => this.handleSubmitBudget(budget, totalBudgets)}
         >
           <Text>Submit</Text>
         </Button>
@@ -133,8 +168,8 @@ const mapStateToProps = state => ({
 
 const mapActionsToProps = dispatch => {
   return {
-    updateBudget: (budget, budget_id, navigation) =>
-      dispatch(actionCreators.updateBudget(budget, budget_id, navigation))
+    updateBudget: (budget, navigation) =>
+      dispatch(actionCreators.updateBudget(budget, navigation))
   };
 };
 

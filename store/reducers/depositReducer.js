@@ -1,18 +1,17 @@
 import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
-  deposits: [
-    {
-      goal: 1,
-      label: "payment one",
-      amount: 3.0
-    }
-  ],
+  deposits: [],
   loading: false
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case actionTypes.FETCH_DEPOSITS:
+      return {
+        ...state,
+        deposits: action.payload
+      };
     case actionTypes.ADD_DEPOSIT:
       return {
         ...state,

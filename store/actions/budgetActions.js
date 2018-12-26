@@ -1,6 +1,7 @@
 import * as actionTypes from "./actionTypes";
 
 import axios from "axios";
+import { updateProfile } from "./authActions";
 const instance = axios.create({
   baseURL: "http://192.168.100.39/api/budget/"
 });
@@ -19,39 +20,59 @@ export const fetchBudgets = () => {
   };
 };
 
-export const addBudget = (budget, navigation) => {
+// export const addBudget = (budget, navigation) => {
+//   return dispatch => {
+//     instance
+//       .post("create/", {
+//         label: budget.label,
+//         category: budget.category,
+//         amount: budget.amount
+//       })
+//       .then(res => res.data)
+//       .then(budget => {
+//         dispatch({
+//           type: actionTypes.ADD_BUDGET,
+//           payload: budget
+//         });
+//       })
+//       .catch(err => {
+//         console.log(err.response.data);
+//       });
+//   };
+// };
+
+export const addBudget = (budgets, navigation, type, profile) => {
   return dispatch => {
-    instance
-      .post("create/", {
-        label: budget.label,
-        category: budget.category,
-        amount: budget.amount
-      })
+    return instance
+      .post("create/", budgets)
       .then(res => res.data)
-      .then(budget => {
+      .then(budgets => {
         dispatch({
           type: actionTypes.ADD_BUDGET,
-          payload: budget
+          payload: budgets
         });
       })
-      // .then(() => navigation.navigate("Budgets"))
+      .then(() => {
+        if (type === "auto") {
+          profile = { ...profile, automated: true };
+          dispatch(updateProfile(profile));
+          navigation.navigate("Home");
+        } else {
+          navigation.navigate("BudgesView");
+        }
+      })
+
+      .then(() => navigation.navigate("Home"))
       .catch(err => {
-        dispatch(console.log(err.response.data));
+        console.log(err.response.data);
       });
   };
 };
 
-// export const addBudgets = budgets => {
-//   return {
-//     type: actionTypes.ADD_BUDGETS,
-//     payload: budgets
-//   };
-// };
-
-export const updateBudget = (budget, budget_id, navigation) => {
+export const updateBudget = (budget, navigation) => {
   return dispatch => {
     instance
-      .put(`${budget_id}/update/`, {
+      .put(`${budget.id}/update/`, {
         category: budget.category,
         amount: budget.amount,
         label: budget.label,
@@ -63,6 +84,7 @@ export const updateBudget = (budget, budget_id, navigation) => {
           type: actionTypes.UPDATE_BUDGET,
           payload: budget
         });
+        navigation.goBack();
       })
       .catch(err => {
         dispatch(console.log(err.response.data));

@@ -9,12 +9,11 @@ import {
   View,
   RefreshControl
 } from "react-native";
-import { Button, List, Card, CardItem, Body } from "native-base";
+import { Button, List, Card, CardItem, Body, H3 } from "native-base";
 import { WebBrowser } from "expo";
 import { connect } from "react-redux";
-import { MonoText } from "../components/StyledText";
-import * as actionCreators from "../store/actions";
-import { dispatch } from "rxjs/internal/observable/pairs";
+import * as actionCreators from "../../store/actions";
+import styles from "./styles";
 
 class BudgetsView extends React.Component {
   static navigationOptions = {
@@ -31,11 +30,14 @@ class BudgetsView extends React.Component {
             budget: budget
           })
         }
+        style={styles.card}
       >
-        <Card>
+        <Card style={styles.shadow}>
           <CardItem>
             <Body>
-              <Text>{budget.label}</Text>
+              <H3 style={{ color: "#BEA647", fontFamily: "quicksand-bold" }}>
+                {budget.label}
+              </H3>
               <Text>{budget.category}</Text>
               <Text>{parseFloat(budget.balance).toFixed(3)}KWD</Text>
             </Body>
@@ -82,13 +84,6 @@ class BudgetsView extends React.Component {
           <List>{ListItems}</List>
         </ScrollView>
         <View>
-          <Button
-            block
-            success
-            onPress={() => this.props.navigation.navigate("Add")}
-          >
-            <Text style={{ color: "white" }}> ADD Transaction</Text>
-          </Button>
           {!this.props.profile.automated && (
             <Button
               block
@@ -115,92 +110,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(BudgetsView);
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff"
-  },
-  developmentModeText: {
-    marginBottom: 20,
-    color: "rgba(0,0,0,0.4)",
-    fontSize: 14,
-    lineHeight: 19,
-    textAlign: "center"
-  },
-  contentContainer: {
-    paddingTop: 30
-  },
-  welcomeContainer: {
-    alignItems: "center",
-    marginTop: 10,
-    marginBottom: 20
-  },
-  welcomeImage: {
-    width: 100,
-    height: 80,
-    resizeMode: "contain",
-    marginTop: 3,
-    marginLeft: -10
-  },
-  getStartedContainer: {
-    alignItems: "center",
-    marginHorizontal: 50
-  },
-  homeScreenFilename: {
-    marginVertical: 7
-  },
-  codeHighlightText: {
-    color: "rgba(96,100,109, 0.8)"
-  },
-  codeHighlightContainer: {
-    backgroundColor: "rgba(0,0,0,0.05)",
-    borderRadius: 3,
-    paddingHorizontal: 4
-  },
-  getStartedText: {
-    fontSize: 17,
-    color: "rgba(96,100,109, 1)",
-    lineHeight: 24,
-    textAlign: "center"
-  },
-  tabBarInfoContainer: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    ...Platform.select({
-      ios: {
-        shadowColor: "black",
-        shadowOffset: { height: -3 },
-        shadowOpacity: 0.1,
-        shadowRadius: 3
-      },
-      android: {
-        elevation: 20
-      }
-    }),
-    alignItems: "center",
-    backgroundColor: "#fbfbfb",
-    paddingVertical: 20
-  },
-  tabBarInfoText: {
-    fontSize: 17,
-    color: "rgba(96,100,109, 1)",
-    textAlign: "center"
-  },
-  navigationFilename: {
-    marginTop: 5
-  },
-  helpContainer: {
-    marginTop: 15,
-    alignItems: "center"
-  },
-  helpLink: {
-    paddingVertical: 15
-  },
-  helpLinkText: {
-    fontSize: 14,
-    color: "#2e78b7"
-  }
-});

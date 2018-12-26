@@ -5,10 +5,11 @@ export {
   updateProfile,
   checkForExpiredToken,
   fetchProfile,
-  setErrors
+  setErrors,
+  updateBalance
 } from "./authActions";
 
-export { addIncome, addExpenses, getBalance } from "./userInfo";
+export { addIncome, addExpenses, getBalance, fetchExpenses } from "./userInfo";
 export { addBudget, updateBudget, fetchBudgets } from "./budgetActions";
 export {
   addTransaction,
@@ -16,7 +17,12 @@ export {
   updateTransaction
 } from "./transactionActions";
 
-export { addGoal, updateGoal, fetchGoals } from "./goalActions";
+export {
+  addGoal,
+  updateGoal,
+  fetchGoals,
+  updateGoalBalance
+} from "./goalActions";
 export { addDeposit, fetchDeposits, updateDeposit } from "./depositActions";
 export {
   getCurrentPositionThunk,
