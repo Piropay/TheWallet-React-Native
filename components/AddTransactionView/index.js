@@ -63,6 +63,17 @@ class AddTransactionView extends React.Component {
         this.state.budget.id,
         this.props.navigation
       );
+      Toast.show({
+        text: "Transaction added!",
+        buttonText: "Okay",
+        duration: 6000,
+        type: "success",
+        buttonTextStyle: { color: "#000" },
+        buttonStyle: {
+          backgroundColor: "#F1C04F",
+          alignSelf: "center"
+        }
+      });
     }
   }
 
