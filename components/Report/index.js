@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import {
   Text,
   View,
-  Image,
   ScrollView,
   AppState,
   Dimensions,
@@ -183,7 +182,6 @@ class Report extends Component {
     let TotalTransactions = 0;
     let tempBudgets = [];
     if (
-
       //Uncomment this when testing for previous budgets
 
       today.getMonth() !== compDate.getMonth() ||

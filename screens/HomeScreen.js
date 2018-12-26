@@ -23,7 +23,7 @@ class HomeScreen extends React.Component {
 
   async componentDidMount() {
     if (this.props.profile) {
-      if (this.props.budgets) {
+      if (this.props.budgets[0]) {
         var today = new Date();
         if (this.props.budgets.length !== 0) {
           var compDate = new Date(
@@ -38,10 +38,10 @@ class HomeScreen extends React.Component {
         } else if (!this.props.profile.income) {
           this.props.navigation.replace("UpdateProfile");
         } else {
-          console.log("sdefafaf", this.props.profile.income);
-
           this.props.navigation.replace("Home");
         }
+      } else {
+        this.props.navigation.replace("Automation");
       }
     }
   }
