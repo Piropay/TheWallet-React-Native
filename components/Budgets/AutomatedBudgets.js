@@ -19,7 +19,7 @@ import { Row, Grid } from "react-native-easy-grid";
 import { Button, H2, H1, Item, Picker, Icon, Container } from "native-base";
 import styles, { colors } from "./styles";
 import { LinearGradient } from "expo";
-import { Card } from "react-native-paper";
+import { Card, KeyboardAvoidingView } from "react-native-paper";
 class AutoMatedBudgets extends Component {
   constructor(props) {
     super(props);
@@ -231,7 +231,6 @@ class AutoMatedBudgets extends Component {
             full
             onPress={() => this.resetBudgets()}
           >
-
             <Text style={styles.buttontext}>Reset</Text>
           </Button>
           <Button
@@ -244,25 +243,32 @@ class AutoMatedBudgets extends Component {
           </Button>
         </View>
         <Card padder style={styles.mainCard}>
-          <Text >
-            These are the suggested budgets for you!
-          </Text>
-    <H2  style={[
+          <Text
+            style={[
               styles.text,
               {
                 color: "#2b2b2b",
                 paddingTop: 20
               }
-            ]}>
-            Balance {parseFloat(this.props.profile.balance).toFixed(3)} KD{" "}
-            {"\n"} Total Budget
-            {totalBudget.toFixed(3)} KD
+            ]}
+          >
+            These are the suggested budgets for you!
+          </Text>
+          <H2
+            style={[
+              styles.text,
+              {
+                color: "#2b2b2b",
+                paddingBottom: 20,
+                fontSize: 20
+              }
+            ]}
+          >
+            Total Budget {totalBudget.toFixed(3)} KD
           </H2>
-
-      
-
-
-          <ScrollView contentContainerStyle={styles.contentContainer}>
+          <ScrollView
+            contentContainerStyle={{ paddingBottom: 150, paddingTop: 30 }}
+          >
             {inputRows}
           </ScrollView>
         </Card>

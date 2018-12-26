@@ -143,7 +143,7 @@ class AddExpenseView extends Component {
             />
           </Button>
         </View>
-        <Item style={styles.label}>
+        <Item style={[styles.label, { marginTop: 0 }]}>
           <Icon
             active
             type="Entypo"
