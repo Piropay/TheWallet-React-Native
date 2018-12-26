@@ -19,7 +19,7 @@ import { Row, Grid } from "react-native-easy-grid";
 import { Button, H2, H1, Item, Picker, Icon, Container } from "native-base";
 import styles, { colors } from "./styles";
 import { LinearGradient } from "expo";
-import { Card } from "react-native-paper";
+import { Card, KeyboardAvoidingView } from "react-native-paper";
 class AutoMatedBudgets extends Component {
   constructor(props) {
     super(props);
@@ -180,7 +180,7 @@ class AutoMatedBudgets extends Component {
         <Slider
           minimumTrackTintColor="#258779"
           style={{ width: 200, alignSelf: "center" }}
-          step={1}
+          step={10}
           maximumValue={this.props.profile.balance}
           value={idx.amount}
           onValueChange={value =>
@@ -233,22 +233,29 @@ class AutoMatedBudgets extends Component {
           </Button>
         </View>
         <Card padder style={styles.mainCard}>
+
           <Text>These are the suggested budgets for you!</Text>
+
           <H2
             style={[
               styles.text,
               {
                 color: "#2b2b2b",
-                paddingTop: 20
+                paddingBottom: 20,
+                fontSize: 20
               }
             ]}
           >
+
             Balance {parseFloat(this.props.profile.balance).toFixed(3)} KD{" "}
             {"\n"} Total Budget
             {totalBudget.toFixed(3)} KD
-          </H2>
 
-          <ScrollView contentContainerStyle={styles.contentContainer}>
+            Total Budget {totalBudget.toFixed(3)} KD
+          </H2>
+          <ScrollView
+            contentContainerStyle={{ paddingBottom: 150, paddingTop: 30 }}
+          >
             {inputRows}
           </ScrollView>
         </Card>

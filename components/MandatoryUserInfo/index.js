@@ -143,7 +143,7 @@ class AddExpenseView extends Component {
             />
           </Button>
         </View>
-        <Item style={styles.label}>
+        <Item style={[styles.label, { marginTop: 0 }]}>
           <Icon
             active
             type="Entypo"
@@ -253,7 +253,7 @@ class AddExpenseView extends Component {
               }
             ]}
           >
-            Pleasse add your rent, installments, bills... etc or any reccuring
+            Please add your rent, installments, bills... etc or any reccuring
             monthly spendings.
           </Text>
           <ScrollView contentContainerStyle={styles.contentContainer}>
