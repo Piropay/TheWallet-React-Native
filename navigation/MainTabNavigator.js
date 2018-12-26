@@ -23,6 +23,7 @@ import GoalsView from "../components/GoalView";
 import Report from "../components/Report";
 import AutomatedBudgets from "../components/Budgets/AutomatedBudgets";
 import UpdateBudget from "../components/Budgets/UpdateBudget";
+import ExpensesList from "../components/ExpensesList/ExpensesList";
 
 const HomeStack = createStackNavigator(
   {
@@ -151,7 +152,8 @@ const ProfileStack = createStackNavigator(
     // Profile: Profile,
     Profile: ProfileView,
     UpdateProfile: UpdateProfile,
-    Report: Report
+    Report: Report,
+    ExpensesList: ExpensesList
   },
   {
     navigationOptions: {
