@@ -27,13 +27,15 @@ import {
   Body,
   Icon,
   H2,
-  H1
+  H1,
+  Container
 } from "native-base";
 
 import Speedometer from "react-native-speedometer-chart";
 import { connect } from "react-redux";
 
-import styles from "./styles";
+import styles, { colors } from "./styles";
+import { LinearGradient } from "expo";
 import Transaction from "../AddTransactionView";
 import { ScrollView } from "react-native-gesture-handler";
 import { Modal } from "react-native-paper";
@@ -81,7 +83,7 @@ class BudgetDetails extends Component {
             </Text>
           </View>
           <View style={styles.eventContent}>
-            <H3 style={styles.eventTime}>{transaction.label}:</H3>
+            <H3 style={styles.eventTime}>{transaction.label}</H3>
             <Text style={styles.userName}>Amount: {transaction.amount} KD</Text>
             <Text style={styles.userName}>Category: {budget.category}</Text>
           </View>
@@ -110,168 +112,188 @@ class BudgetDetails extends Component {
       );
     }
     return (
-      <View style={styles.container}>
-        <Row
-          style={{
-            height: "20%",
-            borderRadius: 1,
-            borderColor: "black",
-            backgroundColor: "#252525",
-            shadowColor: "#a0a0a0",
-            shadowRadius: 1,
-            shadowOpacity: 0.5,
-            shadowOffset: { width: 5, height: 7 }
-          }}
-        >
-          <Col
+      <Container>
+        <LinearGradient
+          colors={[colors.background1, colors.background2]}
+          startPoint={{ x: 1, y: 0 }}
+          endPoint={{ x: 0, y: 1 }}
+          style={styles.gradient}
+        />
+        <View style={styles.container}>
+          <Row
             style={{
-              shadowColor: "#a0a0a0",
+              height: "20%",
+              borderRadius: 1,
               shadowRadius: 1,
               shadowOpacity: 0.5,
-              shadowOffset: { width: 2, height: 5 }
+              shadowOffset: { width: 3, height: 3 }
             }}
           >
-            <Speedometer
-              style={{
-                position: "absolute",
-                top: 0,
-                transform: [{ rotateX: "180deg" }]
-              }}
-              size={deviceWidth * 0.5}
-              outerColor="rgba(0,0,0,0)"
-              internalColor={parseFloat(budget.balance) < 0 ? "red" : "#258779"}
-              showText
-              text={String(totalTransactions)}
-              textStyle={{
-                backgroundColor: "rgba(0,0,0,0)",
-                color: "#258779",
-                transform: [{ rotateX: "180deg" }]
-              }}
-              showPercent
-              percentStyle={{
-                color: "#258779",
-                transform: [{ rotateX: "180deg" }]
-              }}
-              value={totalTransactions}
-              totalValue={parseFloat(budget.amount)}
-            />
-          </Col>
+            <Col>
+              <Speedometer
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  transform: [{ rotateX: "180deg" }]
+                }}
+                size={deviceWidth * 0.5}
+                outerColor="rgba(0,0,0,0)"
+                internalColor={
+                  parseFloat(budget.balance) < 0
+                    ? "rgba(231,76,60,1)"
+                    : "#258779"
+                }
+                showText
+                text={String(totalTransactions)}
+                textStyle={{
+                  backgroundColor: "rgba(0,0,0,0)",
+                  color: "#258779",
+                  transform: [{ rotateX: "180deg" }]
+                }}
+                showPercent
+                percentStyle={{
+                  color: "#258779",
+                  transform: [{ rotateX: "180deg" }]
+                }}
+                value={totalTransactions}
+                totalValue={parseFloat(budget.amount)}
+              />
+            </Col>
 
-          <Col
-            style={{
-              flex: 1,
-              justifyContent: "center",
-              shadowColor: "#a0a0a0",
-              shadowRadius: 1,
-              shadowOpacity: 0.5,
-              shadowOffset: { width: 2, height: 5 }
-            }}
-          >
-            <H3
+            <Col
               style={{
-                paddingTop: 10,
-                fontFamily: "pacifico-regular",
-                color: "#fff",
-                textAlign: "center"
+                flex: 1,
+                justifyContent: "center",
+                shadowColor: "#2b2b2b",
+                shadowRadius: 1,
+                shadowOpacity: 0.5,
+                shadowOffset: { width: 2, height: 5 }
               }}
             >
-              {budget.label}
-            </H3>
-            <Badge containerStyle={{ backgroundColor: "#E8D300" }}>
-              <Text style={{ fontSize: 17, color: "#fff" }}>
-                amount: {budget.amount}
-              </Text>
-              <Text style={{ fontSize: 17, color: "#fff" }}>
-                balance: {budget.balance}
-              </Text>
-            </Badge>
-          </Col>
-        </Row>
+              <H3
+                style={{
+                  paddingTop: 10,
+                  paddingBottom: 10,
+                  fontFamily: "pacifico-regular",
+                  color: "#fff",
+                  textAlign: "center"
+                }}
+              >
+                {budget.label}
+              </H3>
+              <Badge containerStyle={{ backgroundColor: "#258779" }}>
+                <Text style={{ fontSize: 17, color: "#fff" }}>
+                  Amount {parseFloat(budget.amount).toFixed(3)}
+                </Text>
+                <Text style={{ fontSize: 17, color: "#fff" }}>
+                  Balance {parseFloat(budget.balance).toFixed(3)}
+                </Text>
+              </Badge>
+            </Col>
+          </Row>
 
-        <Row>
-          <ScrollView
-            style={styles.container}
-            contentContainerStyle={styles.contentContainer}
-            refreshControl={
-              <RefreshControl
-                refreshing={this.state.refreshing}
-                onRefresh={this._onRefresh}
-              />
-            }
-          >
-            {transactions.length > 0 ? (
-              <List>{ListItems}</List>
-            ) : (
-              <Card style={styles.container}>
-                <H1 style={styles.h3}>No transactions made for this budget </H1>
-              </Card>
-            )}
-          </ScrollView>
+          <Row>
+            <ScrollView
+              style={styles.container}
+              contentContainerStyle={styles.contentContainer}
+              refreshControl={
+                <RefreshControl
+                  refreshing={this.state.refreshing}
+                  onRefresh={this._onRefresh}
+                />
+              }
+            >
+              {transactions.length > 0 ? (
+                <List>{ListItems}</List>
+              ) : (
+                <Card
+                  style={[
+                    styles.container,
+                    {
+                      backgroundColor: "transparent",
+                      borderColor: "transparent"
+                    }
+                  ]}
+                >
+                  <H1
+                    style={[
+                      styles.h3,
+                      {
+                        color: "#fff"
+                      }
+                    ]}
+                  >
+                    No transactions made for this budget{" "}
+                  </H1>
+                </Card>
+              )}
+            </ScrollView>
 
-          <Modal
-            animationType={"slide"}
-            transparent={true}
-            onRequestClose={() => this.setModalVisible(false)}
-            visible={this.state.modalVisible}
-          >
-            <View style={styles.popupOverlay}>
-              <Card style={[styles.shadow, styles.popup]}>
-                <View style={styles.popupContent}>
-                  <Button style={styles.Header}>
-                    <H3 style={styles.name}>{budget.label}</H3>
-                    <Button
-                      transparent
-                      onPress={() => {
-                        this.setModalVisible(false);
-                      }}
-                      style={styles.btnClose}
-                    >
-                      <Text style={{ color: "wheat" }}>X</Text>
+            <Modal
+              animationType={"slide"}
+              transparent={true}
+              onRequestClose={() => this.setModalVisible(false)}
+              visible={this.state.modalVisible}
+            >
+              <View style={styles.popupOverlay}>
+                <Card style={[styles.shadow, styles.popup]}>
+                  <View style={styles.popupContent}>
+                    <Button style={styles.Header}>
+                      <H3 style={styles.name}>{budget.label}</H3>
+                      <Button
+                        transparent
+                        onPress={() => {
+                          this.setModalVisible(false);
+                        }}
+                        style={styles.btnClose}
+                      >
+                        <Text style={{ color: "wheat" }}>X</Text>
+                      </Button>
                     </Button>
-                  </Button>
 
-                  <ScrollView contentContainerStyle={styles.modalInfo}>
-                    <Text style={styles.position}>
-                      Progress {"\n"} {totalTransactions}/{budget.amount} KWD
-                    </Text>
+                    <ScrollView contentContainerStyle={styles.modalInfo}>
+                      <Text style={styles.position}>
+                        Progress {"\n"} {totalTransactions}/{budget.amount} KWD
+                      </Text>
 
-                    <Transaction budget={budget} />
-                  </ScrollView>
-                </View>
-              </Card>
-            </View>
-          </Modal>
+                      <Transaction budget={budget} />
+                    </ScrollView>
+                  </View>
+                </Card>
+              </View>
+            </Modal>
 
-          {new Date(budget.date).getMonth() === new Date().getMonth() &&
-            new Date().getFullYear() === new Date().getFullYear() && (
-              <ActionButton buttonColor="rgba(231,76,60,1)">
-                <ActionButton.Item
-                  buttonColor="#E8D300"
-                  title="Update Budget"
-                  onPress={() =>
-                    this.props.navigation.navigate("UpdateBudget", {
-                      budget: budget
-                    })
-                  }
-                >
-                  <Icon name="md-create" style={styles.actionButtonIcon} />
-                </ActionButton.Item>
+            {new Date(budget.date).getMonth() === new Date().getMonth() &&
+              new Date().getFullYear() === new Date().getFullYear() && (
+                <ActionButton buttonColor="rgba(231,76,60,1)">
+                  <ActionButton.Item
+                    buttonColor="#E8D300"
+                    title="Update Budget"
+                    onPress={() =>
+                      this.props.navigation.navigate("UpdateBudget", {
+                        budget: budget
+                      })
+                    }
+                  >
+                    <Icon name="md-create" style={styles.actionButtonIcon} />
+                  </ActionButton.Item>
 
-                <ActionButton.Item
-                  buttonColor="#278979"
-                  title="Add a Transaction"
-                  onPress={() => this.setModalVisible(true)}
-                >
-                  <Icon
-                    name="add-to-list"
-                    type="Entypo"
-                    style={styles.actionButtonIcon}
-                  />
-                </ActionButton.Item>
-              </ActionButton>
-            )}
-        </Row>
-      </View>
+                  <ActionButton.Item
+                    buttonColor="#278979"
+                    title="Add a Transaction"
+                    onPress={() => this.setModalVisible(true)}
+                  >
+                    <Icon
+                      name="add-to-list"
+                      type="Entypo"
+                      style={styles.actionButtonIcon}
+                    />
+                  </ActionButton.Item>
+                </ActionButton>
+              )}
+          </Row>
+        </View>
+      </Container>
     );
   }
 }

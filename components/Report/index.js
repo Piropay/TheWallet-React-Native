@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import styles, { colors } from "./style";
 import { connect } from "react-redux";
-import { Button, Container } from "native-base";
+import { Button, Container, Toast, H1 } from "native-base";
 import * as actionCreators from "../../store/actions";
 import { VictoryPie, VictoryLabel } from "victory-native";
 import ProgressBarAnimated from "react-native-progress-bar-animated";
@@ -183,6 +183,9 @@ class Report extends Component {
     let TotalTransactions = 0;
     let tempBudgets = [];
     if (
+
+      //Uncomment this when testing for previous budgets
+
       today.getMonth() !== compDate.getMonth() ||
       today.getFullYear() !== compDate.getFullYear()
     ) {
@@ -215,55 +218,68 @@ class Report extends Component {
         <ScrollView>
           <View style={styles.container}>
             <View>
-              <VictoryPie
-                padAngle={3}
-                innerRadius={50}
-                radius={100}
-                padding={100}
-                labelRadius={110}
-                startAngle={90}
-                endAngle={450}
-                labelComponent={<VictoryLabel angle={0} />}
-                colorScale={["#278979", "#BA2D17", "#BEA647"]}
-                animate={{
-                  duration: 2000
-                }}
-                data={[
-                  {
-                    label: `Balance: \n ${(
-                      (parseFloat(balance - totalPreviousBudgets) / income) *
-                      100
-                    ).toFixed(2)}%`,
-                    x: 1,
-                    y: parseFloat(balance - totalPreviousBudgets)
-                  },
-                  {
-                    label: `Expenses:\n ${(
-                      (parseFloat(TotalTransactions) / income) *
-                      100
-                    ).toFixed(2)}%`,
-                    x: 2,
-                    y: parseFloat(TotalTransactions)
-                  },
-                  {
-                    label: `Budgets:\n ${(
-                      (parseFloat(totalPreviousBudgets) / income) *
-                      100
-                    ).toFixed(2)}%`,
-                    x: 3,
-                    y: parseFloat(totalPreviousBudgets)
-                  }
-                ]}
-                style={{
-                  marginTop: 100,
-                  labels: {
-                    fill: "#fff",
-                    fontSize: 13,
-                    fontWeight: "bold",
-                    fontFamily: "quicksand-regular"
-                  }
-                }}
-              />
+              {tempBudgets.length > 0 ? (
+                <VictoryPie
+                  padAngle={3}
+                  innerRadius={50}
+                  radius={100}
+                  padding={100}
+                  labelRadius={110}
+                  startAngle={90}
+                  endAngle={450}
+                  labelComponent={<VictoryLabel angle={0} />}
+                  colorScale={["#278979", "#BA2D17", "#BEA647"]}
+                  animate={{
+                    duration: 2000
+                  }}
+                  data={[
+                    {
+                      label: `Balance: \n ${(
+                        (parseFloat(balance - totalPreviousBudgets) / income) *
+                        100
+                      ).toFixed(2)}%`,
+                      x: 1,
+                      y: parseFloat(balance - totalPreviousBudgets)
+                    },
+                    {
+                      label: `Expenses:\n ${(
+                        (parseFloat(TotalTransactions) / income) *
+                        100
+                      ).toFixed(2)}%`,
+                      x: 2,
+                      y: parseFloat(TotalTransactions)
+                    },
+                    {
+                      label: `Budgets:\n ${(
+                        (parseFloat(totalPreviousBudgets) / income) *
+                        100
+                      ).toFixed(2)}%`,
+                      x: 3,
+                      y: parseFloat(totalPreviousBudgets)
+                    }
+                  ]}
+                  style={{
+                    marginTop: 100,
+                    labels: {
+                      fill: "#fff",
+                      fontSize: 13,
+                      fontWeight: "bold",
+                      fontFamily: "quicksand-regular"
+                    }
+                  }}
+                />
+              ) : (
+                <H1
+                  style={[
+                    styles.h3,
+                    {
+                      color: "#fff"
+                    }
+                  ]}
+                >
+                  No Budgets made for last month{" "}
+                </H1>
+              )}
               <Text style={styles.details}>
                 {" "}
                 Income {parseFloat(this.props.profile.income).toFixed(
@@ -285,26 +301,43 @@ class Report extends Component {
 
             {ListItems}
           </View>
-          {this.state.show ? (
+          {this.state.show ||
+          (compDate.getMonth() === new Date().getMonth() &&
+            tempBudgets.length > 0) ? (
             <View>
-              <Button block onPress={() => this.sameBudget()}>
-                <Text>Continue on same budget</Text>
+              <Button
+                block
+                style={[
+                  styles.greenbutton,
+                  { marginHorizontal: 15, marginBottom: 10 }
+                ]}
+                onPress={() => this.sameBudget()}
+              >
+                <Text style={[styles.buttontext]}>Keep Same Budget</Text>
               </Button>
               {this.props.profile.automated ? (
                 <Button
                   block
+                  style={[
+                    styles.greenbutton,
+                    { marginHorizontal: 15, marginBottom: 10 }
+                  ]}
                   onPress={() =>
                     this.props.navigation.navigate("AutomatedBudgets")
                   }
                 >
-                  <Text>Set New Budget</Text>
+                  <Text style={styles.buttontext}>Set New Budget</Text>
                 </Button>
               ) : (
                 <Button
                   block
+                  style={[
+                    styles.greenbutton,
+                    { marginHorizontal: 15, marginBottom: 10 }
+                  ]}
                   onPress={() => this.props.navigation.navigate("userBudgets")}
                 >
-                  <Text>Set New Budget</Text>
+                  <Text style={styles.buttontext}> Set New Budget</Text>
                 </Button>
               )}
             </View>

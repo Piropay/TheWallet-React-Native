@@ -9,11 +9,12 @@ import {
   View,
   RefreshControl
 } from "react-native";
-import { Button, List, Card, CardItem, Body, H3 } from "native-base";
+import { Button, List, Card, CardItem, Body, H3, Container } from "native-base";
 import { WebBrowser } from "expo";
 import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions";
-import styles from "./styles";
+import styles, { colors } from "./styles";
+import { LinearGradient } from "expo";
 
 class ExpensesList extends React.Component {
   static navigationOptions = {
@@ -52,20 +53,38 @@ class ExpensesList extends React.Component {
       ListItems = expenses.map(expense => this.renderCard(expense));
     }
     return (
-      <View style={styles.container}>
-        <ScrollView
-          style={styles.container}
-          contentContainerStyle={styles.contentContainer}
-          refreshControl={
-            <RefreshControl
-              refreshing={this.state.refreshing}
-              onRefresh={this._onRefresh}
-            />
-          }
-        >
-          <List>{ListItems}</List>
-        </ScrollView>
-      </View>
+      <Container>
+        <LinearGradient
+          colors={[colors.background1, colors.background2]}
+          startPoint={{ x: 1, y: 0 }}
+          endPoint={{ x: 0, y: 1 }}
+          style={styles.gradient}
+        />
+        <View style={styles.container}>
+          <Button
+            block
+            style={[
+              styles.greenbutton,
+              { marginHorizontal: 15, marginBottom: 10 }
+            ]}
+            onPress={() => this.props.navigation.navigate("mandatoryInfo")}
+          >
+            <Text style={styles.buttontext}> Add Expense</Text>
+          </Button>
+          <ScrollView
+            style={styles.container}
+            contentContainerStyle={styles.contentContainer}
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={this._onRefresh}
+              />
+            }
+          >
+            <List>{ListItems}</List>
+          </ScrollView>
+        </View>
+      </Container>
     );
   }
 }

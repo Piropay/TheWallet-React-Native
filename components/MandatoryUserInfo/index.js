@@ -23,7 +23,8 @@ import {
   Item,
   Icon,
   Content,
-  Container
+  Container,
+  Toast
 } from "native-base";
 
 import styles, { colors } from "./styles";

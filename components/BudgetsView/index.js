@@ -7,13 +7,15 @@ import {
   Text,
   TouchableOpacity,
   View,
-  RefreshControl
+  RefreshControl,
+  ActivityIndicator
 } from "react-native";
-import { Button, List, Card, CardItem, Body, H3 } from "native-base";
+import { Button, List, Card, CardItem, Body, H3, Container } from "native-base";
 import { WebBrowser } from "expo";
 import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions";
-import styles from "./styles";
+import styles, { colors } from "./styles";
+import { LinearGradient } from "expo";
 
 class BudgetsView extends React.Component {
   static navigationOptions = {
@@ -69,38 +71,63 @@ class BudgetsView extends React.Component {
     if (budgets) {
       ListItems = budgets.map(budget => this.renderCard(budget));
     }
-    return (
-      <View style={styles.container}>
-        <ScrollView
-          style={styles.container}
-          contentContainerStyle={styles.contentContainer}
-          refreshControl={
-            <RefreshControl
-              refreshing={this.state.refreshing}
-              onRefresh={this._onRefresh}
-            />
-          }
-        >
-          <List>{ListItems}</List>
-        </ScrollView>
-        <View>
-          {!this.props.profile.automated && (
-            <Button
-              block
-              warning
-              onPress={() => this.props.navigation.navigate("userBudgets")}
+    if (!this.props.fetched) {
+      return (
+        <Container>
+          <LinearGradient
+            colors={[colors.background1, colors.background2]}
+            startPoint={{ x: 1, y: 0 }}
+            endPoint={{ x: 0, y: 1 }}
+            style={styles.gradient}
+          />
+          <ActivityIndicator size="large" color="#fff" />
+        </Container>
+      );
+    } else {
+      return (
+        <Container>
+          <LinearGradient
+            colors={[colors.background1, colors.background2]}
+            startPoint={{ x: 1, y: 0 }}
+            endPoint={{ x: 0, y: 1 }}
+            style={styles.gradient}
+          />
+          <View style={styles.container}>
+            {!this.props.profile.automated && (
+              <Button
+                block
+                style={[
+                  styles.greenbutton,
+                  { marginHorizontal: 15, marginBottom: 10 }
+                ]}
+                onPress={() => this.props.navigation.navigate("userBudgets")}
+              >
+                <Text style={styles.buttontext}> Add Budget</Text>
+              </Button>
+            )}
+            <ScrollView
+              style={styles.container}
+              contentContainerStyle={styles.contentContainer}
+              refreshControl={
+                <RefreshControl
+                  refreshing={this.state.refreshing}
+                  onRefresh={this._onRefresh}
+                />
+              }
             >
-              <Text style={{ color: "white" }}> ADD Budget</Text>
-            </Button>
-          )}
-        </View>
-      </View>
-    );
+              <List>{ListItems}</List>
+            </ScrollView>
+            <View />
+          </View>
+        </Container>
+      );
+    }
   }
 }
 
 const mapStateToProps = state => ({
   profile: state.auth.profile,
+  fetched: state.auth.fetched,
   budgets: state.budget.budgets
 });
 const mapDispatchToProps = dispatch => ({

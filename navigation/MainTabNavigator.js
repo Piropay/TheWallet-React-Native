@@ -23,6 +23,7 @@ import GoalsView from "../components/GoalView";
 import Report from "../components/Report";
 import AutomatedBudgets from "../components/Budgets/AutomatedBudgets";
 import UpdateBudget from "../components/Budgets/UpdateBudget";
+import ExpensesList from "../components/ExpensesList/ExpensesList";
 
 const HomeStack = createStackNavigator(
   {
@@ -151,14 +152,16 @@ const ProfileStack = createStackNavigator(
     // Profile: Profile,
     Profile: ProfileView,
     UpdateProfile: UpdateProfile,
-    Report: Report
+    Report: Report,
+    ExpensesList: ExpensesList
   },
   {
     navigationOptions: {
       headerTintColor: "#fff",
       headerStyle: {
         fontWeight: "bold",
-        backgroundColor: "transparent"
+        backgroundColor: "transparent",
+        borderBottomWidth: 0
       },
       headerTextStyle: {
         fontWeight: "bold",
@@ -180,9 +183,6 @@ ProfileStack.navigationOptions = {
     />
   )
 };
-
-import { Component } from "react";
-import { View, Text } from "react-native";
 
 export default createMaterialBottomTabNavigator(
   {

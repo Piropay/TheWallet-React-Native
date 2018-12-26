@@ -12,6 +12,27 @@ const styles = StyleSheet.create({
 
     marginTop: 30
   },
+  buttontext: {
+    paddingTop: 10,
+    paddingHorizontal: 5,
+    color: "#fff",
+    fontWeight: "bold",
+    fontFamily: "pacifico-regular",
+    fontSize: 20,
+    paddingBottom: 40
+  },
+  greenbutton: {
+    marginVertical: 5,
+    marginHorizontal: 5,
+    backgroundColor: "#258779",
+    paddingHorizontal: 50,
+    shadowColor: "#2b2b2b",
+    shadowRadius: 1,
+    shadowOpacity: 0.7,
+    borderRadius: 5,
+    shadowOffset: { width: 5, height: 5 },
+    paddingBottom: 13
+  },
   gradient: {
     ...StyleSheet.absoluteFillObject
   },

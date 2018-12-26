@@ -35,19 +35,18 @@ class HomePage extends Component {
     }
   }
   componentDidUpdate(prevProps) {
-    // if (prevProps.user !== this.props.user) {
-    //   this.props.navigation.navigate("Home");
-    // }
-    try {
-      if (this.props.user !== prevProps.user && this.props.fetched) {
-        if (this.props.profile.income !== null)
-          this.props.navigation.navigate("Home");
-        else {
-          this.props.navigation.navigate("SetIncome");
+    if (prevProps.user !== this.props.user) {
+      try {
+        if (this.props.fetched) {
+          if (this.props.profile.income !== null)
+            this.props.navigation.navigate("Home");
+          else {
+            this.props.navigation.navigate("SetIncome");
+          }
         }
+      } catch (e) {
+      } finally {
       }
-    } catch (e) {
-    } finally {
     }
   }
   static navigationOptions = {
