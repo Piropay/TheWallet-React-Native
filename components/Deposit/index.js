@@ -70,7 +70,7 @@ class AddDeposit extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <H3 style={styles.h3}>Enter your deposit</H3>
+        <H3 style={[styles.h3, { paddingBottom: 0 }]}>Enter your deposit</H3>
         <Form>
           <Item style={styles.label}>
             <Input

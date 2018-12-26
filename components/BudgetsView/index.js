@@ -9,11 +9,12 @@ import {
   View,
   RefreshControl
 } from "react-native";
-import { Button, List, Card, CardItem, Body, H3 } from "native-base";
+import { Button, List, Card, CardItem, Body, H3, Container } from "native-base";
 import { WebBrowser } from "expo";
 import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions";
-import styles from "./styles";
+import styles, { colors } from "./styles";
+import { LinearGradient } from "expo";
 
 class BudgetsView extends React.Component {
   static navigationOptions = {
@@ -70,31 +71,39 @@ class BudgetsView extends React.Component {
       ListItems = budgets.map(budget => this.renderCard(budget));
     }
     return (
-      <View style={styles.container}>
-        <ScrollView
-          style={styles.container}
-          contentContainerStyle={styles.contentContainer}
-          refreshControl={
-            <RefreshControl
-              refreshing={this.state.refreshing}
-              onRefresh={this._onRefresh}
-            />
-          }
-        >
-          <List>{ListItems}</List>
-        </ScrollView>
-        <View>
-          {!this.props.profile.automated && (
-            <Button
-              block
-              warning
-              onPress={() => this.props.navigation.navigate("userBudgets")}
-            >
-              <Text style={{ color: "white" }}> ADD Budget</Text>
-            </Button>
-          )}
+      <Container>
+        <LinearGradient
+          colors={[colors.background1, colors.background2]}
+          startPoint={{ x: 1, y: 0 }}
+          endPoint={{ x: 0, y: 1 }}
+          style={styles.gradient}
+        />
+        <View style={styles.container}>
+          <ScrollView
+            style={styles.container}
+            contentContainerStyle={styles.contentContainer}
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={this._onRefresh}
+              />
+            }
+          >
+            <List>{ListItems}</List>
+          </ScrollView>
+          <View>
+            {!this.props.profile.automated && (
+              <Button
+                block
+                warning
+                onPress={() => this.props.navigation.navigate("userBudgets")}
+              >
+                <Text style={{ color: "white" }}> ADD Budget</Text>
+              </Button>
+            )}
+          </View>
         </View>
-      </View>
+      </Container>
     );
   }
 }

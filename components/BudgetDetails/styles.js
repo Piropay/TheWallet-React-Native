@@ -1,9 +1,16 @@
 import { StyleSheet } from "react-native";
-
+export const colors = {
+  black: "#1a1917",
+  gray: "#888888",
+  background1: "#2B2B2B",
+  background2: "#BEA647"
+};
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#2B2B2B",
     height: "100%"
+  },
+  gradient: {
+    ...StyleSheet.absoluteFillObject
   },
   eventList: {
     marginTop: 20
@@ -24,19 +31,19 @@ const styles = StyleSheet.create({
   },
   eventDay: {
     fontSize: 50,
-    color: "#E8D300",
+    color: "#fff",
     fontWeight: "600",
     fontFamily: "pacifico-regular",
-    textShadowColor: "#7f7f7f",
+    textShadowColor: "#2b2b2b",
     textShadowOffset: { width: 3, height: 3 },
     textShadowRadius: 1
   },
   eventMonth: {
     fontSize: 16,
-    color: "#E8D300",
+    color: "#fff",
     fontWeight: "600",
     fontFamily: "pacifico-regular",
-    textShadowColor: "#7f7f7f",
+    textShadowColor: "#2b2b2b",
     textShadowOffset: { width: 3, height: 3 },
     textShadowRadius: 1
   },
@@ -49,7 +56,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     paddingLeft: 20,
     borderRadius: 10,
-    shadowColor: "#a0a0a0",
+    shadowColor: "#2b2b2b",
     shadowRadius: 1,
     shadowOpacity: 0.5,
     shadowOffset: { width: 5, height: 7 }
@@ -87,13 +94,13 @@ const styles = StyleSheet.create({
     color: "#BDA747",
     fontWeight: "600",
     fontFamily: "pacifico-regular",
-    textShadowColor: "#7f7f7f",
+    textShadowColor: "#2b2b2b",
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 1
   },
   popupOverlay: {
     backgroundColor: "#00000057",
-    flex: 1
+    height: "100%"
   },
   popupContent: {
     margin: 5,

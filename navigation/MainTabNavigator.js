@@ -158,7 +158,8 @@ const ProfileStack = createStackNavigator(
       headerTintColor: "#fff",
       headerStyle: {
         fontWeight: "bold",
-        backgroundColor: "transparent"
+        backgroundColor: "transparent",
+        borderBottomWidth: 0
       },
       headerTextStyle: {
         fontWeight: "bold",
