@@ -183,10 +183,10 @@ class BudgetDetails extends Component {
               </H3>
               <Badge containerStyle={{ backgroundColor: "#258779" }}>
                 <Text style={{ fontSize: 17, color: "#fff" }}>
-                  Amount {budget.amount}
+                  Amount {parseFloat(budget.amount).toFixed(3)}
                 </Text>
                 <Text style={{ fontSize: 17, color: "#fff" }}>
-                  Balance {budget.balance}
+                  Balance {parseFloat(budget.balance).toFixed(3)}
                 </Text>
               </Badge>
             </Col>
@@ -251,11 +251,10 @@ class BudgetDetails extends Component {
                       </Button>
                     </Button>
 
-
-                  <ScrollView contentContainerStyle={styles.modalInfo}>
-                    <Text style={styles.position}>
-                      Progress {"\n"} {totalTransactions}/{budget.amount} KWD
-                    </Text>
+                    <ScrollView contentContainerStyle={styles.modalInfo}>
+                      <Text style={styles.position}>
+                        Progress {"\n"} {totalTransactions}/{budget.amount} KWD
+                      </Text>
 
                       <Transaction budget={budget} />
                     </ScrollView>
@@ -264,37 +263,37 @@ class BudgetDetails extends Component {
               </View>
             </Modal>
 
-          {new Date(budget.date).getMonth() === new Date().getMonth() &&
-            new Date().getFullYear() === new Date().getFullYear() && (
-              <ActionButton buttonColor="rgba(231,76,60,1)">
-                <ActionButton.Item
-                  buttonColor="#E8D300"
-                  title="Update Budget"
-                  onPress={() =>
-                    this.props.navigation.navigate("UpdateBudget", {
-                      budget: budget
-                    })
-                  }
-                >
-                  <Icon name="md-create" style={styles.actionButtonIcon} />
-                </ActionButton.Item>
+            {new Date(budget.date).getMonth() === new Date().getMonth() &&
+              new Date().getFullYear() === new Date().getFullYear() && (
+                <ActionButton buttonColor="rgba(231,76,60,1)">
+                  <ActionButton.Item
+                    buttonColor="#E8D300"
+                    title="Update Budget"
+                    onPress={() =>
+                      this.props.navigation.navigate("UpdateBudget", {
+                        budget: budget
+                      })
+                    }
+                  >
+                    <Icon name="md-create" style={styles.actionButtonIcon} />
+                  </ActionButton.Item>
 
-                <ActionButton.Item
-                  buttonColor="#278979"
-                  title="Add a Transaction"
-                  onPress={() => this.setModalVisible(true)}
-                >
-                  <Icon
-                    name="add-to-list"
-                    type="Entypo"
-                    style={styles.actionButtonIcon}
-                  />
-                </ActionButton.Item>
-              </ActionButton>
-            )}
-        </Row>
-      </View>
- </Container>
+                  <ActionButton.Item
+                    buttonColor="#278979"
+                    title="Add a Transaction"
+                    onPress={() => this.setModalVisible(true)}
+                  >
+                    <Icon
+                      name="add-to-list"
+                      type="Entypo"
+                      style={styles.actionButtonIcon}
+                    />
+                  </ActionButton.Item>
+                </ActionButton>
+              )}
+          </Row>
+        </View>
+      </Container>
     );
   }
 }
