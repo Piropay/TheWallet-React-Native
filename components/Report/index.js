@@ -183,7 +183,9 @@ class Report extends Component {
     let TotalTransactions = 0;
     let tempBudgets = [];
     if (
+
       //Uncomment this when testing for previous budgets
+
       today.getMonth() !== compDate.getMonth() ||
       today.getFullYear() !== compDate.getFullYear()
     ) {
