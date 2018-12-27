@@ -3,7 +3,7 @@ import * as actionTypes from "./actionTypes";
 import axios from "axios";
 import { updateProfile } from "./authActions";
 const instance = axios.create({
-  baseURL: "http://192.168.8.107/api/budget/"
+  baseURL: "http://192.168.8.105/api/budget/"
 });
 
 export const fetchBudgets = () => {
