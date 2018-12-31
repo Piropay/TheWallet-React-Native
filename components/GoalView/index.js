@@ -77,9 +77,15 @@ class GoalView extends React.Component {
     return (
       <TouchableOpacity
         style={styles.card}
-        onPress={() => {
-          this.clickEventListener(goal, mdeposit);
-        }}
+        // onPress={() => {
+        //   this.clickEventListener(goal, mdeposit);
+        // }}
+        onPress={() =>
+          this.props.navigation.navigate("GoalDetails", {
+            goal: goal,
+            mdeposit: mdeposit.toFixed(3)
+          })
+        }
         key={goal.id}
       >
         <Card key={goal.id} style={styles.shadow}>

@@ -20,12 +20,6 @@ export const fetchGoals = () => {
 };
 
 export const addGoal = (goals, navigation) => {
-  // let date =
-  //   goal.end_date.getFullYear() +
-  //   "-" +
-  //   (goal.end_date.getMonth() + 1) +
-  //   "-" +
-  //   goal.end_date.getDate();
   return dispatch => {
     instance
       .post("create/", goals)
@@ -43,13 +37,6 @@ export const addGoal = (goals, navigation) => {
       });
   };
 };
-
-// export const addBudgets = budgets => {
-//   return {
-//     type: actionTypes.ADD_BUDGETS,
-//     payload: budgets
-//   };
-// };
 
 export const updateGoal = (goal, navigation) => {
   return dispatch => {

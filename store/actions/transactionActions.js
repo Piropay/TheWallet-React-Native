@@ -55,12 +55,12 @@ export const addTransaction = (transaction, budget_id, navigation) => {
 
 export const updateTransaction = (
   transaction_id,
-  budget_id,
   transaction,
+  budget_id,
   navigation
 ) => {
   return dispatch => {
-    axios
+    instance
       .put(`${transaction_id}/update/`, {
         amount: transaction.amount,
         label: transaction.label,
@@ -70,9 +70,22 @@ export const updateTransaction = (
       .then(transaction => {
         dispatch({
           type: actionTypes.UPDATE_TRANSACTION,
-          payload: transaction
+          payload: { transaction, transaction_id }
         });
       })
+      .then(() =>
+        Toast.show({
+          text: "Transaction Updated!",
+          buttonText: "Okay",
+          duration: 6000,
+          type: "success",
+          buttonTextStyle: { color: "#000" },
+          buttonStyle: {
+            backgroundColor: "#F1C04F",
+            alignSelf: "center"
+          }
+        })
+      )
       .catch(err => {
         // dispatch(console.log(err.response.data));
       });

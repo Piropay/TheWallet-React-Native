@@ -58,22 +58,35 @@ export const addDeposit = (deposit, goal_id, navigation) => {
   };
 };
 
-export const updateDeposit = (deposit_id, goal_id, deposit, navigation) => {
+export const updateDeposit = (deposit_id, deposit, goal_id, navigation) => {
   return dispatch => {
-    axios
+    instance
       .put(`${deposit_id}/update/`, {
-        amount: deposit.amount,
+        amount: deposit,
         goal: goal_id
       })
       .then(res => res.data)
       .then(deposit => {
         dispatch({
           type: actionTypes.UPDATE_DEPOSIT,
-          payload: deposit
+          payload: { deposit, deposit_id }
         });
       })
+      .then(() =>
+        Toast.show({
+          text: "Deposit Updated!",
+          buttonText: "Okay",
+          duration: 6000,
+          type: "success",
+          buttonTextStyle: { color: "#000" },
+          buttonStyle: {
+            backgroundColor: "#F1C04F",
+            alignSelf: "center"
+          }
+        })
+      )
       .catch(err => {
-        dispatch(console.log(err.response.data));
+        console.log(err.response.data);
       });
   };
 };
