@@ -228,7 +228,6 @@ class BudgetDetails extends Component {
                 </Card>
               )}
             </ScrollView>
-
             <Modal
               animationType={"slide"}
               transparent={true}
@@ -263,34 +262,31 @@ class BudgetDetails extends Component {
               </View>
             </Modal>
 
-            {new Date(budget.date).getMonth() === new Date().getMonth() &&
-              new Date().getFullYear() === new Date().getFullYear() && (
-                <ActionButton buttonColor="rgba(231,76,60,1)">
-                  <ActionButton.Item
-                    buttonColor="#E8D300"
-                    title="Update Budget"
-                    onPress={() =>
-                      this.props.navigation.navigate("UpdateBudget", {
-                        budget: budget
-                      })
-                    }
-                  >
-                    <Icon name="md-create" style={styles.actionButtonIcon} />
-                  </ActionButton.Item>
+            <ActionButton buttonColor="rgba(231,76,60,1)">
+              <ActionButton.Item
+                buttonColor="#E8D300"
+                title="Update Budget"
+                onPress={() =>
+                  this.props.navigation.navigate("UpdateBudget", {
+                    budget: budget
+                  })
+                }
+              >
+                <Icon name="md-create" style={styles.actionButtonIcon} />
+              </ActionButton.Item>
 
-                  <ActionButton.Item
-                    buttonColor="#278979"
-                    title="Add a Transaction"
-                    onPress={() => this.setModalVisible(true)}
-                  >
-                    <Icon
-                      name="add-to-list"
-                      type="Entypo"
-                      style={styles.actionButtonIcon}
-                    />
-                  </ActionButton.Item>
-                </ActionButton>
-              )}
+              <ActionButton.Item
+                buttonColor="#278979"
+                title="Add a Transaction"
+                onPress={() => this.setModalVisible(true)}
+              >
+                <Icon
+                  name="add-to-list"
+                  type="Entypo"
+                  style={styles.actionButtonIcon}
+                />
+              </ActionButton.Item>
+            </ActionButton>
           </Row>
         </View>
       </Container>
