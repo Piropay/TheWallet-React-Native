@@ -50,7 +50,7 @@ class UpdateGoal extends Component {
     this.setState({ end_date: date });
   }
 
-  handleSubmitBudget = async goal => {
+  handleSubmitGoal = async goal => {
     let filled = false;
     let newBalance = 0;
     let { amount, label, balance } = { ...this.state };
@@ -123,7 +123,7 @@ class UpdateGoal extends Component {
             block
             rounded
             dark
-            onPress={() => this.handleSubmitBudget(goal)}
+            onPress={() => this.handleSubmitGoal(goal)}
           >
             <Text style={styles.buttontext}>Submit</Text>
           </Button>

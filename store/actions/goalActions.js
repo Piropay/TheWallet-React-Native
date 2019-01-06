@@ -44,7 +44,8 @@ export const updateGoal = (goal, navigation) => {
       .put(`${goal.id}/update/`, {
         end_date: goal.end_date,
         amount: goal.amount,
-        label: goal.label
+        label: goal.label,
+        balance: goal.balance
       })
       .then(res => res.data)
       .then(goal => {
