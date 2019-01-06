@@ -43,7 +43,18 @@ class ProfileView extends Component {
   });
   render() {
     const prof = this.props.profile;
-    let { income, balance, savings, budgets } = { ...prof };
+    let { income, balance, savings } = { ...prof };
+    var today = new Date();
+
+    const budgets = this.props.budgets.filter(budget => {
+      let date = new Date(budget.date);
+      if (
+        date.getMonth() === today.getMonth() &&
+        date.getFullYear() === today.getFullYear()
+      ) {
+        return budget;
+      }
+    });
     let totalexpenses = 0;
     this.props.expenses.forEach(expense => {
       totalexpenses += parseFloat(expense.amount);
@@ -51,7 +62,7 @@ class ProfileView extends Component {
 
     let totalBudgets = 0;
 
-    this.props.budgets.forEach(budget => {
+    budgets.forEach(budget => {
       totalBudgets += parseFloat(budget.amount);
     });
     if (!this.props.fetched) {

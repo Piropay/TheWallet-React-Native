@@ -53,7 +53,7 @@ class UpdateGoal extends Component {
   handleSubmitBudget = async goal => {
     let filled = false;
     let newBalance = 0;
-    let { amount, label } = { ...this.state };
+    let { amount, label, balance } = { ...this.state };
     if (amount !== "" && label !== "") {
       filled = true;
     } else {
@@ -199,8 +199,8 @@ const mapStateToProps = state => ({
 
 const mapActionsToProps = dispatch => {
   return {
-    updateBudget: (goal, navigation) =>
-      dispatch(actionCreators.updateBudget(goal, navigation))
+    updateGoal: (goal, navigation) =>
+      dispatch(actionCreators.updateGoal(goal, navigation))
   };
 };
 

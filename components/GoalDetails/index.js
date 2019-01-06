@@ -121,6 +121,7 @@ class GoalDetails extends Component {
       totalDeposits += parseFloat(deposit.amount);
     });
     let deviceWidth = Dimensions.get("window").width;
+    let deviceHeight = Dimensions.get("window").height;
 
     let ListItems;
     if (goal) {
@@ -137,7 +138,7 @@ class GoalDetails extends Component {
         <View style={styles.container}>
           <Row
             style={{
-              height: "30%",
+              height: "25%",
               borderRadius: 1,
               shadowRadius: 1,
               shadowOpacity: 0.5,
@@ -151,7 +152,7 @@ class GoalDetails extends Component {
                   top: 0,
                   transform: [{ rotateX: "180deg" }]
                 }}
-                size={deviceWidth * 0.5}
+                size={deviceWidth * 0.455}
                 outerColor="rgba(0,0,0,0)"
                 internalColor={
                   parseFloat(goal.balance) < 0 ? "rgba(231,76,60,1)" : "#258779"
@@ -171,7 +172,13 @@ class GoalDetails extends Component {
                 value={totalDeposits}
                 totalValue={parseFloat(goal.amount)}
               />
-              <Text style={{ fontSize: 17, top: 110, color: "#fff" }}>
+              <Text
+                style={{
+                  fontSize: 17,
+                  top: deviceHeight * 0.13,
+                  color: "#fff"
+                }}
+              >
                 Suggested Deposit KWD {mdeposit}
               </Text>
             </Col>
@@ -199,10 +206,10 @@ class GoalDetails extends Component {
               </H3>
               <Badge containerStyle={{ backgroundColor: "#258779" }}>
                 <Text style={{ fontSize: 17, color: "#fff" }}>
-                  Amount {parseFloat(goal.amount).toFixed(3)}
+                  Amount {parseFloat(goal.amount).toFixed(2)}
                 </Text>
                 <Text style={{ fontSize: 17, color: "#fff" }}>
-                  Balance {parseFloat(goal.balance).toFixed(3)}
+                  Balance {parseFloat(goal.balance).toFixed(2)}
                 </Text>
               </Badge>
             </Col>
