@@ -10,7 +10,8 @@ import {
   ListView,
   TouchableOpacity,
   Dimensions,
-  RefreshControl
+  RefreshControl,
+  ActionSheetIOS
 } from "react-native";
 import * as actionCreators from "../../store/actions";
 
@@ -80,11 +81,30 @@ class BudgetDetails extends Component {
     this.setState({ modalVisible2: visible });
   }
 
+  openContextMenu(transaction, budgetId) {
+    ActionSheetIOS.showActionSheetWithOptions(
+      {
+        options: ["Cancel", "Remove", "Update"],
+        destructiveButtonIndex: 1,
+        cancelButtonIndex: 0
+      },
+      buttonIndex => {
+        if (buttonIndex === 1) {
+          this.props.deleteTransaction(transaction, budgetId);
+        } else if (buttonIndex === 2) {
+          this.clickEventListener(transaction);
+        }
+      }
+    );
+  }
+  render() {
+    return this.openContextMenu(this.props.tpye);
+  }
   renderCard(transaction, budget) {
     return (
       <TouchableOpacity
         onPress={() => {
-          this.clickEventListener(transaction);
+          this.openContextMenu(transaction, budget.id);
         }}
         key={transaction.id}
       >
@@ -351,7 +371,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchTransactions: () => dispatch(actionCreators.fetchTransactions())
+  fetchTransactions: () => dispatch(actionCreators.fetchTransactions()),
+  deleteTransaction: (transaction, budgetId) =>
+    dispatch(actionCreators.deleteTransaction(transaction, budgetId))
 });
 export default connect(
   mapStateToProps,

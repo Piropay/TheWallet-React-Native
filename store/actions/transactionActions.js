@@ -3,7 +3,7 @@ import * as actionTypes from "./actionTypes";
 import axios from "axios";
 import { Toast } from "native-base";
 const instance = axios.create({
-  baseURL: "http://68.183.217.91/api/transaction/"
+  baseURL: "http://192.168.100.32:8000/api/transaction/"
 });
 
 export const fetchTransactions = () => {
@@ -49,6 +49,34 @@ export const addTransaction = (transaction, budget_id, navigation) => {
 
       .catch(err => {
         //dispatch(console.log(err.response));
+      });
+  };
+};
+
+export const deleteTransaction = (transaction, budget_id) => {
+  return dispatch => {
+    instance
+      .delete(`${transaction.id}/delete/`, {
+        data: {
+          amount: transaction.amount,
+          label: transaction.label,
+          budget: budget_id
+        }
+      })
+      .then(res => res.data)
+      .then(transactionID => {
+        dispatch({
+          type: actionTypes.DELETE_TRANSACTION,
+          payload: transactionID
+        });
+        dispatch({
+          type: actionTypes.ADD_TO_BUDGET,
+          payload: transaction
+        });
+      })
+
+      .catch(err => {
+        console.log(err.response.data);
       });
   };
 };

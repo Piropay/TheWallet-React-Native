@@ -15,7 +15,7 @@ import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions";
 import styles from "./styles";
 
-class UpdateTransactionView extends React.Component {
+class UpdateExpenseView extends React.Component {
   static navigationOptions = {
     title: "Add Expanses"
   };
@@ -23,9 +23,8 @@ class UpdateTransactionView extends React.Component {
     super(props);
 
     this.state = {
-      budget: this.props.budget,
-      amount: this.props.transaction.amount,
-      label: this.props.transaction.label
+      amount: this.props.expense.amount,
+      label: this.props.expense.label
     };
   }
 
@@ -49,22 +48,14 @@ class UpdateTransactionView extends React.Component {
         buttonStyle: { backgroundColor: "#F1C04F", alignSelf: "center" }
       });
     } else {
-      this.props.updateTransaction(
-        this.props.transaction.id,
-        {
-          label: this.state.label,
-          amount: this.state.amount
-        },
-        this.state.budget.id,
-        this.props.navigation
-      );
+      this.props.updateExpense(this.props.expense.id, this.state);
     }
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <H3 style={styles.h3}>Update your transaction</H3>
+        <H3 style={styles.h3}>Update your expense</H3>
         <Form>
           <Item style={styles.label}>
             <Input
@@ -97,22 +88,13 @@ class UpdateTransactionView extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  profile: state.auth.profile,
-  budgets: state.budget.budgets,
-  transactions: state.transaction.transactions
+  profile: state.auth.profile
 });
 const mapDispatchToProps = dispatch => ({
-  updateTransaction: (transaction_id, transaction, budget_id, navigation) =>
-    dispatch(
-      actionCreators.updateTransaction(
-        transaction_id,
-        transaction,
-        budget_id,
-        navigation
-      )
-    )
+  updateExpense: (expense_id, expense) =>
+    dispatch(actionCreators.updateExpense(expense_id, expense))
 });
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(UpdateTransactionView);
+)(UpdateExpenseView);

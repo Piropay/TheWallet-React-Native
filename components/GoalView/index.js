@@ -8,7 +8,8 @@ import {
   View,
   Modal,
   RefreshControl,
-  Dimensions
+  Dimensions,
+  ActionSheetIOS
 } from "react-native";
 import {
   Button,
@@ -54,6 +55,18 @@ class GoalView extends React.Component {
     this.setState({ modalVisible: visible });
   }
 
+  openContextMenu(goal) {
+    ActionSheetIOS.showActionSheetWithOptions(
+      {
+        options: ["Cancel", "Remove"],
+        destructiveButtonIndex: 1,
+        cancelButtonIndex: 0
+      },
+      buttonIndex => {
+        if (buttonIndex === 1) this.props.deleteGoal(goal);
+      }
+    );
+  }
   renderCard(goal) {
     let goalDate = new Date(goal.end_date);
     let today = new Date();
@@ -77,9 +90,7 @@ class GoalView extends React.Component {
     return (
       <TouchableOpacity
         style={styles.card}
-        // onPress={() => {
-        //   this.clickEventListener(goal, mdeposit);
-        // }}
+        onLongPress={() => this.openContextMenu(goal)}
         onPress={() =>
           this.props.navigation.navigate("GoalDetails", {
             goal: goal,
@@ -259,7 +270,8 @@ const mapStateToProps = state => ({
   deposits: state.deposit.deposits
 });
 const mapDispatchToProps = dispatch => ({
-  fetchGoals: () => dispatch(actionCreators.fetchGoals())
+  fetchGoals: () => dispatch(actionCreators.fetchGoals()),
+  deleteGoal: goal => dispatch(actionCreators.deleteGoal(goal))
 });
 
 export default connect(

@@ -10,24 +10,32 @@ export const ADD_INCOME = "ADD_INCOME";
 export const ADD_EXPENSES = "ADD_EXPENSES";
 export const GET_BALANCE = "GET_BALANCE";
 export const FETCH_EXPENSES = "FETCH_EXPENSES";
+export const DELETE_EXPENSE = "DELETE_EXPENSE";
+export const UPDATE_EXPENSE = "UPDATE_EXPENSE";
 
 //Transaction Actions
 export const ADD_TRANSACTION = "ADD_TRANSACTION";
 export const UPDATE_TRANSACTION = "UPDATE_TRANSACTION";
 export const FETCH_TRANSACTIONS = "FETCH_TRANSACTIONS";
+export const DELETE_TRANSACTION = "DELETE_TRANSACTION";
 
 //Budget Actions
 export const FETCH_BUDGETS = "FETCH_BUDGETS";
 export const UPDATE_BUDGET = "UPDATE_BUDGET";
 export const ADD_BUDGET = "ADD_BUDGET";
 export const SUBTRACT_BUDGET = "SUBTRACT_BUDGET";
+export const ADD_TO_BUDGET = "ADD_TO_BUDGET";
+export const DELETE_BUDGET = "DELETE_BUDGET";
 
 //Deposits Actions
 export const ADD_DEPOSIT = "ADD_DEPOSIT";
 export const UPDATE_DEPOSIT = "UPDATE_DEPOSIT";
 export const FETCH_DEPOSITS = "FETCH_DEPOSITS";
+export const DELETE_DEPOSIT = "DELETE_DEPOSIT";
+export const ADD_TO_GOAL = "ADD_TO_GOAL";
 
 //Goal Actions
 export const FETCH_GOALS = "FETCH_GOALS";
 export const UPDATE_GOAL = "UPDATE_GOAL";
 export const ADD_GOAL = "ADD_GOAL";
+export const DELETE_GOAL = "DELETE_GOAL";

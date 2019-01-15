@@ -3,7 +3,7 @@ import * as actionTypes from "./actionTypes";
 import axios from "axios";
 import { updateProfile } from "./authActions";
 const instance = axios.create({
-  baseURL: "http://68.183.217.91/api/budget/"
+  baseURL: "http://192.168.100.32:8000/api/budget/"
 });
 
 export const fetchBudgets = () => {
@@ -48,6 +48,23 @@ export const addBudget = (budgets, navigation, type, profile) => {
   };
 };
 
+export const deleteBudget = budget => {
+  return dispatch => {
+    return instance
+      .delete(`${budget.id}/delete/`)
+      .then(res => res.data)
+      .then(() => {
+        dispatch({
+          type: actionTypes.DELETE_BUDGET,
+          payload: budget
+        });
+      })
+
+      .catch(err => {
+        console.log(err.response.data);
+      });
+  };
+};
 export const updateBudget = (budget, navigation) => {
   return dispatch => {
     instance

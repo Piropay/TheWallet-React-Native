@@ -8,11 +8,10 @@ import { fetchGoals } from "./goalActions";
 import { fetchTransactions } from "./transactionActions";
 import { fetchExpenses } from "./userInfo";
 import { AsyncStorage } from "react-native";
-import { StackActions, NavigationActions } from "react-navigation";
 import { Toast } from "native-base";
 
 const instance = axios.create({
-  baseURL: "http://68.183.217.91/api/"
+  baseURL: "http://192.168.100.32:8000/api/"
 });
 
 const setAuthToken = token => {
@@ -63,6 +62,8 @@ export const login = (userData, navigation, type) => {
       })
 
       .catch(err => {
+        console.log(err);
+
         if (err.response.data.username) {
           Toast.show({
             text: "Username: " + err.response.data.username,

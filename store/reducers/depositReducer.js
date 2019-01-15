@@ -31,6 +31,14 @@ const reducer = (state = initialState, action) => {
         ...state,
         deposits: dep
       };
+    case actionTypes.DELETE_DEPOSIT:
+      return {
+        ...state,
+        deposits: state.deposits.filter(deposit => {
+          console.log(deposit.id);
+          deposit.id !== action.payload;
+        })
+      };
     default:
       return state;
   }

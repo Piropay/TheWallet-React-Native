@@ -10,7 +10,8 @@ import {
   ListView,
   TouchableOpacity,
   Dimensions,
-  RefreshControl
+  RefreshControl,
+  ActionSheetIOS
 } from "react-native";
 import * as actionCreators from "../../store/actions";
 
@@ -83,11 +84,28 @@ class GoalDetails extends Component {
     this.setState({ modalVisible2: visible });
   }
 
+  openContextMenu(deposit, goalId) {
+    ActionSheetIOS.showActionSheetWithOptions(
+      {
+        options: ["Cancel", "Remove", "Update"],
+        destructiveButtonIndex: 1,
+        cancelButtonIndex: 0
+      },
+      buttonIndex => {
+        if (buttonIndex === 1) {
+          this.props.deleteDeposit(deposit, goalId);
+        } else if (buttonIndex === 2) {
+          this.clickEventListener(deposit);
+        }
+      }
+    );
+  }
+
   renderCard(deposit, goal) {
     return (
       <TouchableOpacity
         onPress={() => {
-          this.clickEventListener(deposit);
+          this.openContextMenu(deposit, goal.id);
         }}
         key={deposit.id}
       >
@@ -389,7 +407,9 @@ const mapStateToProps = state => ({
   deposits: state.deposit.deposits
 });
 const mapDispatchToProps = dispatch => ({
-  fetchDeposits: () => dispatch(actionCreators.fetchDeposits())
+  fetchDeposits: () => dispatch(actionCreators.fetchDeposits()),
+  deleteDeposit: (deposit, goalId) =>
+    dispatch(actionCreators.deleteDeposit(deposit, goalId))
 });
 
 export default connect(

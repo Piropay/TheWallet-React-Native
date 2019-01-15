@@ -2,7 +2,7 @@ import * as actionTypes from "./actionTypes";
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "http://68.183.217.91/api/expense/"
+  baseURL: "http://192.168.100.32:8000/api/expense/"
 });
 
 export const addExpenses = (expenses, navigation) => {
@@ -19,6 +19,43 @@ export const addExpenses = (expenses, navigation) => {
       .then(() => navigation.navigate("Automation"))
       .catch(err => {
         dispatch(console.log(err.response));
+      });
+  };
+};
+
+export const deleteExpense = expense => {
+  console.log(expense);
+
+  return dispatch => {
+    instance
+      .delete(`${expense.id}/delete/`, { data: { id: expense.id } })
+      .then(res => res.data)
+      .then(expenseId => {
+        dispatch({
+          type: actionTypes.DELETE_EXPENSE,
+          payload: expenseId
+        });
+      })
+
+      .catch(err => {
+        dispatch(console.log(err.response));
+      });
+  };
+};
+
+export const updateExpense = (expense_id, expense) => {
+  return dispatch => {
+    instance
+      .put(`${expense_id}/update/`, expense)
+      .then(res => res.data)
+      .then(expense => {
+        dispatch({
+          type: actionTypes.UPDATE_EXPENSE,
+          payload: expense
+        });
+      })
+      .catch(err => {
+        console.log(err.response.data);
       });
   };
 };

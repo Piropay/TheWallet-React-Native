@@ -2,7 +2,7 @@ import * as actionTypes from "./actionTypes";
 
 import axios from "axios";
 const instance = axios.create({
-  baseURL: "http://68.183.217.91/api/goal/"
+  baseURL: "http://192.168.100.32:8000/api/goal/"
 });
 
 export const fetchGoals = () => {
@@ -38,6 +38,27 @@ export const addGoal = (goals, navigation) => {
   };
 };
 
+export const deleteGoal = goal => {
+  return dispatch => {
+    return instance
+      .delete(`${goal.id}/delete/`, {
+        data: {
+          id: goal.id
+        }
+      })
+      .then(res => res.data)
+      .then(() => {
+        dispatch({
+          type: actionTypes.DELETE_GOAL,
+          payload: goal
+        });
+      })
+
+      .catch(err => {
+        console.log(err.response.data);
+      });
+  };
+};
 export const updateGoal = (goal, navigation) => {
   return dispatch => {
     instance

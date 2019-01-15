@@ -17,6 +17,13 @@ const reducer = (state = initialState, action) => {
         ...state,
         transactions: state.transactions.concat(action.payload)
       };
+    case actionTypes.DELETE_TRANSACTION:
+      return {
+        ...state,
+        transactions: state.transactions.filter(
+          transaction => transaction.id !== action.payload
+        )
+      };
     case actionTypes.UPDATE_TRANSACTION:
       var newTransaction = state.transactions.find(transaction => {
         if (transaction.id === action.payload.transaction_id)

@@ -3,7 +3,7 @@ import * as actionTypes from "./actionTypes";
 import axios from "axios";
 import { Toast } from "native-base";
 const instance = axios.create({
-  baseURL: "http://68.183.217.91/api/deposit/"
+  baseURL: "http://192.168.100.32:8000/api/deposit/"
 });
 
 export const fetchDeposits = () => {
@@ -52,6 +52,33 @@ export const addDeposit = (deposit, goal_id, navigation) => {
           }
         })
       )
+      .catch(err => {
+        console.log(err.response.data);
+      });
+  };
+};
+
+export const deleteDeposit = (deposit, goalId) => {
+  return dispatch => {
+    instance
+      .delete(`${deposit.id}/delete/`, {
+        data: {
+          amount: deposit.amount,
+          goal: goalId
+        }
+      })
+      .then(res => res.data)
+      .then(depositID => {
+        dispatch({
+          type: actionTypes.DELETE_DEPOSIT,
+          payload: depositID
+        });
+        dispatch({
+          type: actionTypes.ADD_TO_GOAL,
+          payload: deposit
+        });
+      })
+
       .catch(err => {
         console.log(err.response.data);
       });
