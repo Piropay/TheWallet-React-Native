@@ -22,6 +22,7 @@ class HomeScreen extends React.Component {
   };
 
   async componentDidMount() {
+
     if (this.props.budgets) {
       var today = new Date();
       if (this.props.budgets.length !== 0) {

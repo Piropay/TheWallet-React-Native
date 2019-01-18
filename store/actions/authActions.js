@@ -192,6 +192,9 @@ export const updateProfile = (profile, navigation) => {
         income: profile.income,
         balance: profile.balance,
         savings: profile.savings,
+        longitude: profile.longitude,
+        latitude: profile.latitude,
+        accuracy: profile.accuracy,
         automated: profile.automated
       })
       .then(res => res.data)

@@ -37,6 +37,11 @@ export {
   updateGoalBalance,
   deleteGoal
 } from "./goalActions";
+
+export {
+  getCurrentPositionThunk,
+  watchCurrentPositionThunk
+} from "./locationActions";
 export {
   addDeposit,
   fetchDeposits,
