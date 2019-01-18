@@ -1,5 +1,6 @@
 import * as actionTypes from "./actionTypes";
 import axios from "axios";
+import { Toast } from "native-base";
 
 const instance = axios.create({
   baseURL: "http://192.168.1.102/api/expense/"
@@ -54,6 +55,19 @@ export const updateExpense = (expense_id, expense) => {
           payload: expense
         });
       })
+      .then(() =>
+        Toast.show({
+          text: "Expense Updated!",
+          buttonText: "Okay",
+          duration: 6000,
+          type: "success",
+          buttonTextStyle: { color: "#000" },
+          buttonStyle: {
+            backgroundColor: "#F1C04F",
+            alignSelf: "center"
+          }
+        })
+      )
       .catch(err => {
         console.log(err.response.data);
       });

@@ -2,6 +2,7 @@ import * as actionTypes from "./actionTypes";
 
 import axios from "axios";
 import { Toast } from "native-base";
+import { fetchBudgets } from "./budgetActions";
 const instance = axios.create({
   baseURL: "http://192.168.1.102/api/transaction/"
 });
@@ -101,6 +102,7 @@ export const updateTransaction = (
           payload: { transaction, transaction_id }
         });
       })
+      .then(() => dispatch(fetchBudgets()))
       .then(() =>
         Toast.show({
           text: "Transaction Updated!",

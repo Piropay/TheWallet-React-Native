@@ -16,7 +16,8 @@ import {
   Input,
   Item,
   Content,
-  Header
+  Header,
+  Toast
 } from "native-base";
 import { Platform, ScrollView, StyleSheet, View } from "react-native";
 
@@ -106,11 +107,21 @@ class Location extends Component {
           profile.longitude = this.props.location.coords.longitude;
           profile.latitude = this.props.location.coords.latitude;
           profile.accuracy = this.props.location.coords.accuracy;
-          alert(
-            " Your location has changed by " +
+          Toast.show({
+            text:
+              " Your location has changed by " +
               (d / 1000).toFixed(2) +
-              " KMs dont forget to add any transactions you made"
-          );
+              " KMs dont forget to add any transactions you made",
+            buttonText: "Okay",
+            duration: 15000,
+            type: "warning",
+            buttonTextStyle: { color: "#000" },
+            buttonStyle: {
+              backgroundColor: "#F1C04F",
+              alignSelf: "center"
+            }
+          });
+
           this.props.updateProfile(profile, this.props.navigation);
           // create notification
         }

@@ -2,6 +2,7 @@ import * as actionTypes from "./actionTypes";
 
 import axios from "axios";
 import { Toast } from "native-base";
+import { fetchGoals } from "./index";
 const instance = axios.create({
   baseURL: "http://192.168.1.102/api/deposit/"
 });
@@ -85,7 +86,7 @@ export const deleteDeposit = (deposit, goalId) => {
   };
 };
 
-export const updateDeposit = (deposit_id, deposit, goal_id, navigation) => {
+export const updateDeposit = (deposit_id, deposit, goal_id) => {
   return dispatch => {
     instance
       .put(`${deposit_id}/update/`, {
@@ -99,6 +100,7 @@ export const updateDeposit = (deposit_id, deposit, goal_id, navigation) => {
           payload: { deposit, deposit_id }
         });
       })
+      .then(() => dispatch(fetchGoals()))
       .then(() =>
         Toast.show({
           text: "Deposit Updated!",

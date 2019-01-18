@@ -2,6 +2,7 @@ import * as actionTypes from "./actionTypes";
 
 import axios from "axios";
 import { updateProfile } from "./authActions";
+import { Toast } from "native-base";
 const instance = axios.create({
   baseURL: "http://192.168.1.102/api/budget/"
 });
@@ -82,6 +83,19 @@ export const updateBudget = (budget, navigation) => {
         });
         navigation.goBack();
       })
+      .then(() =>
+        Toast.show({
+          text: "Budget Updated!",
+          buttonText: "Okay",
+          duration: 6000,
+          type: "success",
+          buttonTextStyle: { color: "#000" },
+          buttonStyle: {
+            backgroundColor: "#F1C04F",
+            alignSelf: "center"
+          }
+        })
+      )
       .catch(err => {
         dispatch(console.log(err.response.data));
       });
