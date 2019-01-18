@@ -11,7 +11,7 @@ import { AsyncStorage } from "react-native";
 import { Toast } from "native-base";
 
 const instance = axios.create({
-  baseURL: "http://192.168.100.39/api/"
+  baseURL: "http://192.168.1.102/api/"
 });
 
 const setAuthToken = token => {
