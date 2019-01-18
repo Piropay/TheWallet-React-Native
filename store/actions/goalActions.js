@@ -2,7 +2,7 @@ import * as actionTypes from "./actionTypes";
 
 import axios from "axios";
 const instance = axios.create({
-  baseURL: "http://192.168.100.32:8000/api/goal/"
+  baseURL: "http://192.168.100.39/api/goal/"
 });
 
 export const fetchGoals = () => {

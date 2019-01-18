@@ -31,7 +31,7 @@ class IncomePage extends Component {
       gender: null,
       income: null,
       balance: 0,
-      savings: null,
+      savings: 0.0,
       automated: false
     };
   }
