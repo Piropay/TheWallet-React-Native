@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Image,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View
-} from "react-native";
+import { Platform, ScrollView, StyleSheet, Text, View } from "react-native";
 import {
   Button,
   Form,
@@ -14,6 +7,7 @@ import {
   Picker,
   Icon,
   Input,
+  H1,
   H3,
   Toast
 } from "native-base";
@@ -21,19 +15,20 @@ import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions";
 import styles from "./styles";
 
-class AddDeposit extends React.Component {
+class UpdateDepositView extends React.Component {
   static navigationOptions = {
-    title: "Add Deposit"
+    title: "Add Expanses"
   };
   constructor(props) {
     super(props);
+
     this.state = {
       goal: this.props.goal,
-      amount: 0
+      amount: this.props.deposit.amount
     };
   }
 
-  sendDeposit() {
+  sendTransaction() {
     if (this.state.amount === 0) {
       Toast.show({
         text: "Please enter a valid value",
@@ -43,25 +38,11 @@ class AddDeposit extends React.Component {
         buttonTextStyle: { color: "#000" },
         buttonStyle: { backgroundColor: "#F1C04F", alignSelf: "center" }
       });
-    } else if (this.state.amount > this.state.goal.balance) {
-      Toast.show({
-        text: "Please make sure you don't exceed your goal balance!",
-        buttonText: "Okay",
-        duration: 6000,
-        type: "danger",
-        buttonTextStyle: { color: "#000" },
-        buttonStyle: { backgroundColor: "#F1C04F", alignSelf: "center" }
-      });
     } else {
-      let newGoal = this.props.goals.find(
-        goal => goal.id === this.state.goal.id
-      );
-      newGoal.balance -= this.state.amount;
-      newGoal = { ...newGoal };
-      this.props.updateGoal(newGoal);
-      this.props.addDeposit(
+      this.props.updateDeposit(
+        this.props.deposit.id,
         this.state.amount,
-        this.props.goal.id,
+        this.state.goal.id,
         this.props.navigation
       );
     }
@@ -70,28 +51,26 @@ class AddDeposit extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <H3 style={[styles.h3, { paddingBottom: 0 }]}>Enter your deposit</H3>
+        <H3 style={styles.h3}>Update your deposit</H3>
         <Form>
           <Item style={styles.label}>
             <Input
               style={styles.inputs}
-              placeholder="0.00 KWD"
+              defaultValue={this.state.amount}
               keyboardType="decimal-pad"
               onChangeText={value =>
                 this.setState({ amount: parseFloat(value) })
               }
             />
             <Button
-              style={styles.button}
               block
-              onPress={() => this.sendDeposit()}
+              style={styles.button}
+              onPress={() => this.sendTransaction()}
             >
               <Text style={{ color: "white" }}>+</Text>
             </Button>
           </Item>
         </Form>
-
-        <View />
       </View>
     );
   }
@@ -103,11 +82,12 @@ const mapStateToProps = state => ({
   deposits: state.deposit.deposits
 });
 const mapDispatchToProps = dispatch => ({
-  updateGoal: goal => dispatch(actionCreators.updateGoalBalance(goal)),
-  addDeposit: (deposit, goal_id, navigation) =>
-    dispatch(actionCreators.addDeposit(deposit, goal_id, navigation))
+  updateDeposit: (deposit_id, deposit, goal_id, navigation) =>
+    dispatch(
+      actionCreators.updateDeposit(deposit_id, deposit, goal_id, navigation)
+    )
 });
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AddDeposit);
+)(UpdateDepositView);

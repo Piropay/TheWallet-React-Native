@@ -4,7 +4,7 @@ export const colors = {
   black: "#1a1917",
   gray: "#888888",
   background1: "#2B2B2B",
-  background2: "#E8D300"
+  background2: "#BEA647"
 };
 
 export default StyleSheet.create({

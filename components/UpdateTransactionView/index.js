@@ -15,7 +15,7 @@ import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions";
 import styles from "./styles";
 
-class AddTransactionView extends React.Component {
+class UpdateTransactionView extends React.Component {
   static navigationOptions = {
     title: "Add Expanses"
   };
@@ -24,22 +24,13 @@ class AddTransactionView extends React.Component {
 
     this.state = {
       budget: this.props.budget,
-      amount: 0,
-      label: ""
+      amount: this.props.transaction.amount,
+      label: this.props.transaction.label
     };
   }
 
   sendTransaction() {
-    if (this.state.budget === undefined) {
-      Toast.show({
-        text: "Please select a budget",
-        buttonText: "Okay",
-        duration: 6000,
-        type: "danger",
-        buttonTextStyle: { color: "#000" },
-        buttonStyle: { backgroundColor: "#F1C04F", alignSelf: "center" }
-      });
-    } else if (this.state.label === "") {
+    if (this.state.label === "") {
       Toast.show({
         text: "Please enter a label",
         buttonText: "Okay",
@@ -58,41 +49,34 @@ class AddTransactionView extends React.Component {
         buttonStyle: { backgroundColor: "#F1C04F", alignSelf: "center" }
       });
     } else {
-      this.props.makeTransaction(
-        { label: this.state.label, amount: this.state.amount },
+      this.props.updateTransaction(
+        this.props.transaction.id,
+        {
+          label: this.state.label,
+          amount: this.state.amount
+        },
         this.state.budget.id,
         this.props.navigation
       );
-      Toast.show({
-        text: "Transaction added!",
-        buttonText: "Okay",
-        duration: 6000,
-        type: "success",
-        buttonTextStyle: { color: "#000" },
-        buttonStyle: {
-          backgroundColor: "#F1C04F",
-          alignSelf: "center"
-        }
-      });
     }
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <H3 style={styles.h3}>Enter your transaction</H3>
+        <H3 style={styles.h3}>Update your transaction</H3>
         <Form>
           <Item style={styles.label}>
             <Input
               style={styles.inputs}
-              placeholder="Transaction..."
+              defaultValue={this.state.label}
               onChangeText={value => this.setState({ label: value })}
             />
           </Item>
           <Item style={styles.label}>
             <Input
               style={styles.inputs}
-              placeholder="0.00"
+              defaultValue={this.state.amount}
               keyboardType="decimal-pad"
               onChangeText={value =>
                 this.setState({ amount: parseFloat(value) })
@@ -118,12 +102,17 @@ const mapStateToProps = state => ({
   transactions: state.transaction.transactions
 });
 const mapDispatchToProps = dispatch => ({
-  updateBudget: (budget, navigation) =>
-    dispatch(actionCreators.updateBudget(budget, navigation)),
-  makeTransaction: (transaction, budget_id, navigation) =>
-    dispatch(actionCreators.addTransaction(transaction, budget_id, navigation))
+  updateTransaction: (transaction_id, transaction, budget_id, navigation) =>
+    dispatch(
+      actionCreators.updateTransaction(
+        transaction_id,
+        transaction,
+        budget_id,
+        navigation
+      )
+    )
 });
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AddTransactionView);
+)(UpdateTransactionView);

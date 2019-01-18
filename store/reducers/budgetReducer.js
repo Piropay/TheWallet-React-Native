@@ -23,6 +23,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         budgets: state.budgets.concat(action.payload)
       };
+    case actionTypes.DELETE_BUDGET:
+      return {
+        ...state,
+        budgets: state.budgets.filter(budget => budget.id !== action.payload.id)
+      };
     case actionTypes.UPDATE_BUDGET:
       var newBudget = state.budgets.find(
         budget => budget.id === action.payload.id
@@ -33,6 +38,20 @@ const reducer = (state = initialState, action) => {
         newBudget.label = action.payload.label;
         newBudget.category = action.payload.category;
         newBudget.balance = action.payload.balance;
+      }
+      bud = [...state.budgets];
+      return {
+        ...state,
+        budgets: bud
+      };
+    case actionTypes.ADD_TO_BUDGET:
+      var newBudget = state.budgets.find(
+        budget => budget.id === action.payload.budget
+      );
+
+      if (newBudget) {
+        newBudget.balance =
+          parseFloat(newBudget.balance) + parseFloat(action.payload.amount);
       }
       bud = [...state.budgets];
       return {

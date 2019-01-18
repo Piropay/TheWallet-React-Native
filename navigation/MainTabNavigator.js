@@ -18,11 +18,14 @@ import Profile from "../components/Profile";
 import ProfileView from "../components/Profile/newProfile";
 
 import Goals from "../components/Goal";
+import GoalDetails from "../components/GoalDetails";
+import UpdateGoal from "../components/GoalUpdate";
 import Deposit from "../components/Deposit";
 import GoalsView from "../components/GoalView";
 import Report from "../components/Report";
 import AutomatedBudgets from "../components/Budgets/AutomatedBudgets";
 import UpdateBudget from "../components/Budgets/UpdateBudget";
+import ExpensesList from "../components/ExpensesList/ExpensesList";
 
 const HomeStack = createStackNavigator(
   {
@@ -110,7 +113,9 @@ const GoalsStack = createStackNavigator(
   {
     GoalsView: GoalsView,
     Deposit: Deposit,
-    Goals: Goals
+    Goals: Goals,
+    UpdateGoal: UpdateGoal,
+    GoalDetails: GoalDetails
   },
   {
     navigationOptions: {
@@ -151,14 +156,16 @@ const ProfileStack = createStackNavigator(
     // Profile: Profile,
     Profile: ProfileView,
     UpdateProfile: UpdateProfile,
-    Report: Report
+    Report: Report,
+    ExpensesList: ExpensesList
   },
   {
     navigationOptions: {
       headerTintColor: "#fff",
       headerStyle: {
         fontWeight: "bold",
-        backgroundColor: "transparent"
+        backgroundColor: "transparent",
+        borderBottomWidth: 0
       },
       headerTextStyle: {
         fontWeight: "bold",
@@ -180,9 +187,6 @@ ProfileStack.navigationOptions = {
     />
   )
 };
-
-import { Component } from "react";
-import { View, Text } from "react-native";
 
 export default createMaterialBottomTabNavigator(
   {

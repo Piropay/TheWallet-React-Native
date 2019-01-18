@@ -46,9 +46,64 @@ export const addTransaction = (transaction, budget_id, navigation) => {
 
         navigation.navigate("Budgets");
       })
+
+      .catch(err => {
+        //dispatch(console.log(err.response));
+      });
+  };
+};
+
+export const deleteTransaction = (transaction, budget_id) => {
+  return dispatch => {
+    instance
+      .delete(`${transaction.id}/delete/`, {
+        data: {
+          amount: transaction.amount,
+          label: transaction.label,
+          budget: budget_id
+        }
+      })
+      .then(res => res.data)
+      .then(transactionID => {
+        dispatch({
+          type: actionTypes.DELETE_TRANSACTION,
+          payload: transactionID
+        });
+        dispatch({
+          type: actionTypes.ADD_TO_BUDGET,
+          payload: transaction
+        });
+      })
+
+      .catch(err => {
+        console.log(err.response.data);
+      });
+  };
+};
+
+export const updateTransaction = (
+  transaction_id,
+  transaction,
+  budget_id,
+  navigation
+) => {
+  return dispatch => {
+    instance
+      .put(`${transaction_id}/update/`, {
+        amount: transaction.amount,
+        label: transaction.label,
+        budget: budget_id
+      })
+      .then(res => res.data)
+      .then(transaction => {
+        dispatch({
+          type: actionTypes.UPDATE_TRANSACTION,
+          payload: { transaction, transaction_id }
+        });
+      })
       .then(() =>
         Toast.show({
-          text: "Transaction added!",
+          text: "Transaction Updated!",
           buttonText: "Okay",
           duration: 6000,
           type: "success",
@@ -59,32 +114,6 @@ export const addTransaction = (transaction, budget_id, navigation) => {
           }
         })
       )
-      .catch(err => {
-        //dispatch(console.log(err.response));
-      });
-  };
-};
-
-export const updateTransaction = (
-  transaction_id,
-  budget_id,
-  transaction,
-  navigation
-) => {
-  return dispatch => {
-    axios
-      .put(`${transaction_id}/update/`, {
-        amount: transaction.amount,
-        label: transaction.label,
-        budget: budget_id
-      })
-      .then(res => res.data)
-      .then(transaction => {
-        dispatch({
-          type: actionTypes.UPDATE_TRANSACTION,
-          payload: transaction
-        });
-      })
       .catch(err => {
         // dispatch(console.log(err.response.data));
       });

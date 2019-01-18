@@ -23,6 +23,43 @@ export const addExpenses = (expenses, navigation) => {
   };
 };
 
+export const deleteExpense = expense => {
+  console.log(expense);
+
+  return dispatch => {
+    instance
+      .delete(`${expense.id}/delete/`, { data: { id: expense.id } })
+      .then(res => res.data)
+      .then(expenseId => {
+        dispatch({
+          type: actionTypes.DELETE_EXPENSE,
+          payload: expenseId
+        });
+      })
+
+      .catch(err => {
+        dispatch(console.log(err.response));
+      });
+  };
+};
+
+export const updateExpense = (expense_id, expense) => {
+  return dispatch => {
+    instance
+      .put(`${expense_id}/update/`, expense)
+      .then(res => res.data)
+      .then(expense => {
+        dispatch({
+          type: actionTypes.UPDATE_EXPENSE,
+          payload: expense
+        });
+      })
+      .catch(err => {
+        console.log(err.response.data);
+      });
+  };
+};
+
 export const fetchExpenses = () => {
   return dispatch => {
     instance

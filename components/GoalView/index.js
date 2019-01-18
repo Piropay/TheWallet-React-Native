@@ -8,7 +8,8 @@ import {
   View,
   Modal,
   RefreshControl,
-  Dimensions
+  Dimensions,
+  ActionSheetIOS
 } from "react-native";
 import {
   Button,
@@ -24,7 +25,8 @@ import {
 } from "native-base";
 import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions";
-import styles from "./styles";
+import styles, { colors } from "./styles";
+import { LinearGradient } from "expo";
 import Deposit from "../Deposit";
 import { Icon } from "react-native-elements";
 import { Row, Col } from "react-native-easy-grid";
@@ -53,6 +55,18 @@ class GoalView extends React.Component {
     this.setState({ modalVisible: visible });
   }
 
+  openContextMenu(goal) {
+    ActionSheetIOS.showActionSheetWithOptions(
+      {
+        options: ["Cancel", "Remove"],
+        destructiveButtonIndex: 1,
+        cancelButtonIndex: 0
+      },
+      buttonIndex => {
+        if (buttonIndex === 1) this.props.deleteGoal(goal);
+      }
+    );
+  }
   renderCard(goal) {
     let goalDate = new Date(goal.end_date);
     let today = new Date();
@@ -76,9 +90,13 @@ class GoalView extends React.Component {
     return (
       <TouchableOpacity
         style={styles.card}
-        onPress={() => {
-          this.clickEventListener(goal, mdeposit);
-        }}
+        onLongPress={() => this.openContextMenu(goal)}
+        onPress={() =>
+          this.props.navigation.navigate("GoalDetails", {
+            goal: goal,
+            mdeposit: mdeposit.toFixed(3)
+          })
+        }
         key={goal.id}
       >
         <Card key={goal.id} style={styles.shadow}>
@@ -125,68 +143,96 @@ class GoalView extends React.Component {
       });
     }
     return (
-      <View style={styles.container}>
-        <ScrollView
-          refreshControl={
-            <RefreshControl
-              refreshing={this.state.refreshing}
-              onRefresh={this._onRefresh}
-            />
-          }
-          style={styles.container}
-          contentContainerStyle={styles.contentContainer}
-        >
-          <List>{ListItems}</List>
-        </ScrollView>
-        <Button
-          block
-          warning
-          onPress={() => this.props.navigation.navigate("Goals")}
-        >
-          <Text style={{ color: "white" }}> ADD Goal</Text>
-        </Button>
-        <Modal
-          animationType={"slide"}
-          transparent={true}
-          onRequestClose={() => this.setModalVisible(false)}
-          visible={this.state.modalVisible}
-        >
-          <View style={styles.popupOverlay}>
-            <Card style={[styles.shadow, styles.popup]}>
-              <View style={styles.popupContent}>
-                <Button style={styles.Header}>
-                  <H3 style={styles.name}>{this.state.goalSelected.label}</H3>
-                  <Button
-                    transparent
-                    onPress={() => {
-                      this.setModalVisible(false);
-                    }}
-                    style={styles.btnClose}
-                  >
-                    <Text style={{ color: "wheat" }}>X</Text>
-                  </Button>
-                </Button>
+      <Container>
+        <LinearGradient
+          colors={[colors.background1, colors.background2]}
+          startPoint={{ x: 1, y: 0 }}
+          endPoint={{ x: 0, y: 1 }}
+          style={styles.gradient}
+        />
+        <View style={styles.container}>
+          <Button
+            block
+            style={[
+              styles.greenbutton,
+              { marginHorizontal: 15, marginBottom: 10 }
+            ]}
+            onPress={() => this.props.navigation.navigate("Goals")}
+          >
+            <Text style={styles.buttontext}> Add Goal</Text>
+          </Button>
+          <ScrollView
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={this._onRefresh}
+              />
+            }
+            contentContainerStyle={styles.contentContainer}
+          >
+            <List>{ListItems}</List>
+          </ScrollView>
 
-                <ScrollView contentContainerStyle={styles.modalInfo}>
-                  {/* <H2 style={styles.h3}>Your Goal</H2> */}
-
-                  <Row>
-                    <Col
-                      style={{
-                        flex: 0.1,
-                        padding: 0
+          <Modal
+            animationType={"slide"}
+            transparent={true}
+            onRequestClose={() => this.setModalVisible(false)}
+            visible={this.state.modalVisible}
+          >
+            <View style={[styles.popupOverlay]}>
+              <Card
+                style={[styles.shadow, styles.popup, { paddingBottom: 30 }]}
+              >
+                <View style={styles.popupContent}>
+                  <Button style={styles.Header}>
+                    <H3 style={styles.name}>{this.state.goalSelected.label}</H3>
+                    <Button
+                      transparent
+                      onPress={() => {
+                        this.setModalVisible(false);
                       }}
+                      style={styles.btnClose}
                     >
-                      <Icon name="calendar" type="evilicon" color="#517fa4" />
-                    </Col>
-                    <Col style={{ flex: 0.3, marginHorizontal: 0, padding: 0 }}>
-                      <Text style={{}}>{this.state.goalSelected.end_date}</Text>
-                    </Col>
-                  </Row>
-                  <Text style={styles.position}>
-                    Progress {"\n"} {totalDeposits}/
-                    {this.state.goalSelected.amount} KWD
-                  </Text>
+                      <Text style={{ color: "wheat" }}>X</Text>
+                    </Button>
+                  </Button>
+
+                  <Content contentContainerStyle={styles.modalInfo}>
+                    {/* <H2 style={styles.h3}>Your Goal</H2> */}
+
+                    <Row>
+                      <Col
+                        style={{
+                          flex: 0.1,
+                          padding: 0
+                        }}
+                      >
+                        <Icon name="calendar" type="evilicon" color="#517fa4" />
+                      </Col>
+                      <Col
+                        style={{ flex: 0.3, marginHorizontal: 0, padding: 0 }}
+                      >
+                        <Text style={{}}>
+                          {this.state.goalSelected.end_date}
+                        </Text>
+                      </Col>
+                    </Row>
+                    <Text style={[styles.position, { paddingVertical: 10 }]}>
+                      Progress {"\n"} {totalDeposits}/
+                      {this.state.goalSelected.amount} KWD
+                    </Text>
+                    <Text style={styles.position}>
+                      Suggested Deposit {"\n"}
+                      {parseFloat(this.state.mdeposit).toFixed(3)} KWD
+                    </Text>
+                    {parseFloat(this.state.goalSelected.balance) > 0 ? (
+                      <Deposit goal={this.state.goalSelected} />
+                    ) : (
+                      <H2 style={styles.h3}>You reached your goal!</H2>
+                    )}
+                  </Content>
+                </View>
+                <View style={{ alignSelf: "center" }}>
                   <ProgressBarAnimated
                     {...progressCustomStyles}
                     width={barWidth}
@@ -208,30 +254,12 @@ class GoalView extends React.Component {
                       });
                     }}
                   />
-
-                  {parseFloat(this.state.goalSelected.balance) > 0 ? (
-                    <Content
-                      contentContainerStyle={{
-                        alignItems: "center",
-                        justifyContent: "center"
-                      }}
-                    >
-                      <Text style={styles.about}>
-                        {"\n"}
-                        Suggested Deposit {"\n"}
-                        {parseFloat(this.state.mdeposit).toFixed(3)} KWD
-                      </Text>
-                      <Deposit goal={this.state.goalSelected} />
-                    </Content>
-                  ) : (
-                    <H2 style={styles.h3}>You reached your goal!</H2>
-                  )}
-                </ScrollView>
-              </View>
-            </Card>
-          </View>
-        </Modal>
-      </View>
+                </View>
+              </Card>
+            </View>
+          </Modal>
+        </View>
+      </Container>
     );
   }
 }
@@ -242,7 +270,8 @@ const mapStateToProps = state => ({
   deposits: state.deposit.deposits
 });
 const mapDispatchToProps = dispatch => ({
-  fetchGoals: () => dispatch(actionCreators.fetchGoals())
+  fetchGoals: () => dispatch(actionCreators.fetchGoals()),
+  deleteGoal: goal => dispatch(actionCreators.deleteGoal(goal))
 });
 
 export default connect(

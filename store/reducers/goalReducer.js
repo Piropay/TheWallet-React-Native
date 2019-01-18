@@ -17,6 +17,23 @@ const reducer = (state = initialState, action) => {
         ...state,
         goals: state.goals.concat(action.payload)
       };
+    case actionTypes.ADD_TO_GOAL:
+      var newGoal = state.goals.find(goal => goal.id === action.payload.goal);
+
+      if (newGoal) {
+        newGoal.balance =
+          parseFloat(newGoal.balance) + parseFloat(action.payload.amount);
+      }
+      goa = [...state.goals];
+      return {
+        ...state,
+        goals: goa
+      };
+    case actionTypes.DELETE_GOAL:
+      return {
+        ...state,
+        goals: state.goals.filter(goal => goal.id !== action.payload.id)
+      };
     case actionTypes.UPDATE_GOAL:
       return {
         ...state,

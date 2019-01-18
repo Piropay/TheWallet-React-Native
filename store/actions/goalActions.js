@@ -20,12 +20,6 @@ export const fetchGoals = () => {
 };
 
 export const addGoal = (goals, navigation) => {
-  // let date =
-  //   goal.end_date.getFullYear() +
-  //   "-" +
-  //   (goal.end_date.getMonth() + 1) +
-  //   "-" +
-  //   goal.end_date.getDate();
   return dispatch => {
     instance
       .post("create/", goals)
@@ -44,20 +38,35 @@ export const addGoal = (goals, navigation) => {
   };
 };
 
-// export const addBudgets = budgets => {
-//   return {
-//     type: actionTypes.ADD_BUDGETS,
-//     payload: budgets
-//   };
-// };
+export const deleteGoal = goal => {
+  return dispatch => {
+    return instance
+      .delete(`${goal.id}/delete/`, {
+        data: {
+          id: goal.id
+        }
+      })
+      .then(res => res.data)
+      .then(() => {
+        dispatch({
+          type: actionTypes.DELETE_GOAL,
+          payload: goal
+        });
+      })
 
+      .catch(err => {
+        console.log(err.response.data);
+      });
+  };
+};
 export const updateGoal = (goal, navigation) => {
   return dispatch => {
     instance
       .put(`${goal.id}/update/`, {
         end_date: goal.end_date,
         amount: goal.amount,
-        label: goal.label
+        label: goal.label,
+        balance: goal.balance
       })
       .then(res => res.data)
       .then(goal => {

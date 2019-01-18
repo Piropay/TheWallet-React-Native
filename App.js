@@ -19,10 +19,14 @@ class App extends React.Component {
   };
 
   componentDidMount() {
+    console.log("hi");
+
     store.dispatch(checkForExpiredToken());
   }
 
   render() {
+    console.disableYellowBox = true;
+
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
       return (
         <AppLoading

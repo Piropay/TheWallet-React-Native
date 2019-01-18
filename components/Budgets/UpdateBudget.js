@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { LinearGradient } from "expo";
+
 import * as actionCreators from "../../store/actions";
 
 import {
@@ -13,11 +15,11 @@ import {
   Slider
 } from "react-native";
 
-import { Input, CardItem, Body, Toast } from "native-base";
+import { Input, CardItem, Body, Toast, Container } from "native-base";
 
 import { Row, Grid } from "react-native-easy-grid";
 import { Button, H1, Item, Picker, Icon, Card } from "native-base";
-import styles from "./styles";
+import styles, { colors } from "./styles";
 
 class UpdateBudget extends Component {
   constructor(props) {
@@ -68,10 +70,13 @@ class UpdateBudget extends Component {
       totalBudgets += parseFloat(budget.amount);
     });
     return (
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.contentContainer}
-      >
+      <Container style={styles.container}>
+        <LinearGradient
+          colors={[colors.background1, colors.background2]}
+          startPoint={{ x: 1, y: 0 }}
+          endPoint={{ x: 0, y: 1 }}
+          style={styles.gradient}
+        />
         <Grid>
           <H1
             style={[
@@ -104,9 +109,17 @@ class UpdateBudget extends Component {
             balance left:
             {(this.props.profile.balance - totalBudgets).toFixed(3)} KD
           </H1>
-
+          <Button
+            style={[styles.button]}
+            block
+            rounded
+            dark
+            onPress={() => this.handleSubmitBudget(budget, totalBudgets)}
+          >
+            <Text style={styles.buttontext}>Submit</Text>
+          </Button>
           <Row>
-            <Card style={styles.shadow}>
+            <Card padder style={styles.mainCard}>
               <CardItem style={{ borderRadius: 10 }}>
                 <Body
                   style={{
@@ -148,15 +161,7 @@ class UpdateBudget extends Component {
             </Card>
           </Row>
         </Grid>
-        <Button
-          style={styles.button}
-          block
-          full
-          onPress={() => this.handleSubmitBudget(budget, totalBudgets)}
-        >
-          <Text>Submit</Text>
-        </Button>
-      </ScrollView>
+      </Container>
     );
   }
 }

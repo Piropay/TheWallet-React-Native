@@ -20,27 +20,6 @@ export const fetchBudgets = () => {
   };
 };
 
-// export const addBudget = (budget, navigation) => {
-//   return dispatch => {
-//     instance
-//       .post("create/", {
-//         label: budget.label,
-//         category: budget.category,
-//         amount: budget.amount
-//       })
-//       .then(res => res.data)
-//       .then(budget => {
-//         dispatch({
-//           type: actionTypes.ADD_BUDGET,
-//           payload: budget
-//         });
-//       })
-//       .catch(err => {
-//         console.log(err.response.data);
-//       });
-//   };
-// };
-
 export const addBudget = (budgets, navigation, type, profile) => {
   return dispatch => {
     return instance
@@ -69,6 +48,23 @@ export const addBudget = (budgets, navigation, type, profile) => {
   };
 };
 
+export const deleteBudget = budget => {
+  return dispatch => {
+    return instance
+      .delete(`${budget.id}/delete/`)
+      .then(res => res.data)
+      .then(() => {
+        dispatch({
+          type: actionTypes.DELETE_BUDGET,
+          payload: budget
+        });
+      })
+
+      .catch(err => {
+        console.log(err.response.data);
+      });
+  };
+};
 export const updateBudget = (budget, navigation) => {
   return dispatch => {
     instance
@@ -91,12 +87,3 @@ export const updateBudget = (budget, navigation) => {
       });
   };
 };
-
-// export const updateBudget = (budget, amount) => {
-//   return dispatch => {
-//     dispatch({
-//       type: actionTypes.UPDATE_BUDGET,
-//       payload: { id: budget, amount: amount }
-//     });
-//   };
-// };

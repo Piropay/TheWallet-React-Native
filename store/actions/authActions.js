@@ -8,7 +8,6 @@ import { fetchGoals } from "./goalActions";
 import { fetchTransactions } from "./transactionActions";
 import { fetchExpenses } from "./userInfo";
 import { AsyncStorage } from "react-native";
-import { StackActions, NavigationActions } from "react-navigation";
 import { Toast } from "native-base";
 
 const instance = axios.create({
@@ -63,6 +62,8 @@ export const login = (userData, navigation, type) => {
       })
 
       .catch(err => {
+        console.log(err);
+
         if (err.response.data.username) {
           Toast.show({
             text: "Username: " + err.response.data.username,

@@ -13,7 +13,7 @@ import {
   Slider
 } from "react-native";
 
-import { Input, CardItem, Body } from "native-base";
+import { Input, CardItem, Body, Toast } from "native-base";
 
 import { Row, Grid } from "react-native-easy-grid";
 import { Button, H2, H1, Item, Picker, Icon, Container } from "native-base";
@@ -214,7 +214,18 @@ class AutoMatedBudgets extends Component {
         >
           Budgets
         </H1>
-
+        <H2
+          style={[
+            styles.h3,
+            {
+              fontFamily: "quicksand-bold",
+              textShadowOffset: { width: 0, height: 0 }
+            }
+          ]}
+        >
+          Balance {parseFloat(this.props.profile.balance).toFixed(3)} KD {"\n"}{" "}
+          Total Budget {totalBudget.toFixed(3)} KD
+        </H2>
         <View style={{ flexDirection: "row", alignSelf: "center" }}>
           <Button
             style={styles.greenbutton}
@@ -233,26 +244,20 @@ class AutoMatedBudgets extends Component {
           </Button>
         </View>
         <Card padder style={styles.mainCard}>
-
-          <Text>These are the suggested budgets for you!</Text>
-
-          <H2
+          <Text
             style={[
-              styles.text,
+              styles.h3,
               {
-                color: "#2b2b2b",
-                paddingBottom: 20,
-                fontSize: 20
+                fontFamily: "quicksand-bold",
+                textShadowOffset: { width: 0, height: 0 },
+                fontSize: 20,
+                color: "#000"
               }
             ]}
           >
+            These are the suggested budgets for you!
+          </Text>
 
-            Balance {parseFloat(this.props.profile.balance).toFixed(3)} KD{" "}
-            {"\n"} Total Budget
-            {totalBudget.toFixed(3)} KD
-
-            Total Budget {totalBudget.toFixed(3)} KD
-          </H2>
           <ScrollView
             contentContainerStyle={{ paddingBottom: 150, paddingTop: 30 }}
           >
