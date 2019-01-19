@@ -1,22 +1,6 @@
 import React from "react";
-import {
-  Image,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View
-} from "react-native";
-import {
-  Button,
-  Form,
-  Item,
-  Picker,
-  Icon,
-  Input,
-  H3,
-  Toast
-} from "native-base";
+import { Text, View } from "react-native";
+import { Button, Form, Item, Input, H3, Toast } from "native-base";
 import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions";
 import styles from "./styles";
@@ -53,12 +37,6 @@ class AddDeposit extends React.Component {
         buttonStyle: { backgroundColor: "#F1C04F", alignSelf: "center" }
       });
     } else {
-      let newGoal = this.props.goals.find(
-        goal => goal.id === this.state.goal.id
-      );
-      newGoal.balance -= this.state.amount;
-      newGoal = { ...newGoal };
-      this.props.updateGoal(newGoal);
       this.props.addDeposit(
         this.state.amount,
         this.props.goal.id,
@@ -98,9 +76,7 @@ class AddDeposit extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  profile: state.auth.profile,
-  goals: state.goal.goals,
-  deposits: state.deposit.deposits
+  goals: state.goal.goals
 });
 const mapDispatchToProps = dispatch => ({
   updateGoal: goal => dispatch(actionCreators.updateGoalBalance(goal)),

@@ -1,21 +1,15 @@
 import React, { Component } from "react";
 import {
-  StyleSheet,
   Text,
   View,
-  TextInput,
-  TouchableHighlight,
-  Alert,
-  Image,
   ListView,
   TouchableOpacity,
   Dimensions,
   RefreshControl,
   ActionSheetIOS
 } from "react-native";
-import * as actionCreators from "../../store/actions";
 
-import { Row, Grid, Col } from "react-native-easy-grid";
+import { Row, Col } from "react-native-easy-grid";
 import ActionButton from "react-native-action-button";
 import { Badge, Icon as EIcon } from "react-native-elements";
 
@@ -24,8 +18,6 @@ import {
   Button,
   List,
   Card,
-  CardItem,
-  Body,
   H2,
   Icon,
   H1,
@@ -38,13 +30,12 @@ import { connect } from "react-redux";
 
 import styles, { colors } from "./styles";
 import { LinearGradient } from "expo";
-import Transaction from "../AddTransactionView";
 
 import UpdateDeposit from "../UpdateDepositView";
 import { ScrollView } from "react-native-gesture-handler";
 import { Modal } from "react-native-paper";
 import Deposit from "../Deposit";
-import { dispatch } from "rxjs/internal/observable/range";
+import * as actionCreators from "../../store/actions";
 
 class GoalDetails extends Component {
   constructor(props) {
@@ -57,7 +48,6 @@ class GoalDetails extends Component {
       modalVisible: false,
       modalVisible2: false,
       depositSelected: [],
-
       dataSource: ds.cloneWithRows(
         this.props.deposits
           .filter(deposit => deposit.goal === goal.id)
@@ -74,13 +64,13 @@ class GoalDetails extends Component {
 
   clickEventListener = deposit => {
     this.setState({ depositSelected: deposit }, () => {
-      this.setModalVisible2(true);
+      this.setDepositUpdateModalVisible(true);
     });
   };
-  setModalVisible(visible) {
+  setDepositModalVisible(visible) {
     this.setState({ modalVisible: visible });
   }
-  setModalVisible2(visible) {
+  setDepositUpdateModalVisible(visible) {
     this.setState({ modalVisible2: visible });
   }
 
@@ -232,7 +222,6 @@ class GoalDetails extends Component {
               </Badge>
             </Col>
           </Row>
-
           <Row>
             <ScrollView
               style={styles.container}
@@ -269,11 +258,10 @@ class GoalDetails extends Component {
                 </Card>
               )}
             </ScrollView>
-
             <Modal
               animationType={"slide"}
               transparent={true}
-              onRequestClose={() => this.setModalVisible(false)}
+              onRequestClose={() => this.setDepositModalVisible(false)}
               visible={this.state.modalVisible}
             >
               <View style={styles.popupOverlay}>
@@ -284,7 +272,7 @@ class GoalDetails extends Component {
                       <Button
                         transparent
                         onPress={() => {
-                          this.setModalVisible(false);
+                          this.setDepositModalVisible(false);
                         }}
                         style={styles.btnClose}
                       >
@@ -336,11 +324,10 @@ class GoalDetails extends Component {
                 </Card>
               </View>
             </Modal>
-
             <Modal
               animationType={"slide"}
               transparent={true}
-              onRequestClose={() => this.setModalVisible2(false)}
+              onRequestClose={() => this.setDepositUpdateModalVisible(false)}
               visible={this.state.modalVisible2}
             >
               <View style={styles.popupOverlay}>
@@ -351,7 +338,7 @@ class GoalDetails extends Component {
                       <Button
                         transparent
                         onPress={() => {
-                          this.setModalVisible2(false);
+                          this.setDepositUpdateModalVisible(false);
                         }}
                         style={styles.btnClose}
                       >
@@ -369,7 +356,6 @@ class GoalDetails extends Component {
                 </Card>
               </View>
             </Modal>
-
             <ActionButton buttonColor="rgba(231,76,60,1)">
               <ActionButton.Item
                 buttonColor="#E8D300"
@@ -386,7 +372,7 @@ class GoalDetails extends Component {
               <ActionButton.Item
                 buttonColor="#278979"
                 title="Add a Deposit"
-                onPress={() => this.setModalVisible(true)}
+                onPress={() => this.setDepositModalVisible(true)}
               >
                 <Icon
                   name="add-to-list"
@@ -403,7 +389,6 @@ class GoalDetails extends Component {
 }
 
 const mapStateToProps = state => ({
-  profile: state.auth.profile,
   deposits: state.deposit.deposits
 });
 const mapDispatchToProps = dispatch => ({

@@ -1,21 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions";
-import { Text, View, TextInput, ScrollView } from "react-native";
-import { Row, Grid } from "react-native-easy-grid";
+import { Text, View, ScrollView } from "react-native";
 import {
   Button,
   H1,
   Item,
-  Picker,
   DatePicker,
   Icon,
   Input,
   Card,
-  CardItem,
-  Body,
   Toast,
-  Content,
   Container
 } from "native-base";
 import styles, { colors } from "./styles";
@@ -31,7 +26,7 @@ class Goal extends Component {
     this.handleAddGoal = this.handleAddGoal.bind(this);
     this.handleGoalLabelChange = this.handleGoalLabelChange.bind(this);
     this.handleGoalAmountChange = this.handleGoalAmountChange.bind(this);
-    this.onValueChange2 = this.onValueChange2.bind(this);
+    this.onDateChange = this.onDateChange.bind(this);
     this.handleRemoveGoal = this.handleRemoveGoal.bind(this);
   }
 
@@ -40,13 +35,11 @@ class Goal extends Component {
       if (i !== sidx) return goal;
       return { ...goal, label: value };
     });
-
     this.setState({ goals: newLable });
   };
 
   handleGoalAmountChange = (value, i) => {
     let oldAmount = 0;
-
     const newAmount = this.state.goals.map((goal, sidx) => {
       if (i !== sidx) return goal;
       oldAmount = goal.amount;
@@ -65,19 +58,17 @@ class Goal extends Component {
       ])
     });
   };
+
   handleSubmitGoal = () => {
     let filled = false;
     this.state.goals.forEach(goal => {
       let { amount, end_date, label } = { ...goal };
-
       if (end_date !== "" && label !== "" && amount !== "0") {
         filled = true;
       }
     });
     if (filled) {
       this.props.addGoal(this.state.goals, this.props.navigation);
-
-      // this.props.navigation.navigate("GoalsView");
     } else {
       Toast.show({
         text: "Please make sure that you fill in all the boxes",
@@ -89,6 +80,7 @@ class Goal extends Component {
       });
     }
   };
+
   handleRemoveGoal = i => {
     this.setState({
       goals: this.state.goals.filter((goal, sidx) => {
@@ -97,7 +89,7 @@ class Goal extends Component {
     });
   };
 
-  onValueChange2(value, i) {
+  onDateChange(value, i) {
     let date =
       value.getFullYear() +
       "-" +
@@ -121,7 +113,6 @@ class Goal extends Component {
           style={{
             flex: 1,
             justifyContent: "space-between",
-
             marginHorizontal: 25,
             flexDirection: "row"
           }}
@@ -144,7 +135,6 @@ class Goal extends Component {
             />
           </Button>
         </View>
-
         <Item style={[styles.label, { marginTop: 0 }]}>
           <Icon
             active
@@ -185,7 +175,6 @@ class Goal extends Component {
               }
             />
           </Item>
-
           <Item picker style={[styles.label, { marginLeft: 0, flex: 1 }]}>
             <DatePicker
               defaultDate={new Date()}
@@ -198,7 +187,7 @@ class Goal extends Component {
               androidMode={"default"}
               placeHolderText="Select date"
               placeHolderTextStyle={{ color: "#585858" }}
-              onDateChange={value => this.onValueChange2(value, i)}
+              onDateChange={value => this.onDateChange(value, i)}
             />
             <Icon
               name="calendar"
@@ -235,7 +224,6 @@ class Goal extends Component {
         >
           Goals
         </H1>
-
         <View style={{ flexDirection: "row", alignSelf: "center" }}>
           <Button
             style={styles.greenbutton}
@@ -277,10 +265,6 @@ class Goal extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  balance: state.userInfo.balance
-});
-
 const mapActionsToProps = dispatch => {
   return {
     addGoal: (goals, navigation) =>
@@ -289,6 +273,6 @@ const mapActionsToProps = dispatch => {
 };
 
 export default connect(
-  mapStateToProps,
+  null,
   mapActionsToProps
 )(Goal);

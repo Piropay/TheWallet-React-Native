@@ -51,11 +51,8 @@ class Profile extends Component {
       totalexpenses += parseFloat(expense.amount);
     });
 
-    let totalBudgets = 0;
+    let totalBudgets = this.props.totalBudgets;
 
-    budgets.forEach(budget => {
-      totalBudgets += parseFloat(budget.amount);
-    });
     return (
       <ScrollView>
         <View style={styles.container}>
@@ -122,7 +119,8 @@ class Profile extends Component {
 const mapStateToProps = state => ({
   user: state.auth.user,
   profile: state.auth.profile,
-  expenses: state.userInfo.expenses
+  expenses: state.userInfo.expenses,
+  totalBudget: state.budget.totalUserBudget
 });
 
 const mapActionsToProps = dispatch => ({

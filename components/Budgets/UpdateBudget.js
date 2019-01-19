@@ -64,11 +64,8 @@ class UpdateBudget extends Component {
 
   render() {
     let budget = this.props.navigation.getParam("budget", {});
-    let totalBudgets = 0;
+    let totalBudgets = this.props.totalBudget;
 
-    this.props.profile.budgets.forEach(budget => {
-      totalBudgets += parseFloat(budget.amount);
-    });
     return (
       <Container style={styles.container}>
         <LinearGradient
@@ -136,7 +133,7 @@ class UpdateBudget extends Component {
                 </Body>
               </CardItem>
               <Slider
-                step={1}
+                step={5}
                 style={{ width: 200, alignSelf: "center" }}
                 minimumValue={0}
                 maximumValue={
@@ -168,7 +165,7 @@ class UpdateBudget extends Component {
 
 const mapStateToProps = state => ({
   profile: state.auth.profile,
-  totalUserBudget: state.budget.totalUserBudget
+  totalBudget: state.budget.totalUserBudget
 });
 
 const mapActionsToProps = dispatch => {

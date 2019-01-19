@@ -1,16 +1,6 @@
 import React from "react";
-import { Platform, ScrollView, StyleSheet, Text, View } from "react-native";
-import {
-  Button,
-  Form,
-  Item,
-  Picker,
-  Icon,
-  Input,
-  H1,
-  H3,
-  Toast
-} from "native-base";
+import { Text, View } from "react-native";
+import { Button, Form, Item, Input, H3, Toast } from "native-base";
 import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions";
 import styles from "./styles";
@@ -112,18 +102,11 @@ class AddTransactionView extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  profile: state.auth.profile,
-  budgets: state.budget.budgets,
-  transactions: state.transaction.transactions
-});
 const mapDispatchToProps = dispatch => ({
-  updateBudget: (budget, navigation) =>
-    dispatch(actionCreators.updateBudget(budget, navigation)),
   makeTransaction: (transaction, budget_id, navigation) =>
     dispatch(actionCreators.addTransaction(transaction, budget_id, navigation))
 });
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(AddTransactionView);

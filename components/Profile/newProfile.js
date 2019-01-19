@@ -60,11 +60,8 @@ class ProfileView extends Component {
       totalexpenses += parseFloat(expense.amount);
     });
 
-    let totalBudgets = 0;
+    let totalBudgets = this.props.totalBudget;
 
-    budgets.forEach(budget => {
-      totalBudgets += parseFloat(budget.amount);
-    });
     if (!this.props.fetched) {
       return (
         <Container>
@@ -317,7 +314,8 @@ const mapStateToProps = state => ({
   profile: state.auth.profile,
   fetched: state.auth.fetched,
   budgets: state.budget.budgets,
-  expenses: state.userInfo.expenses
+  expenses: state.userInfo.expenses,
+  totalBudget: state.budget.totalUserBudget
 });
 const mapDispatchToProps = dispatch => ({
   fetchProfile: () => dispatch(actionCreators.fetchProfile()),
