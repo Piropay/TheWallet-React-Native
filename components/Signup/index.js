@@ -4,17 +4,14 @@ import * as actionCreators from "../../store/actions/authActions";
 import styles, { colors } from "./styles";
 import { LinearGradient } from "expo";
 
-import { StyleSheet, View, StatusBar, Image, ScrollView } from "react-native";
+import { Image } from "react-native";
 import {
-  Thumbnail,
   Card,
   Button,
   Content,
   Text,
-  Label,
   CardItem,
   Body,
-  Form,
   Item,
   Input,
   Container,

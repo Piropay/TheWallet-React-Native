@@ -1,17 +1,8 @@
 import React from "react";
-import {
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity
-} from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import GoalsCarousel from "../components/GoalsCarousel";
 import BudgetsCarousel from "../components/BudgetsCarousel";
-import { Button } from "native-base";
 import { connect } from "react-redux";
-import { Row, Grid } from "react-native-easy-grid";
 
 // Actions
 import * as actionCreators from "../store/actions";
@@ -22,7 +13,6 @@ class HomeScreen extends React.Component {
   };
 
   async componentDidMount() {
-
     if (this.props.budgets) {
       var today = new Date();
       if (this.props.budgets.length !== 0) {

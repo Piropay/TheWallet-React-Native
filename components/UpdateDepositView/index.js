@@ -1,16 +1,6 @@
 import React from "react";
-import { Platform, ScrollView, StyleSheet, Text, View } from "react-native";
-import {
-  Button,
-  Form,
-  Item,
-  Picker,
-  Icon,
-  Input,
-  H1,
-  H3,
-  Toast
-} from "native-base";
+import { Text, View } from "react-native";
+import { Button, Form, Item, Input, H3, Toast } from "native-base";
 import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions";
 import styles from "./styles";

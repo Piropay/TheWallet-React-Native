@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import {
-  StyleSheet,
   View,
-  Image,
-  TouchableOpacity,
   ScrollView,
   RefreshControl,
   ActivityIndicator

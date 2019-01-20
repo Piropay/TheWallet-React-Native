@@ -1,19 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { StyleSheet, View, StatusBar, Image, ScrollView } from "react-native";
-import {
-  Thumbnail,
-  Card,
-  Button,
-  Content,
-  Text,
-  H1,
-  Container
-} from "native-base";
+import { View, Image } from "react-native";
+import { Button, Content, Text, Container } from "native-base";
 import * as actionCreators from "../../store/actions";
 import { LinearGradient } from "expo";
-
 // Style
 import styles, { colors } from "./styles";
 

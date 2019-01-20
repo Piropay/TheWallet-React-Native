@@ -250,7 +250,7 @@ export const fetchProfile = () => {
       })
 
       .catch(err => {
-        //dispatch(console.log(err.response.data));
+        // dispatch(console.log(err.response.data));
       });
   };
 };

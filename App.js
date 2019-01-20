@@ -4,12 +4,8 @@ import { AppLoading, Asset, Font, Icon } from "expo";
 import AppNavigator from "./navigation/AppNavigator";
 import { Provider } from "react-redux";
 import Location from "./components/Location";
-import * as actionCreators from "./store/actions";
 import { checkForExpiredToken } from "./store/actions/authActions";
-import ActionButton from "react-native-action-button";
 import { Icon as BIcon, Root } from "native-base";
-import { Constants } from "expo";
-
 
 // Store
 import store from "./store";
@@ -19,8 +15,6 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    console.log("hi");
-
     store.dispatch(checkForExpiredToken());
   }
 
@@ -40,7 +34,6 @@ class App extends React.Component {
       return (
         <Provider store={store}>
           <View style={styles.container}>
-
             <StatusBar barStyle="light-content" />
             <Location />
             <Root>

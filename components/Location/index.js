@@ -1,24 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions";
-import { AsyncStorage, AppState } from "react-native";
-// import BackgroundTask from "react-native-background-task";
-import styles from "./styles";
+import { AppState } from "react-native";
 // NativeBase Components
-import {
-  Text,
-  Button,
-  Body,
-  List,
-  ListItem,
-  Form,
-  Label,
-  Input,
-  Item,
-  Content,
-  Header,
-  Toast
-} from "native-base";
+import { Toast } from "native-base";
 import { Platform, ScrollView, StyleSheet, View } from "react-native";
 
 // BackgroundTask.define(() => {
