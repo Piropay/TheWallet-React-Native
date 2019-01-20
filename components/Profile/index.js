@@ -1,20 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { CheckBox } from "react-native-elements";
-import { PieChart } from "react-native-svg-charts";
-import Svg, { Circle, G, Line, Rect } from "react-native-svg";
-import { Text as SvgText } from "react-native-svg";
-import { Col, Row, Grid } from "react-native-easy-grid";
-import { VictoryPie, VictoryLabel } from "victory-native";
+import { VictoryPie } from "victory-native";
 
-import {
-  StyleSheet,
-  View,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-  Dimensions
-} from "react-native";
+import { View, TouchableOpacity, ScrollView } from "react-native";
 // NativeBase Components
 import { Text } from "native-base";
 
@@ -51,11 +40,8 @@ class Profile extends Component {
       totalexpenses += parseFloat(expense.amount);
     });
 
-    let totalBudgets = 0;
+    let totalBudgets = this.props.totalBudgets;
 
-    budgets.forEach(budget => {
-      totalBudgets += parseFloat(budget.amount);
-    });
     return (
       <ScrollView>
         <View style={styles.container}>
@@ -122,7 +108,8 @@ class Profile extends Component {
 const mapStateToProps = state => ({
   user: state.auth.user,
   profile: state.auth.profile,
-  expenses: state.userInfo.expenses
+  expenses: state.userInfo.expenses,
+  totalBudget: state.budget.totalUserBudget
 });
 
 const mapActionsToProps = dispatch => ({

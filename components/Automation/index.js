@@ -1,16 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { StyleSheet, View, StatusBar, Image, ScrollView } from "react-native";
-import {
-  Thumbnail,
-  Card,
-  Button,
-  Content,
-  Text,
-  H1,
-  Container
-} from "native-base";
+import { Image } from "react-native";
+import { Button, Content, Text, Container } from "native-base";
 import * as actionCreators from "../../store/actions";
 
 // Style
@@ -25,7 +17,6 @@ class Automation extends Component {
     this.props.fetchProfile();
   }
   render() {
-    let profile = this.props.profile;
     return (
       <Container>
         <LinearGradient
@@ -73,20 +64,11 @@ class Automation extends Component {
     );
   }
 }
-const mapStateToProps = state => ({
-  user: state.auth.user,
-  profile: state.auth.profile,
-  isAuthenticated: state.auth.isAuthenticated,
-  income: state.userInfo.income,
-  fetched: state.auth.fetched
-});
 
 const mapDispatchToProps = dispatch => ({
-  fetchBudgets: () => dispatch(actionCreators.fetchBudgets()),
-  fetchProfile: () => dispatch(actionCreators.fetchProfile()),
-  checkForExpiredToken: () => dispatch(actionCreators.checkForExpiredToken())
+  fetchProfile: () => dispatch(actionCreators.fetchProfile())
 });
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(Automation);

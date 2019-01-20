@@ -7,6 +7,7 @@ import transactionReducer from "./transactionReducer";
 import budgetReducer from "./budgetReducer";
 import depositReducer from "./depositReducer";
 import goalReducer from "./goalReducer";
+import locationReducer from "./locationReducer";
 
 export default combineReducers({
   auth: AuthReducer,
@@ -14,5 +15,6 @@ export default combineReducers({
   transaction: transactionReducer,
   budget: budgetReducer,
   deposit: depositReducer,
-  goal: goalReducer
+  goal: goalReducer,
+  location: locationReducer
 });

@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import {
-  StyleSheet,
   View,
-  Image,
-  TouchableOpacity,
   ScrollView,
   RefreshControl,
   ActivityIndicator
@@ -43,17 +40,25 @@ class ProfileView extends Component {
   });
   render() {
     const prof = this.props.profile;
-    let { income, balance, savings, budgets } = { ...prof };
+    let { income, balance, savings } = { ...prof };
+    var today = new Date();
+
+    const budgets = this.props.budgets.filter(budget => {
+      let date = new Date(budget.date);
+      if (
+        date.getMonth() === today.getMonth() &&
+        date.getFullYear() === today.getFullYear()
+      ) {
+        return budget;
+      }
+    });
     let totalexpenses = 0;
     this.props.expenses.forEach(expense => {
       totalexpenses += parseFloat(expense.amount);
     });
 
-    let totalBudgets = 0;
+    let totalBudgets = this.props.totalBudget;
 
-    this.props.budgets.forEach(budget => {
-      totalBudgets += parseFloat(budget.amount);
-    });
     if (!this.props.fetched) {
       return (
         <Container>
@@ -306,7 +311,8 @@ const mapStateToProps = state => ({
   profile: state.auth.profile,
   fetched: state.auth.fetched,
   budgets: state.budget.budgets,
-  expenses: state.userInfo.expenses
+  expenses: state.userInfo.expenses,
+  totalBudget: state.budget.totalUserBudget
 });
 const mapDispatchToProps = dispatch => ({
   fetchProfile: () => dispatch(actionCreators.fetchProfile()),

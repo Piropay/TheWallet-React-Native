@@ -3,20 +3,15 @@ import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions/";
 
 import {
-  StyleSheet,
-  Platform,
   Text,
   View,
   TextInput,
-  Button,
   TouchableOpacity,
   Image,
-  Alert,
   ScrollView
 } from "react-native";
-import { H1, Item, Picker, Icon, DatePicker, Toast } from "native-base";
+import { Item, Picker, Icon, DatePicker, Toast } from "native-base";
 import styles from "./styles";
-import { Card } from "react-native-paper";
 
 class UpdateProfile extends Component {
   constructor(props) {
@@ -94,13 +89,6 @@ class UpdateProfile extends Component {
           </View>
 
           <View style={styles.inputContainer}>
-            {/* <TextInput
-              style={styles.inputs}
-              placeholder="Date of Birth"
-              defaultValue={this.state.dob}
-              underlineColorAndroid="transparent"
-              onChangeText={dob => this.setState({ dob: dob })}
-            /> */}
             <Item picker>
               <DatePicker
                 defaultDate={new Date()}

@@ -2,24 +2,14 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions";
 
-import {
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-  Image,
-  Alert,
-  ScrollView,
-  Slider
-} from "react-native";
+import { Text, View, ScrollView, Slider } from "react-native";
 
-import { Input, CardItem, Body, Toast } from "native-base";
+import { Toast } from "native-base";
 
-import { Row, Grid } from "react-native-easy-grid";
-import { Button, H2, H1, Item, Picker, Icon, Container } from "native-base";
+import { Button, H2, H1, Icon, Container } from "native-base";
 import styles, { colors } from "./styles";
 import { LinearGradient } from "expo";
-import { Card, KeyboardAvoidingView } from "react-native-paper";
+import { Card } from "react-native-paper";
 class AutoMatedBudgets extends Component {
   constructor(props) {
     super(props);
@@ -270,19 +260,13 @@ class AutoMatedBudgets extends Component {
 }
 
 const mapStateToProps = state => ({
-  expenses: state.userInfo.expenses,
-  profile: state.auth.profile,
-  totalUserBudget: state.budget.totalUserBudget
+  profile: state.auth.profile
 });
 
 const mapActionsToProps = dispatch => {
   return {
     addBudget: (budgets, navigation, profile) =>
-      dispatch(actionCreators.addBudget(budgets, navigation, "auto", profile)),
-
-    updateProfile: (profile, navigation) =>
-      dispatch(actionCreators.updateProfile(profile, navigation)),
-    fetchProfile: () => dispatch(actionCreators.fetchProfile())
+      dispatch(actionCreators.addBudget(budgets, navigation, "auto", profile))
   };
 };
 

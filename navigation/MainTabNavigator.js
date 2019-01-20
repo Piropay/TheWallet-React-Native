@@ -18,6 +18,8 @@ import Profile from "../components/Profile";
 import ProfileView from "../components/Profile/newProfile";
 
 import Goals from "../components/Goal";
+import GoalDetails from "../components/GoalDetails";
+import UpdateGoal from "../components/GoalUpdate";
 import Deposit from "../components/Deposit";
 import GoalsView from "../components/GoalView";
 import Report from "../components/Report";
@@ -111,7 +113,9 @@ const GoalsStack = createStackNavigator(
   {
     GoalsView: GoalsView,
     Deposit: Deposit,
-    Goals: Goals
+    Goals: Goals,
+    UpdateGoal: UpdateGoal,
+    GoalDetails: GoalDetails
   },
   {
     navigationOptions: {

@@ -2,8 +2,9 @@ import * as actionTypes from "./actionTypes";
 
 import axios from "axios";
 import { Toast } from "native-base";
+import { fetchGoals } from "./index";
 const instance = axios.create({
-  baseURL: "http://68.183.217.91/api/deposit/"
+  baseURL: "http://192.168.100.32:8000/api/deposit/"
 });
 
 export const fetchDeposits = () => {
@@ -25,7 +26,7 @@ export const fetchDeposits = () => {
   };
 };
 
-export const addDeposit = (deposit, goal_id, navigation) => {
+export const addDeposit = (deposit, goal_id) => {
   return dispatch => {
     instance
       .post("create/", {
@@ -58,22 +59,63 @@ export const addDeposit = (deposit, goal_id, navigation) => {
   };
 };
 
-export const updateDeposit = (deposit_id, goal_id, deposit, navigation) => {
+export const deleteDeposit = (deposit, goalId) => {
   return dispatch => {
-    axios
+    instance
+      .delete(`${deposit.id}/delete/`, {
+        data: {
+          amount: deposit.amount,
+          goal: goalId
+        }
+      })
+      .then(res => res.data)
+      .then(depositID => {
+        dispatch({
+          type: actionTypes.DELETE_DEPOSIT,
+          payload: depositID
+        });
+        dispatch({
+          type: actionTypes.ADD_TO_GOAL,
+          payload: deposit
+        });
+      })
+
+      .catch(err => {
+        console.log(err.response.data);
+      });
+  };
+};
+
+export const updateDeposit = (deposit_id, deposit, goal_id) => {
+  return dispatch => {
+    instance
       .put(`${deposit_id}/update/`, {
-        amount: deposit.amount,
+        amount: deposit,
         goal: goal_id
       })
       .then(res => res.data)
       .then(deposit => {
         dispatch({
           type: actionTypes.UPDATE_DEPOSIT,
-          payload: deposit
+          payload: { deposit, deposit_id }
         });
       })
+      .then(() => dispatch(fetchGoals()))
+      .then(() =>
+        Toast.show({
+          text: "Deposit Updated!",
+          buttonText: "Okay",
+          duration: 6000,
+          type: "success",
+          buttonTextStyle: { color: "#000" },
+          buttonStyle: {
+            backgroundColor: "#F1C04F",
+            alignSelf: "center"
+          }
+        })
+      )
       .catch(err => {
-        dispatch(console.log(err.response.data));
+        console.log(err.response.data);
       });
   };
 };

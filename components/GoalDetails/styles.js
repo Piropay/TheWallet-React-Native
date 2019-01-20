@@ -1,51 +1,79 @@
-import { StyleSheet, Platform } from "react-native";
+import { StyleSheet } from "react-native";
 export const colors = {
   black: "#1a1917",
   gray: "#888888",
   background1: "#2B2B2B",
-  background2: "#6FC8EB"
+  background2: "#BEA647"
 };
-
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    height: "100%"
   },
   gradient: {
     ...StyleSheet.absoluteFillObject
   },
-  card: {
-    alignSelf: "center",
-    width: "90%"
+  eventList: {
+    marginTop: 20
   },
-  buttontext: {
-    paddingTop: 10,
-    paddingHorizontal: 5,
-    color: "#fff",
-    fontWeight: "bold",
-    fontFamily: "pacifico-regular",
+  eventBox: {
+    padding: 10,
+    marginTop: 5,
+    marginBottom: 5,
+    flexDirection: "row"
+  },
+  actionButtonIcon: {
     fontSize: 20,
-    paddingBottom: 40
+    height: 22,
+    color: "white"
   },
-  greenbutton: {
-    marginVertical: 5,
-    marginHorizontal: 5,
-    backgroundColor: "#258779",
-    paddingHorizontal: 50,
+  eventDate: {
+    flexDirection: "column"
+  },
+  eventDay: {
+    fontSize: 50,
+    color: "#fff",
+    fontWeight: "600",
+    fontFamily: "pacifico-regular",
+    textShadowColor: "#2b2b2b",
+    textShadowOffset: { width: 3, height: 3 },
+    textShadowRadius: 1
+  },
+  eventMonth: {
+    fontSize: 16,
+    color: "#fff",
+    fontWeight: "600",
+    fontFamily: "pacifico-regular",
+    textShadowColor: "#2b2b2b",
+    textShadowOffset: { width: 3, height: 3 },
+    textShadowRadius: 1
+  },
+  eventContent: {
+    flex: 1,
+    flexDirection: "column",
+    alignItems: "flex-start",
+    justifyContent: "center",
+    marginLeft: 10,
+    backgroundColor: "#FFFFFF",
+    paddingLeft: 20,
+    borderRadius: 10,
     shadowColor: "#2b2b2b",
     shadowRadius: 1,
-    shadowOpacity: 0.7,
-    borderRadius: 5,
-    shadowOffset: { width: 5, height: 5 },
-    paddingBottom: 13
+    shadowOpacity: 0.5,
+    shadowOffset: { width: 5, height: 7 }
   },
-  shadow: {
-    shadowColor: "#595959",
-    shadowRadius: 1,
-    shadowOpacity: 0.7,
-    shadowOffset: { width: 8, height: 8 }
+  description: {
+    fontSize: 15,
+    color: "#646464"
   },
-  contentContainer: {
-    paddingTop: 30
+  eventTime: {
+    fontSize: 20,
+    color: "#151515",
+    fontFamily: "quicksand-regular"
+  },
+  userName: {
+    fontSize: 16,
+    color: "#151515",
+    fontFamily: "quicksand-regular"
   },
   popup: {
     backgroundColor: "#fff",
@@ -54,7 +82,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 40,
     borderRadius: 10
   },
-
+  shadow: {
+    shadowColor: "#595959",
+    shadowRadius: 1,
+    shadowOpacity: 0.7,
+    shadowOffset: { width: 8, height: 8 }
+  },
   h3: {
     padding: 10,
     textAlign: "center",

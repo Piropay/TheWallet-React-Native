@@ -1,22 +1,18 @@
 import React, { Component } from "react";
-import { StyleSheet, View, StatusBar, Image, ScrollView } from "react-native";
+import { Image } from "react-native";
 import {
-  Thumbnail,
   Card,
   Button,
   Content,
   Text,
-  Label,
   CardItem,
   Body,
-  Form,
   Item,
   Input,
   Container,
   Icon,
   H1
 } from "native-base";
-import { Row } from "react-native-easy-grid";
 import styles, { colors } from "./styles";
 import { LinearGradient } from "expo";
 import { connect } from "react-redux";
@@ -31,7 +27,7 @@ class IncomePage extends Component {
       gender: null,
       income: null,
       balance: 0,
-      savings: null,
+      savings: 0.0,
       automated: false
     };
   }

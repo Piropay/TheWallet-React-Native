@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import {
   Text,
   View,
-  Image,
   ScrollView,
   AppState,
   Dimensions,
@@ -151,9 +150,6 @@ class Report extends Component {
           <Text style={styles.info}>
             Total Transactions: {TotalTransactions.toFixed(3)} KD
           </Text>
-          {/* <Text style={styles.info}>
-          Remaining budget balance: {TotalTransactions}
-        </Text> */}
           <ProgressBarAnimated
             {...progressCustomStyles}
             width={barWidth}

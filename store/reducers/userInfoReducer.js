@@ -24,6 +24,27 @@ const reducer = (state = initialState, action) => {
         ...state,
         expenses: state.expenses.concat(action.payload)
       };
+    case actionTypes.DELETE_EXPENSE:
+      return {
+        ...state,
+        expenses: state.expenses.filter(
+          expense => expense.id !== action.payload
+        )
+      };
+    case actionTypes.UPDATE_EXPENSE:
+      var newExpense = state.expenses.find(
+        expense => expense.id === action.payload.id
+      );
+
+      if (newExpense) {
+        newExpense.amount = action.payload.amount;
+        newExpense.label = action.payload.label;
+      }
+      exp = [...state.expenses];
+      return {
+        ...state,
+        expenses: exp
+      };
     case actionTypes.GET_BALANCE:
       return {
         ...state,

@@ -2,24 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions/";
 
-import {
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-  Image,
-  Alert,
-  ScrollView,
-  Slider
-} from "react-native";
-import { Row, Grid } from "react-native-easy-grid";
+import { Text, View, ScrollView } from "react-native";
 import {
   Button,
   H1,
   Input,
   Card,
-  CardItem,
-  Body,
   Item,
   Icon,
   Content,

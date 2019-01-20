@@ -1,32 +1,40 @@
 import React from "react";
 import {
-  Image,
-  Platform,
   ScrollView,
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
   RefreshControl,
-  ActivityIndicator
+  ActivityIndicator,
+  ActionSheetIOS
 } from "react-native";
 import { Button, List, Card, CardItem, Body, H3, Container } from "native-base";
-import { WebBrowser } from "expo";
 import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions";
 import styles, { colors } from "./styles";
 import { LinearGradient } from "expo";
-
 class BudgetsView extends React.Component {
   static navigationOptions = {
     title: "Budgets"
   };
-
   state = { refreshing: false };
+  openContextMenu(budget) {
+    ActionSheetIOS.showActionSheetWithOptions(
+      {
+        options: ["Cancel", "Remove"],
+        destructiveButtonIndex: 1,
+        cancelButtonIndex: 0
+      },
+      buttonIndex => {
+        if (buttonIndex === 1) this.props.deleteBudget(budget);
+      }
+    );
+  }
   renderCard(budget) {
     return (
       <TouchableOpacity
         key={budget.id}
+        onLongPress={() => this.openContextMenu(budget)}
         onPress={() =>
           this.props.navigation.navigate("BudgetDetails", {
             budget: budget
@@ -52,7 +60,6 @@ class BudgetsView extends React.Component {
   _onRefresh = () => {
     this.setState({ refreshing: true });
     this.props.fetchBudgets();
-
     this.setState({ refreshing: false });
   };
   render() {
@@ -66,7 +73,6 @@ class BudgetsView extends React.Component {
         return budget;
       }
     });
-
     let ListItems;
     if (budgets) {
       ListItems = budgets.map(budget => this.renderCard(budget));
@@ -131,7 +137,8 @@ const mapStateToProps = state => ({
   budgets: state.budget.budgets
 });
 const mapDispatchToProps = dispatch => ({
-  fetchBudgets: () => dispatch(actionCreators.fetchBudgets())
+  fetchBudgets: () => dispatch(actionCreators.fetchBudgets()),
+  deleteBudget: budget => dispatch(actionCreators.deleteBudget(budget))
 });
 export default connect(
   mapStateToProps,
