@@ -30,7 +30,6 @@ class App extends React.Component {
         />
       );
     } else {
-      console.log("StatusBar.translucent:", StatusBar.translucent);
       return (
         <Provider store={store}>
           <View style={styles.container}>

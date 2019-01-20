@@ -19,7 +19,6 @@ const reducer = (state = initialState, action) => {
         totalUserBudget
       };
     case actionTypes.ADD_BUDGET:
-      console.log(action.payload);
       var totalUserBudget = state.totalUserBudget;
       action.payload.forEach(
         budget => (totalUserBudget += parseFloat(budget.amount))

@@ -6,12 +6,6 @@ import { AppState } from "react-native";
 import { Toast } from "native-base";
 import { Platform, ScrollView, StyleSheet, View } from "react-native";
 
-// BackgroundTask.define(() => {
-//   console.log("Hello from a background task");
-//   this.render;
-//   BackgroundTask.finish();
-// });
-
 class Location extends Component {
   static navigationOptions = {
     title: "Location"
@@ -34,7 +28,6 @@ class Location extends Component {
   _handleAppStateChange = nextAppState => {
     if (this.state.appState.match(/inactive|background/)) {
       this.render();
-      console.log("setting interval");
       setInterval(this.render(), 10000);
     }
     this.setState({ appState: AppState.currentState });
@@ -66,15 +59,7 @@ class Location extends Component {
         var latitude2 = this.toRad(lat2);
         var deltalatitude = this.toRad(lat2 - lat1);
         var deltalongitude = this.toRad(lon2 - lon1);
-        console.log("lat1", lat1);
-        console.log("lon1", lon1);
-        console.log("lat2", lat2);
-        console.log("lon2", lat1);
-        console.log("Radius", Radius);
-        console.log("latitude1", latitude1);
-        console.log("latitude2", latitude2);
-        console.log("deltalatitude", deltalatitude);
-        console.log("deltalongitude", deltalongitude);
+
         var a =
           Math.sin(deltalatitude / 2) * Math.sin(deltalatitude / 2) +
           Math.cos(latitude1) *
@@ -84,8 +69,6 @@ class Location extends Component {
         var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
         var d = Radius * c;
-
-        console.log("DDDDIIIISSSSTTTTAAAANNNCCCEEEEE", d / 1000);
 
         if (d / 1000 > 1 + parseFloat(this.props.profile.accuracy) / 1000) {
           let profile = this.props.profile;

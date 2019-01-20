@@ -25,8 +25,6 @@ export const addExpenses = (expenses, navigation) => {
 };
 
 export const deleteExpense = expense => {
-  console.log(expense);
-
   return dispatch => {
     instance
       .delete(`${expense.id}/delete/`, { data: { id: expense.id } })
