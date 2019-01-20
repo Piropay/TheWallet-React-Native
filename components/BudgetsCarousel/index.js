@@ -1,17 +1,9 @@
 import React, { Component } from "react";
-import {
-  Platform,
-  View,
-  ScrollView,
-  Text,
-  StatusBar,
-  SafeAreaView
-} from "react-native";
+import { Platform, View, ScrollView, Text, SafeAreaView } from "react-native";
 import { LinearGradient } from "expo";
 import Carousel, { Pagination } from "react-native-snap-carousel";
 import styles, { colors } from "./styles/index.style";
 import { connect } from "react-redux";
-import * as actionCreators from "../../store/actions";
 import { sliderWidth, itemWidth } from "./styles/SE";
 
 import SliderEntry from "./components/SliderEntry";
@@ -20,14 +12,7 @@ import { scrollInterpolators, animatedStyles } from "./utils/animations";
 const IS_ANDROID = Platform.OS === "android";
 const SLIDER_1_FIRST_ITEM = 1;
 
-class GoalsCarousel extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      slider1ActiveSlide: SLIDER_1_FIRST_ITEM
-    };
-  }
-
+class BudgetsCarousel extends Component {
   _renderItem({ item, index }) {
     return (
       <SliderEntry
@@ -38,33 +23,7 @@ class GoalsCarousel extends Component {
     );
   }
 
-  _renderItemWithParallax({ item, index }, parallaxProps) {
-    return (
-      <SliderEntry
-        data={item}
-        even={(index + 1) % 2 === 0}
-        parallax={true}
-        parallaxProps={parallaxProps}
-      />
-    );
-  }
-
-  _renderLightItem({ item, index }) {
-    return (
-      <SliderEntry
-        data={item}
-        even={false}
-        navigation={this.props.navigation}
-      />
-    );
-  }
-
-  _renderDarkItem({ item, index }) {
-    return <SliderEntry data={item} even={true} />;
-  }
-
-  layoutExample(number, title, type) {
-    const isTinder = type === "tinder";
+  budgetsCarousel(title, type) {
     var today = new Date();
     const budgets = this.props.budgets.filter(budget => {
       let date = new Date(budget.date);
@@ -77,12 +36,8 @@ class GoalsCarousel extends Component {
     });
     return (
       <View style={[styles.exampleContainer]}>
-        <Text
-          style={[styles.title, isTinder ? {} : styles.titleLight]}
-        >{`Budgets`}</Text>
-        <Text style={[styles.subtitle, isTinder ? {} : styles.titleLight]}>
-          {title}
-        </Text>
+        <Text style={[styles.title, styles.titleLight]}>{`Budgets`}</Text>
+        <Text style={[styles.subtitle, styles.titleLight]}>{title}</Text>
         <Carousel
           data={budgets}
           renderItem={this._renderItem.bind(this)}
@@ -94,42 +49,6 @@ class GoalsCarousel extends Component {
           loop={true}
         />
       </View>
-    );
-  }
-
-  customExample(number, title, refNumber, renderItemFunc) {
-    const isEven = refNumber % 2 === 0;
-
-    // Do not render examples on Android; because of the zIndex bug, they won't work as is
-    return !IS_ANDROID ? (
-      <View
-        style={[
-          styles.exampleContainer,
-          isEven ? styles.exampleContainerDark : styles.exampleContainerLight
-        ]}
-      >
-        <Text
-          style={[styles.title, isEven ? {} : styles.titleDark]}
-        >{`Example ${number}`}</Text>
-        <Text style={[styles.subtitle, isEven ? {} : styles.titleDark]}>
-          {title}
-        </Text>
-        <Carousel
-          data={this.props.budgets}
-          renderItem={renderItemFunc}
-          sliderWidth={sliderWidth}
-          itemWidth={itemWidth}
-          containerCustomStyle={styles.slider}
-          contentContainerCustomStyle={styles.sliderContentContainer}
-          scrollInterpolator={
-            scrollInterpolators[`scrollInterpolator${refNumber}`]
-          }
-          slideInterpolatedStyle={animatedStyles[`animatedStyles${refNumber}`]}
-          useScrollView={true}
-        />
-      </View>
-    ) : (
-      false
     );
   }
 
@@ -145,14 +64,7 @@ class GoalsCarousel extends Component {
   }
 
   render() {
-    const example3 = this.layoutExample(3, "Here are your budgets!", "stack");
-
-    const example8 = this.customExample(
-      8,
-      "Custom animation 4",
-      4,
-      this._renderLightItem
-    );
+    const budgets = this.budgetsCarousel("Here are your budgets!", "stack");
 
     return (
       <SafeAreaView style={styles.safeArea}>
@@ -163,7 +75,7 @@ class GoalsCarousel extends Component {
             scrollEventThrottle={200}
             directionalLockEnabled={true}
           >
-            {example3}
+            {budgets}
           </ScrollView>
         </View>
       </SafeAreaView>
@@ -171,8 +83,7 @@ class GoalsCarousel extends Component {
   }
 }
 const mapStateToProps = state => ({
-  goals: state.goal.goals,
   budgets: state.budget.budgets
 });
 
-export default connect(mapStateToProps)(GoalsCarousel);
+export default connect(mapStateToProps)(BudgetsCarousel);

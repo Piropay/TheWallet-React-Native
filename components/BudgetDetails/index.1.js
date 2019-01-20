@@ -1,12 +1,7 @@
 import React, { Component } from "react";
 import {
-  StyleSheet,
   Text,
   View,
-  TextInput,
-  TouchableHighlight,
-  Alert,
-  Image,
   ListView,
   TouchableOpacity,
   Dimensions,
@@ -19,18 +14,7 @@ import { Row, Grid, Col } from "react-native-easy-grid";
 import ActionButton from "react-native-action-button";
 import { Badge } from "react-native-elements";
 
-import {
-  H3,
-  Button,
-  List,
-  Card,
-  CardItem,
-  Body,
-  Icon,
-  H2,
-  H1,
-  Container
-} from "native-base";
+import { H3, Button, List, Card, Icon, H1, Container } from "native-base";
 
 import Speedometer from "react-native-speedometer-chart";
 import { connect } from "react-redux";
@@ -133,14 +117,12 @@ class BudgetDetails extends Component {
     let transactions = this.props.transactions.filter(
       transaction => transaction.budget === budget.id
     );
-    // console.log(transactions);
 
     let totalTransactions = 0;
     transactions.forEach(transaction => {
       totalTransactions += parseFloat(transaction.amount);
     });
     let deviceWidth = Dimensions.get("window").width;
-    let deviceHeight = Dimensions.get("window").height;
 
     let ListItems;
     if (budget) {
@@ -366,7 +348,6 @@ class BudgetDetails extends Component {
 }
 
 const mapStateToProps = state => ({
-  profile: state.auth.profile,
   transactions: state.transaction.transactions
 });
 

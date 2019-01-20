@@ -26,7 +26,7 @@ export const fetchDeposits = () => {
   };
 };
 
-export const addDeposit = (deposit, goal_id, navigation) => {
+export const addDeposit = (deposit, goal_id) => {
   return dispatch => {
     instance
       .post("create/", {

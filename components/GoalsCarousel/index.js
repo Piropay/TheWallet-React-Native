@@ -9,67 +9,22 @@ import {
   TouchableOpacity
 } from "react-native";
 import { LinearGradient } from "expo";
-import Carousel, { Pagination } from "react-native-snap-carousel";
+import Carousel from "react-native-snap-carousel";
 import styles, { colors } from "./styles/index.style";
 import { connect } from "react-redux";
-import * as actionCreators from "../../store/actions";
 import { sliderWidth, itemWidth } from "./styles/SE";
 
 import SliderEntry from "./components/SliderEntry";
-import { ENTRIES1, ENTRIES2 } from "./static/entries";
-import { scrollInterpolators, animatedStyles } from "./utils/animations";
 
 const IS_ANDROID = Platform.OS === "android";
 const SLIDER_1_FIRST_ITEM = 1;
 
 class GoalsCarousel extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      slider1ActiveSlide: SLIDER_1_FIRST_ITEM
-    };
-  }
-
   _renderItem({ item, index }) {
-    return (
-      <SliderEntry
-        navigation={this.props.navigation}
-        data={item}
-        even={(index + 1) % 2 === 0}
-      />
-    );
+    return <SliderEntry navigation={this.props.navigation} data={item} />;
   }
 
-  _renderItemWithParallax({ item, index }, parallaxProps) {
-    return (
-      <SliderEntry
-        data={item}
-        even={(index + 1) % 2 === 0}
-        parallax={true}
-        parallaxProps={parallaxProps}
-      />
-    );
-  }
-
-  _renderLightItem({ item, index }) {
-    return (
-      <SliderEntry
-        navigation={this.props.navigation}
-        data={item}
-        even={false}
-      />
-    );
-  }
-
-  _renderDarkItem({ item, index }) {
-    return (
-      <SliderEntry navigation={this.props.navigation} data={item} even={true} />
-    );
-  }
-
-  layoutExample(number, title, type) {
-    const isTinder = type === "tinder";
-
+  goalsCarousel(title, type) {
     return (
       <View style={[styles.exampleContainer]}>
         <TouchableOpacity
@@ -78,23 +33,15 @@ class GoalsCarousel extends Component {
             this.props.navigation.navigate("GoalsView");
           }}
         >
-          <Text
-            style={[styles.title, isTinder ? {} : styles.titleLight]}
-          >{`Goals`}</Text>
-          <Text style={[styles.subtitle, isTinder ? {} : styles.titleLight]}>
-            {title}
-          </Text>
+          <Text style={[styles.title, styles.titleLight]}>{`Goals`}</Text>
+          <Text style={[styles.subtitle, styles.titleLight]}>{title}</Text>
         </TouchableOpacity>
         <Carousel
           data={this.props.goals.slice(
             this.props.goals.length - 5,
             this.props.goals.length
           )}
-          renderItem={
-            isTinder
-              ? this._renderLightItem.bind(this)
-              : this._renderItem.bind(this)
-          }
+          renderItem={this._renderItem.bind(this)}
           sliderWidth={sliderWidth}
           itemWidth={itemWidth}
           containerCustomStyle={styles.slider}
@@ -105,7 +52,6 @@ class GoalsCarousel extends Component {
       </View>
     );
   }
-
   get gradient() {
     return (
       <LinearGradient
@@ -118,8 +64,7 @@ class GoalsCarousel extends Component {
   }
 
   render() {
-    const example3 = this.layoutExample(3, "The key is to deposit!", "stack");
-
+    const goals = this.goalsCarousel("The key is to deposit!", "stack");
     return (
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.container}>
@@ -134,7 +79,7 @@ class GoalsCarousel extends Component {
             scrollEventThrottle={200}
             directionalLockEnabled={true}
           >
-            {example3}
+            {goals}
           </ScrollView>
         </View>
       </SafeAreaView>

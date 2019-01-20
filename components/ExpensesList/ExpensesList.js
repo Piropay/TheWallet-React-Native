@@ -1,9 +1,6 @@
 import React from "react";
 import {
-  Image,
-  Platform,
   ScrollView,
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
@@ -11,7 +8,6 @@ import {
   ActionSheetIOS
 } from "react-native";
 import { Button, List, Card, CardItem, Body, H3, Container } from "native-base";
-import { WebBrowser } from "expo";
 import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions";
 import styles, { colors } from "./styles";
@@ -150,7 +146,6 @@ class ExpensesList extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  profile: state.auth.profile,
   expenses: state.userInfo.expenses
 });
 const mapDispatchToProps = dispatch => ({

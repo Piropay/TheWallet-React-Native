@@ -5,38 +5,6 @@ import { ParallaxImage } from "react-native-snap-carousel";
 import styles from "../styles/SE";
 
 export default class SliderEntry extends Component {
-  static propTypes = {
-    data: PropTypes.object.isRequired,
-    even: PropTypes.bool,
-    parallax: PropTypes.bool,
-    parallaxProps: PropTypes.object
-  };
-
-  get image() {
-    const {
-      data: { illustration },
-      parallax,
-      parallaxProps,
-      even
-    } = this.props;
-
-    return parallax ? (
-      <ParallaxImage
-        source={{ uri: illustration }}
-        containerStyle={[
-          styles.imageContainer,
-          even ? styles.imageContainerEven : {}
-        ]}
-        style={styles.image}
-        parallaxFactor={0.35}
-        showSpinner={true}
-        spinnerColor={even ? "rgba(255, 255, 255, 0.4)" : "rgba(0, 0, 0, 0.25)"}
-        {...parallaxProps}
-      />
-    ) : (
-      <Image source={{ uri: illustration }} style={styles.image} />
-    );
-  }
   setColor(category) {
     if (category === "Personal") {
       return "#00A6B5";
@@ -89,17 +57,8 @@ export default class SliderEntry extends Component {
 
   render() {
     const {
-      data: { label, amount, balance, category, id, transactions },
-      even
+      data: { label, amount, balance, category, id, transactions }
     } = this.props;
-
-    const uppercaseTitle = label ? (
-      <Text style={{ color: "white" }} numberOfLines={2}>
-        {label}
-      </Text>
-    ) : (
-      false
-    );
 
     return (
       <TouchableOpacity
@@ -115,7 +74,6 @@ export default class SliderEntry extends Component {
         <View
           style={[
             styles.imageContainer,
-
             {
               backgroundColor: this.setColor(category)
             }
@@ -125,7 +83,9 @@ export default class SliderEntry extends Component {
           <View style={[styles.radiusMask]} />
         </View>
         <View style={styles.textContainer}>
-          {uppercaseTitle}
+          <Text style={{ color: "white" }} numberOfLines={2}>
+            {label}
+          </Text>
           <Text style={{ color: "white" }} numberOfLines={2}>
             {amount}
           </Text>

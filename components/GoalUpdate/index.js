@@ -3,16 +3,7 @@ import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions";
 import { LinearGradient } from "expo";
 
-import {
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-  Image,
-  Alert,
-  ScrollView,
-  Slider
-} from "react-native";
+import { Text, TextInput } from "react-native";
 
 import {
   Input,
@@ -37,10 +28,10 @@ class UpdateGoal extends Component {
       label: goal.label,
       end_date: goal.end_date,
       amount: parseFloat(goal.balance),
-      balance: goal.balance
+      balance: parseFloat(goal.balance)
     };
   }
-  onValueChange2(value) {
+  onDateChange(value) {
     let date =
       value.getFullYear() +
       "-" +
@@ -60,7 +51,6 @@ class UpdateGoal extends Component {
       filled = false;
     }
     newBalance = this.state.amount - goal.amount + parseFloat(balance);
-
     if (filled) {
       await this.setState({ balance: newBalance });
       this.props.updateGoal(this.state, this.props.navigation);
@@ -78,7 +68,6 @@ class UpdateGoal extends Component {
 
   render() {
     let goal = this.props.navigation.getParam("goal", {});
-
     return (
       <Container style={styles.container}>
         <LinearGradient
@@ -154,7 +143,7 @@ class UpdateGoal extends Component {
                       androidMode={"default"}
                       placeHolderText="Select date"
                       placeHolderTextStyle={{ color: "#585858" }}
-                      onDateChange={value => this.onValueChange2(value)}
+                      onDateChange={value => this.onDateChange(value)}
                     />
                     <Icon
                       name="calendar"
@@ -192,11 +181,6 @@ class UpdateGoal extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  profile: state.auth.profile,
-  totalUserBudget: state.goal.totalUserBudget
-});
-
 const mapActionsToProps = dispatch => {
   return {
     updateGoal: (goal, navigation) =>
@@ -205,6 +189,6 @@ const mapActionsToProps = dispatch => {
 };
 
 export default connect(
-  mapStateToProps,
+  null,
   mapActionsToProps
 )(UpdateGoal);

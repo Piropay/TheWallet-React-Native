@@ -1,9 +1,6 @@
 import React from "react";
 import {
-  Image,
-  Platform,
   ScrollView,
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
@@ -12,7 +9,6 @@ import {
   ActionSheetIOS
 } from "react-native";
 import { Button, List, Card, CardItem, Body, H3, Container } from "native-base";
-import { WebBrowser } from "expo";
 import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions";
 import styles, { colors } from "./styles";
@@ -21,9 +17,7 @@ class BudgetsView extends React.Component {
   static navigationOptions = {
     title: "Budgets"
   };
-
   state = { refreshing: false };
-
   openContextMenu(budget) {
     ActionSheetIOS.showActionSheetWithOptions(
       {
@@ -66,7 +60,6 @@ class BudgetsView extends React.Component {
   _onRefresh = () => {
     this.setState({ refreshing: true });
     this.props.fetchBudgets();
-
     this.setState({ refreshing: false });
   };
   render() {
@@ -80,7 +73,6 @@ class BudgetsView extends React.Component {
         return budget;
       }
     });
-
     let ListItems;
     if (budgets) {
       ListItems = budgets.map(budget => this.renderCard(budget));

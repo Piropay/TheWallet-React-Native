@@ -2,17 +2,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions";
 import { Keyboard } from "react-native";
-import {
-  Text,
-  View,
-  TextInput,
-  ScrollView,
-  Slider,
-  KeyboardAvoidingView
-} from "react-native";
+import { Text, View, ScrollView, Slider } from "react-native";
 import styles, { colors } from "./styles";
 import { LinearGradient } from "expo";
-import { Row, Grid } from "react-native-easy-grid";
+import { Row } from "react-native-easy-grid";
 import {
   Button,
   H2,
@@ -20,8 +13,6 @@ import {
   Picker,
   Icon,
   Card,
-  CardItem,
-  Body,
   Container,
   H1,
   Input,
@@ -32,24 +23,15 @@ class userBudgets extends Component {
     super(props);
     this.state = {
       keyboardHeight: 0,
-      inputHeight: 40,
-      totalBudget: 0,
       budgets: [
         { category: "", label: "", amount: 0 },
         { category: "", label: "", amount: 0 }
-      ],
-      value: 50,
-      Food: 0.25,
-      Health: 0.05,
-      Emergency: 0.1,
-      Entertainment: 0.2,
-      Transportation: 0.05,
-      Personal: 0.2
+      ]
     };
     this.handleAddBudget = this.handleAddBudget.bind(this);
     this.handleBudgetLabelChange = this.handleBudgetLabelChange.bind(this);
     this.handleBudgetAmountChange = this.handleBudgetAmountChange.bind(this);
-    this.onValueChange2 = this.onValueChange2.bind(this);
+    this.onCategoryChange = this.onCategoryChange.bind(this);
   }
 
   handleBudgetLabelChange = (value, i) => {
@@ -57,19 +39,16 @@ class userBudgets extends Component {
       if (i !== sidx) return budget;
       return { ...budget, label: value };
     });
-
     this.setState({ budgets: newLable });
   };
 
   handleBudgetAmountChange = (value, i) => {
     const newAmount = this.state.budgets.map((budget, sidx) => {
       if (i !== sidx) return budget;
-
       return { ...budget, amount: value };
     });
-    this.setState(prevState => ({
-      budgets: newAmount,
-      value: parseFloat(value)
+    this.setState(() => ({
+      budgets: newAmount
     }));
   };
 
@@ -80,10 +59,10 @@ class userBudgets extends Component {
       ])
     });
   };
+
   handleSubmitBudget = totalBudget => {
     let filled = false;
     let currentTotalBudget = 0;
-
     this.state.budgets.forEach(budget => {
       let { amount, category, label } = { ...budget };
       if (category !== "" && label !== "" && amount !== 0) {
@@ -97,11 +76,7 @@ class userBudgets extends Component {
       filled &&
       currentTotalBudget + totalBudget < this.props.profile.balance
     ) {
-      // this.state.budgets.forEach(budget =>
-      //   this.props.addBudget(budget, this.props.navigation)
-      // );
       this.props.addBudget(this.state.budgets, this.props.navigation);
-      // this.props.navigation.navigate("Home");
       Toast.show({
         text: "Budgets Successfully added!",
         buttonText: "Okay",
@@ -111,8 +86,6 @@ class userBudgets extends Component {
         buttonStyle: { backgroundColor: "#F1C04F", alignSelf: "center" }
       });
     } else {
-      parseFloat(totalBudget);
-
       Toast.show({
         text:
           "Please make sure that you fill in all the boxes and that you're total budgets don't exceed your current balance!",
@@ -124,6 +97,7 @@ class userBudgets extends Component {
       });
     }
   };
+
   handleRemoveBudget = i => {
     this.setState({
       budgets: this.state.budgets.filter((budget, sidx) => {
@@ -132,24 +106,16 @@ class userBudgets extends Component {
     });
   };
 
-  onValueChange2(category, i) {
+  onCategoryChange(category, i) {
     const newCategory = this.state.budgets.map((budget, sidx) => {
       if (i !== sidx) return budget;
-
       return { ...budget, category: category };
     });
-
     this.setState({
       budgets: newCategory
     });
   }
-  change(value) {
-    this.setState(() => {
-      return {
-        value: parseFloat(value)
-      };
-    });
-  }
+
   componentDidMount() {
     Keyboard.addListener("keyboardDidShow", this._keyboardDidShow.bind(this));
     Keyboard.addListener("keyboardDidHide", this._keyboardDidHide.bind(this));
@@ -163,10 +129,8 @@ class userBudgets extends Component {
     this.setState({ keyboardHeight: 0 });
   }
   render() {
-    let totalBudget = 0;
-    this.props.budgets.forEach(
-      budget => (totalBudget += parseFloat(budget.amount))
-    );
+    let totalBudget = this.props.totalBudget;
+
     const inputRows = this.state.budgets.map((idx, i) => (
       <View key={`${i}`}>
         <View
@@ -231,7 +195,7 @@ class userBudgets extends Component {
               placeholder="Select Budget"
               placeholderIconColor="#585858"
               selectedValue={idx.category}
-              onValueChange={value => this.onValueChange2(value, i)}
+              onValueChange={value => this.onCategoryChange(value, i)}
             >
               <Picker.Item key={1} label={"Food"} value={"Food"} />
               <Picker.Item key={2} label={"Health"} value={"Health"} />
@@ -293,9 +257,8 @@ class userBudgets extends Component {
         <Slider
           minimumTrackTintColor="#258779"
           style={{ width: 250, alignSelf: "center" }}
-          step={1}
+          step={10}
           maximumValue={this.props.profile.balance - totalBudget}
-          onValueChange={this.change.bind(this)}
           value={idx.amount}
           onValueChange={value =>
             this.handleBudgetAmountChange(parseFloat(value), i)
@@ -318,7 +281,6 @@ class userBudgets extends Component {
         />
       </View>
     ));
-
     return (
       <Container style={styles.container}>
         <LinearGradient
@@ -411,7 +373,8 @@ class userBudgets extends Component {
 
 const mapStateToProps = state => ({
   profile: state.auth.profile,
-  budgets: state.budget.budgets
+  budgets: state.budget.budgets,
+  totalBudget: state.budget.totalUserBudget
 });
 
 const mapActionsToProps = dispatch => {
