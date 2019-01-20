@@ -4,7 +4,7 @@ import axios from "axios";
 import { Toast } from "native-base";
 import { fetchBudgets } from "./budgetActions";
 const instance = axios.create({
-  baseURL: "http://192.168.1.102/api/transaction/"
+  baseURL: "http://192.168.100.32:8000/api/transaction/"
 });
 
 export const fetchTransactions = () => {

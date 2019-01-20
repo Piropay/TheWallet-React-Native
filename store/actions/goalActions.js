@@ -3,7 +3,7 @@ import * as actionTypes from "./actionTypes";
 import axios from "axios";
 import { Toast } from "native-base";
 const instance = axios.create({
-  baseURL: "http://192.168.1.102/api/goal/"
+  baseURL: "http://192.168.100.32:8000/api/goal/"
 });
 
 export const fetchGoals = () => {

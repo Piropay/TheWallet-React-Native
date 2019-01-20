@@ -4,7 +4,7 @@ import axios from "axios";
 import { updateProfile } from "./authActions";
 import { Toast } from "native-base";
 const instance = axios.create({
-  baseURL: "http://192.168.1.102/api/budget/"
+  baseURL: "http://192.168.100.32:8000/api/budget/"
 });
 
 export const fetchBudgets = () => {

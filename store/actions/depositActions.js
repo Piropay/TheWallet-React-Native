@@ -4,7 +4,7 @@ import axios from "axios";
 import { Toast } from "native-base";
 import { fetchGoals } from "./index";
 const instance = axios.create({
-  baseURL: "http://192.168.1.102/api/deposit/"
+  baseURL: "http://192.168.100.32:8000/api/deposit/"
 });
 
 export const fetchDeposits = () => {
